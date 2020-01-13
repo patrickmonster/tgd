@@ -51,7 +51,7 @@ body {
   display: inline-block;
   white-space: pre;
   content: '좋아요 · 대댓글';
-  color: #735ba5;
+  color: #cbc1fa;
   font-size: 0.75rem;
   margin-right: 0.125rem;
   order: 3;
@@ -59,7 +59,7 @@ body {
 .name {
   flex-grow: 1;
   padding: 0 0.25rem 0 0.125rem;
-  color: #6441a5 !important;
+  color: #cbc1fa !important;
   font-weight: 600;
   order: 2;
   line-height: 1.42857;
