@@ -1,77 +1,40 @@
 /* 배너 링크 - neocat */
-
 #latestDropdownMenu > li:nth-child(1){
-
   position: absolute;
-
   transform: translate(32px, -97px) scale(2.5);
-
   background: #0000;
-
   display: block;
-
 }
-
-
 
 #latestDropdownMenu > li:nth-child(1)> a{
-
   background: #0000 !important;
-
   color: #0000 !important;
-
   width: 73px;
-
   padding: 0;
-
 }
-
 #latestDropdownMenu > li:nth-child(1) > a > span.delrow > i{
-
   color: #0000 !important;
-
 }
-
-
 
 #latestDropdownMenu>li>a>span.delrow:hover{
-
   background: #0000 !important;
-
 }
-
-
 
 .col-xs-2>.dropdown:nth-child(1)>.dropdown-menu{
-
   display: block;
-
   padding: 0;
-
   margin: 0;
-
   border: 0;
-
+  transform: none !important;
 }
-
 .col-xs-2>.dropdown:nth-child(1)>.dropdown-menu:nth-child(n+2)>li{
-
   display: none;
-
 }
-
 .col-xs-2>.dropdown.open:nth-child(1)>.dropdown-menu:nth-child(n+2)>li{
-
   display: block;
-
 }
-
 .col-xs-2>.open:nth-child(1)>.dropdown-menu{
-
   padding: 5px 0;
-
   margin: 2px 0 0;
-
   border: 1px solid #ccc;
-
 }
