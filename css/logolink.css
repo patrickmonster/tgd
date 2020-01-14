@@ -9,6 +9,7 @@
 #latestDropdownMenu > li:nth-child(1)> a{
   background: #0000 !important;
   color: #0000 !important;
+  width: 145px;
   padding: 0;
 }
 #latestDropdownMenu > li:nth-child(1) > a > span.delrow > i{
