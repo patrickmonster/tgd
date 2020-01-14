@@ -9,6 +9,10 @@
     z-index: 1;
 }
 
+.pull-right {
+    float: left !important;
+}
+
 #board-info {
     overflow: inherit;
 }
