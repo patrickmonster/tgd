@@ -1,0 +1,78 @@
+#board-info #board-info-profile-img{
+    width: 7em;
+    height: auto;
+    background: #fff;
+    border-radius: 50%;
+    border: 2px solid #58ACFA;
+    transform: rotateX(0deg) translateX(-18px) translateY(-34px);
+    position: relative;
+    z-index: 1;
+}
+
+#board-info {
+    overflow: inherit;
+}
+
+#board-info-bottom{
+  position: relative;
+  z-index: 1;
+}
+#article-list,#article-info,#article-content-wrapper{
+  transform: translateY(-32px);
+}
+
+/* 스트리머 정보 */
+
+#article-info>.article-profile-img{
+  position: absolute;
+  right: 0em;
+  left: 1em;
+  top: 3em;
+  width: 3em;
+  height: auto;
+}
+
+#article-info #article-info-writer{
+  padding-bottom: 2em;
+  padding-left: 4em;
+}
+#board-info-bottom{
+  width: 100px;
+  height: 100px;
+  transform: translateX(-18px) translateY(-65px);
+}
+
+#board-info-bottom a{
+  position: absolute;
+  font-size: 0 !important;
+  border-right: 0 !important;
+  padding-right: 0 !important;
+  opacity: 0;
+  transition: 1s;
+}
+
+#board-info-bottom a > i{
+  font-size: 25px;
+}
+
+#board-info-bottom:hover a:nth-child(1){
+  transform: translateX(-6px) translateY(11px);
+}
+#board-info-bottom:hover a:nth-child(2){
+  transform: translateX(-84px) translateY(36px) scale(4.5);
+  opacity: 0 !important;
+}
+#board-info-bottom:hover a:nth-child(3){
+  transform: translateX(-14px) translateY(40px);
+}
+#board-info-bottom a:nth-child(4){
+  display: none !important;
+}
+#board-info-bottom:hover a:nth-child(5){
+  transform:translateX(-24px) translateY(72px);
+}
+
+#board-info-bottom:hover a{
+  opacity: 1;
+  transition: .5s;
+}
