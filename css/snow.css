@@ -1,0 +1,26 @@
+/* 눈내리는 배경 에니메이션(브라우저 호안) */
+@keyframes snow {
+  0% {background-position: 0px 0px, 0px 0px, 0px 0px;}
+  100% {background-position: 500px 1000px, 400px 400px, 300px 300px;}
+}
+@-moz-keyframes snow {
+  0% {background-position: 0px 0px, 0px 0px, 0px 0px;}
+  100% {background-position: 500px 1000px, 400px 400px, 300px 300px;}
+}
+@-webkit-keyframes snow {
+  0% {background-position: 0px 0px, 0px 0px, 0px 0px;}
+  50% {}
+  100% {background-position: 500px 1000px, 400px 400px, 300px 300px;}
+}
+@-ms-keyframes snow {
+  0% {background-position: 0px 0px, 0px 0px, 0px 0px;}
+  100% {background-position: 500px 1000px, 400px 400px, 300px 300px;}
+}
+
+body {
+  letter-spacing: -0.05em !important;
+  background: transparent;
+  animation: snow 20s linear infinite;
+  background-image:url('snow.png'), url("snow3.png"), url("snow2.png");
+  color : rgb(0,0,0);
+}
