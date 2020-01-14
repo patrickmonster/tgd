@@ -1,7 +1,7 @@
 /* 배너 링크 - neocat */
 #latestDropdownMenu > li:nth-child(1){
   position: absolute;
-  transform: translate(32px, -97px) scale(2.5);
+  transform: translate(30px, -85px) scale(2);
   background: #0000;
   display: block;
 }
