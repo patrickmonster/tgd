@@ -20,7 +20,8 @@
 body {
   letter-spacing: -0.05em !important;
   background: transparent;
-  animation: snow 20s linear infinite;
+  animation: snow 20s linear infinite;\
+  min-width: 1080px;
   background-image:url('../img/snow.png'), url("../img/snow3.png"), url("../img/snow2.png");
   color : rgb(0,0,0);
 }
