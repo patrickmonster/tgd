@@ -1,0 +1,35 @@
+/* 헤더 검색 버튼 2 */
+header #right-search-form>#right-search-btn{
+  position: absolute;
+  transform: translateX(-50px) translateY(-10px);
+  padding: 10px;
+}
+header #right-search-form>#right-search-btn>i{
+  width: 40px;
+  height: 40px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#right-search-form{
+  width: 240px;
+}
+header #right-search-form:hover > input[type='text']{
+    border: 0;
+    width: 240px;
+    background: white;
+}
+
+header #right-search-form:hover>#right-search-btn>i{
+  border: 0;
+  transition: 0.4s;
+}
+
+header #right-search-form>input[type='text']{
+  height: 40px;
+  transition: 0.4s;
+  width: 0px;
+  border: 0;
+}
