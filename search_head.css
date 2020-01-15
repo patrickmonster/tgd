@@ -1,0 +1,41 @@
+/* 헤더 검색 버튼 */
+
+header #right-search-form>#right-search-btn{
+  position: absolute;
+  transform: translateX(-50px) translateY(-10px);
+  padding: 10px;
+}
+
+header #right-search-form>#right-search-btn>i{
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#right-search-form{
+  width: 240px;
+}
+header #right-search-form:hover > input[type='text']{
+    border-radius: 30px;
+    width: 240px;
+    background: white;
+}
+
+header #right-search-form:hover>#right-search-btn>i{
+  border: 0;
+  border-radius: 30px;
+  color: #fff;
+  transition: 0.4s;
+}
+
+header #right-search-form>input[type='text']{
+  background: none;
+  border: 0px;
+  height: 40px;
+  transition: 0.4s;
+  width: 0px;
+}
