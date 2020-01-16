@@ -94,6 +94,10 @@ window.addStyle=document.addStyle=function(){var a=arguments,b=a.length,c=0;for(
 })(jQuery);
 
 $(document).ready( function(){
+	tag = document.location.href.split("#")[1];
+	if ('test' == tag){
+		$('body').css('background-color', '#000');
+	}
 	$.fn.snow({html:'.'/*'<image src="./image/box2.png" style="">'*/});
 	$.fn.snow({minSize:10,maxSize:20});
 });
