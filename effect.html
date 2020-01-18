@@ -94,14 +94,10 @@ window.addStyle=document.addStyle=function(){var a=arguments,b=a.length,c=0;for(
 })(jQuery);
 
 $(document).ready( function(){
-	tag = document.location.href.split("#")[1];
-	if ('test' == tag){
-		$.fn.snow({html:'&#9835',flakeColor:"#fff",minSize:10,maxSize:20, newOn: 1000});
-		$.fn.snow({html:'*',flakeColor:"#fff",minSize:10,maxSize:20, newOn: 1000});
-		$('body').css('background-color', '#000');
-	}
-	$.fn.snow({html:'.'/*'<image src="./image/box2.png" style="">'*/});
-	$.fn.snow({minSize:10,maxSize:20});
+	var tag = document.location.href.split("#")[1];
+	var color = '#' + tag;
+	$.fn.snow({html:'.',flakeColor:color});
+	$.fn.snow({minSize:10,maxSize:20,flakeColor:color});
 });
 		</script>
 	</head>
