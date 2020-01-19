@@ -95,6 +95,7 @@ window.addStyle=document.addStyle=function(){var a=arguments,b=a.length,c=0;for(
 
 $(document).ready( function(){
 	var tag = document.location.href.split("#")[1];
+	if(tag==""||!tag) tag = 'fff';
 	var color = '#' + tag;
 	$.fn.snow({html:'.',flakeColor:color});
 	$.fn.snow({minSize:10,maxSize:20,flakeColor:color});
