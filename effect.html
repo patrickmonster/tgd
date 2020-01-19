@@ -55,7 +55,7 @@ window.addStyle=document.addStyle=function(){var a=arguments,b=a.length,c=0;for(
                 minSize: 10,
                 maxSize: 50,
                 newOn: 300,
-				html:'&#10052',
+		html:'&#10052',
                 flakeColor: "#FFFFFF"
             },
             options = $.extend({}, defaults, options),
@@ -65,7 +65,7 @@ window.addStyle=document.addStyle=function(){var a=arguments,b=a.length,c=0;for(
             }).html(options.html);
         var interval = setInterval(function() {
             var startPositionLeft = Math.random() * documentWidth - 100,
-                startOpacity = 0.5 + Math.random(),
+                startOpacity = 0.8 + Math.random(),
                 sizeFlake = options.minSize + Math.random() * options.maxSize,
                 endPositionTop = documentHeight - 40,
                 endPositionLeft = startPositionLeft - 100 + Math.random() * 200,
