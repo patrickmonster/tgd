@@ -19,7 +19,7 @@
 #latestDropdownMenu>li>a>span.delrow:hover{
   background: #0000 !important;
 }
-#latestDropdownMenu>li>a>span.delrow{
+#latestDropdownMenu > li:nth-child(1)>a>span.delrow{
   display: none;
 }
 .col-xs-2>.dropdown:nth-child(1)>.dropdown-menu{
