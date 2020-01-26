@@ -1,6 +1,35 @@
+원하시는 색상을 선택해 주세요!(확인버튼 필수) <input type='color' id='myBestColor' value='#333333' onchange="select_color(this.value)"><br>
+0.OBS의 좌측 하단 (소스목록에서 시작합니다)<br>
 1.브라우저로 추가<br>
 <img src="https://patrickmonster.github.io/tgd/img/%EC%84%A4%EB%AA%851.png" alt="">
 <br>2.이름 설정<br>
 <img src="https://patrickmonster.github.io/tgd/img/%EC%84%A4%EB%AA%852.PNG" alt="">
-<br>3.패널 설정(1920*1080)<br>
+<br>3.패널 설정(1920*1080)<button onclick="copyToClipboard()">링크 복사하기</button><br>
 <img src="https://patrickmonster.github.io/tgd/img/%EC%84%A4%EB%AA%853.PNG" alt="">
+<br>4.적용예시(하단 벚꽃은 2월 중순 업데이트 예정)<br>
+<!--iframe id="view" src="https://patrickmonster.github.io/tgd/effect.html#333333"></iframe><br-->
+<iframe id="view" src="https://patrickmonster.github.io/tgd/effect.html"></iframe><br>
+<img src="https://patrickmonster.github.io/tgd/img/%EC%9D%B4%ED%8E%99%ED%8A%B8.PNG" style="width:500px;height:500px" alt="">
+<script>
+window.addStyle=document.addStyle=function(){var a=arguments,b=a.length,c=0;for(;c<b;c++)document.head.C('style').innerHTML=a[c]};
+var style = false;
+var col = "#fff"
+function select_color(color){
+	if(!style){
+		var doc = document.getElementById("view").contentDocument
+		style = doc.body.C("style")
+	}
+	style.innerHTML="#flake{color:"+color+" !important}";
+	col = color;
+}
+// 클립보드로 복사하는 기능을 생성
+function copyToClipboard(value) {
+  var aux = document.createElement("input");
+  aux.setAttribute("value", "https://patrickmonster.github.io/tgd/effect.html" + col);
+  document.body.appendChild(aux);
+  aux.select();
+  document.execCommand("copy");
+  document.body.removeChild(aux);
+
+}
+</script>
