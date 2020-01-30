@@ -95,8 +95,14 @@ window.addStyle=document.addStyle=function(){var a=arguments,b=a.length,c=0;for(
 
 $(document).ready( function(){
 	var tag = document.location.href.split("#")[1];
-	if(tag==""||!tag) {
-		location.href="http://patrickmonster.github.io/tgd/effect.html#cherryblossom";
+	if(tag==""||!tag){
+		location.href="./effect.html#chocolate";
+	}else if(tag=="chocolate"){
+		$.fn.snow({html:'<image src="img/cacao.png" style="width:3vh;width:3vh">',minSize:10,maxSize:20, newOn: 1500});
+		$.fn.snow({html:'<image src="img/chocolate.png" style="width:3vh;width:3vh">',minSize:10,maxSize:20, newOn: 1500});
+		$.fn.snow({html:'<image src="img/chocolate-1.png" style="width:3vh;width:3vh">',minSize:10,maxSize:20, newOn: 1500});
+		$.fn.snow({html:'<image src="img/chocolate-box-2.png" style="width:3vh;width:3vh">',minSize:10,maxSize:20, newOn: 3000});
+		$.fn.snow({html:'<image src="img/chocolate-chip.png" style="width:3vh;width:3vh">',minSize:10,maxSize:20, newOn: 3000});
 		return;
 	}else if(tag=="cherryblossom") {
 		$.fn.snow({html:'<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-1.png" style="width:3vh;width:3vh">',minSize:10,maxSize:20, newOn: 3000,leftMove:1000});
