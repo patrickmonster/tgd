@@ -1,41 +1,70 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 	<title>Neocat - 방송 이펙트</title>
+	<style>
+html{
+	background:#ff8298;
+	color:#ffffff;
+}
+	</style>
 </head>
 <body>
-원하시는 색상을 선택해 주세요!(확인버튼 필수) <input type='color' id='myBestColor' value='#ffffff' onchange="select_color(this.value)"><br>
-0.OBS의 좌측 하단 (소스목록에서 시작합니다)<br>
+<h1>공지</h1>
+임의로 바꿔서 죄송합니다.
+2월중순에 해보려 했던것을, 변경하다 보니 임의로 변경되었습니다.<br>
+현재는 재 변경하여 정상적인 색상으로 나오게 하데,<br>
+해당하는 벚꽃이펙트는 별도 링크로 변경하였습니다.<br>
+
+<h2>적용예시(좌:눈 우:벚꽃)</h2>
+<iframe id="view" src="https://patrickmonster.github.io/tgd/effect.html#ffffff" style="background:#000;width:400px;height:400px;"></iframe>
+<iframe id="view" src="https://patrickmonster.github.io/tgd/effect.html#cherryblossom" style="background:#000;width:400px;height:400px;"></iframe><br>
+<br><br>
+
+원하시는 색상을 선택해 주세요!(확인버튼 필수/벚꽃은 해당없음) <input type='color' id='myBestColor' value='#ffffff' onchange="select_color(this.value)"><br>
+ 눈  이펙트 복사하기:<button onclick="copyToClipboard(document.getElementById('myBestColor').value)">링크 복사하기</button><br><br>
+벚꽃 이펙트 복사하기:<button onclick="copyToClipboard('')">링크 복사하기</button><br><br>
+
+
+
+<h2><a href="#xsplit">엑스스플릿 설명으로 바로가기</a></h2><br>
+
+0.OBS의 좌측 하단 (소스목록에서 시작합니다)<br><br>
+
 1.브라우저로 추가<br>
 <img src="https://patrickmonster.github.io/tgd/img/%EC%84%A4%EB%AA%851.png" alt="">
 <br>2.이름 설정<br>
 <img src="https://patrickmonster.github.io/tgd/img/%EC%84%A4%EB%AA%852.PNG" alt="">
-<br>3.패널 설정(1920*1080)<button onclick="copyToClipboard()">링크 복사하기</button><br>
+<br>3.패널 설정(1920*1080)<br>
 <img src="https://patrickmonster.github.io/tgd/img/%EC%84%A4%EB%AA%853.PNG" alt="">
-<br>4.적용예시(하단 벚꽃은 2월 중순 업데이트 예정)<br>
-<!--iframe id="view" src="http://549.ipdisk.co.kr/effect/" style="background:#000"></iframe><br-->
-<iframe id="view" src="https://patrickmonster.github.io/tgd/effect.html" style="background:#000;width:500px;height:500px;"></iframe><br>
-<img src="https://patrickmonster.github.io/tgd/img/%EC%9D%B4%ED%8E%99%ED%8A%B8.PNG" style="width:500px;height:500px" alt="">
+
+<br><br><br><br>
+<h1><a id="xsplit">0.엑스스플릿 설정</a></h1>
+
+1.Addsorce-> Webpage..클릭<br>
+<img src="https://patrickmonster.github.io/tgd/img/%EC%84%A4%EB%AA%85X1.PNG" alt="">
+<br>2.복사한 링크 붙혀넣기<br>
+<img src="https://patrickmonster.github.io/tgd/img/%EC%84%A4%EB%AA%85X3.png" alt="">
+<br><br><br><br><h1>* 적용확인</h1><br>
+<img src="https://patrickmonster.github.io/tgd/img/%EC%84%A4%EB%AA%85X4.png" alt="">
+
 <script>
-window.addStyle=document.addStyle=function(){var a=arguments,b=a.length,c=0;for(;c<b;c++)document.head.C('style').innerHTML=a[c]};
 var style = false;
-var col = "#ffffff"
 function select_color(color){
 	if(!style){
 		var doc = document.getElementById("view").contentDocument
-		style = doc.body.C("style")
-	}	
+		style = doc.body.C("style");
+	}
 	style.innerHTML="#flake{color:"+color+" !important}";
-	col = color;
 }
 // 클립보드로 복사하는 기능을 생성
 function copyToClipboard(value) {
   var aux = document.createElement("input");
-  aux.setAttribute("value", "https://patrickmonster.github.io/tgd/effect.html" + col);
+  aux.setAttribute("value", "https://patrickmonster.github.io/tgd/effect.html" + value);
   document.body.appendChild(aux);
   aux.select();
   document.execCommand("copy");
   document.body.removeChild(aux);
-
+	alert("소스가 복사되었습니다!");
 }
 </script>
 </body>
