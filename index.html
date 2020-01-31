@@ -26,17 +26,18 @@ html{
 
 <h2>적용예시(좌:눈 우:벚꽃)</h2>
 <iframe id="view" src="https://patrickmonster.github.io/tgd/effect.html#ffffff" style="background:#000;width:400px;height:400px;"></iframe>
-<iframe id="view" src="https://patrickmonster.github.io/tgd/effect.html#cherryblossom" style="background:#000;width:400px;height:400px;"></iframe>
-<iframe id="view" src="https://patrickmonster.github.io/tgd/effect.html#chocolate" style="background:#000;width:400px;height:400px;"></iframe><br>
-<iframe id="view" src="https://patrickmonster.github.io/tgd/effect.html#cannabisfff" style="background:#000;width:400px;height:400px;"></iframe>
-<iframe id="view" src="https://patrickmonster.github.io/tgd/effect.html#cloud" style="background:#000;width:400px;height:400px;"></iframe>
+<iframe src="https://patrickmonster.github.io/tgd/effect.html#cherryblossom" style="background:#000;width:400px;height:400px;"></iframe>
+<iframe src="https://patrickmonster.github.io/tgd/effect.html#chocolate" style="background:#000;width:400px;height:400px;"></iframe><br>
 <br><br>
 
 원하시는 색상을 선택해 주세요!(확인버튼 필수/벚꽃은 해당없음) <input type='color' id='myBestColor' value='#ffffff' onchange="select_color(this.value)"><br>
- 눈  이펙트 복사하기:<button onclick="copyToClipboard(document.getElementById('myBestColor').value)">링크 복사하기</button><br><br>
+<input type="hidden" id="in_0" value="#">
+<input type="radio" name="chk_info" id="in_1" onclick="select_icon(this.value)" value="#" checked><label for="in_1">눈</label>
+<input type="radio" name="chk_info" id="in_2" onclick="select_icon(this.value)" value="#cannabis"><label for="in_2">단풍</label>
+<input type="radio" name="chk_info" id="in_3" onclick="select_icon(this.value)" value="#cloud"><label for="in_3">구름</label><br>
+폰트(눈/구름/단풍)  이펙트 복사하기:<button onclick="copyToClipboard(document.getElementById('in_0').value + getColor())">링크 복사하기</button><br><br>
 벚꽃 이펙트 복사하기:<button onclick="copyToClipboard('#cherryblossom')">링크 복사하기</button><br>
 초콜릿이펙트 복사하기:<button onclick="copyToClipboard('#chocolate')">링크 복사하기</button><br><br>
-
 
 
 <h2><a href="#xsplit">엑스스플릿 설명으로 바로가기</a></h2><br>
@@ -64,11 +65,31 @@ html{
 <h3>Create by neocat</h3>
 <script>
 var style = false;
+function select_icon(icon){//checked
+	var target = "https://patrickmonster.github.io/tgd/effect.html";
+	document.getElementById("view").src ="about:blank";
+	document.getElementById("in_0").value = icon;
+	setTimeout(function() {
+		document.getElementById("view").src = target + icon;
+	}, 500);
+	setTimeout(function() {
+		var doc = document.getElementById("view").contentDocument
+		style = doc.body.C("style");
+		style.innerHTML = "#flake{color:"+document.getElementById("myBestColor").value+" !important}"
+	}, 1000);
+}
+
+function getColor(){
+	 var color = document.getElementById('myBestColor').value + "";
+	 return color.substring(1);
+}
+
 function select_color(color){
 	if(!style){
 		var doc = document.getElementById("view").contentDocument
 		style = doc.body.C("style");
 	}
+	if (color==""||!color)return;
 	style.innerHTML="#flake{color:"+color+" !important}";
 }
 // 클립보드로 복사하는 기능을 생성
