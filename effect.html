@@ -80,7 +80,7 @@ window.addStyle=document.addStyle=function(){var a=arguments,b=a.length,c=0;for(
                 durationFall = documentHeight * 10 + Math.random() * 5000,
                 rotate = Math.random() * 360;
             $flake.clone().appendTo('body').css({
-                left: startPositionLeft - options.leftMove,
+                left: startPositionLeft - (options.leftMove==200?0:options.leftMove),
                 opacity: startOpacity,
                 'font-size': sizeFlake,
                 color: options.flakeColor
@@ -135,8 +135,8 @@ $(document).ready( function(){
 			$.fn.snow({html:'<i class="fa fa-cloud"></i>',maxSize:20,flakeColor:color});
 		}else if(tag.indexOf("#cannabis") != -1){//단풍
 			var color = getColor(tag,"#cannabis");
-			$.fn.snow({html:'<i class="fas fa-cannabis"></i>',newOn:500,maxSize:20,flakeColor:color});
-			$.fn.snow({html:'<i class="fab fa-canadian-maple-leaf"></i>',newOn:500,maxSize:20,flakeColor:color});
+			$.fn.snow({html:'<i class="fas fa-cannabis"></i>',newOn:500,maxSize:15,flakeColor:color});
+			$.fn.snow({html:'<i class="fab fa-canadian-maple-leaf"></i>',newOn:500,maxSize:15,flakeColor:color});
 		}else if(tag.indexOf("#heart") != -1){//하트
 			var color = getColor(tag,"#heart");
 			$.fn.snow({html:'<i class="far fa-heart"></i>',flakeColor:color,leftMove:1000,flakeColor:color});
