@@ -155,13 +155,13 @@ $(document).ready( function(){
 			$.fn.snow({html:'<i class="far fa-comment-dots"></i>',maxSize:15,flakeColor:color,newOn: 900});
 		}else if(tag.indexOf("#twitch") != -1){//트위치 아이콘
 			var color = getColor(tag,"#twitch");
-			$.fn.snow({html:'<i class="fab fa-twitch"></i>',maxSize:15,leftMove:-1000,flakeColor:color,newOn: 900});
+			$.fn.snow({html:'<i class="fab fa-twitch"></i>',maxSize:15,flakeColor:color,newOn: 900});
 		}else if(tag.indexOf("#umbrella") != -1){//우산
 			var color = getColor(tag,"#umbrella");
-			$.fn.snow({html:'<i class="fas fa-umbrella"></i>',maxSize:15,leftMove:-1000,flakeColor:color,newOn: 900});
+			$.fn.snow({html:'<i class="fas fa-umbrella"></i>',maxSize:15,flakeColor:color,newOn: 900});
 		}else if(tag.indexOf("#umbrella-beach") != -1){//파라솔
 			var color = getColor(tag,"#umbrella-beach");
-			$.fn.snow({html:'<i class="fas fa-umbrella-beach"></i>',maxSize:15,leftMove:-1000,flakeColor:color,newOn: 900});
+			$.fn.snow({html:'<i class="fas fa-umbrella-beach"></i>',maxSize:15,flakeColor:color,newOn: 900});
 		}else{
 			$.fn.snow({html:'.',flakeColor:tag});
 			$.fn.snow({minSize:10,maxSize:20,flakeColor:tag});
