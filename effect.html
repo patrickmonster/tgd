@@ -144,8 +144,8 @@ $(document).ready( function(){
 		}else if(tag.indexOf("#meteor") != -1){//운석
 			var color = getColor(tag,"#meteor");
 			$.fn.snow({html:'<i class="fas fa-meteor"></i>',maxSize:15,leftMove:-1000,flakeColor:color});
-		}else if(tag.indexOf("##carrot_f") != -1){//당근(미사일)
-			var color = getColor(tag,"#carrot");
+		}else if(tag.indexOf("#carrot_f") != -1){//당근(미사일)
+			var color = getColor(tag,"#carrot_f");
 			$.fn.snow({html:'<i class="fas fa-carrot"></i>',maxSize:15,leftMove:-1000,flakeColor:color});
 		}else if(tag.indexOf("#carrot") != -1){//당근
 			var color = getColor(tag,"#carrot");
