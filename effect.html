@@ -133,17 +133,35 @@ $(document).ready( function(){
 		if(tag.indexOf("#cloud") != -1){
 			var color = getColor(tag,"#cloud");
 			$.fn.snow({html:'<i class="fa fa-cloud"></i>',maxSize:20,flakeColor:color});
-		}else if(tag.indexOf("#cannabis") != -1){
+		}else if(tag.indexOf("#cannabis") != -1){//단풍
 			var color = getColor(tag,"#cannabis");
 			$.fn.snow({html:'<i class="fas fa-cannabis"></i>',newOn:500,maxSize:20,flakeColor:color});
 			$.fn.snow({html:'<i class="fab fa-canadian-maple-leaf"></i>',newOn:500,maxSize:20,flakeColor:color});
-		}else if(tag.indexOf("#heart") != -1){
+		}else if(tag.indexOf("#heart") != -1){//하트
 			var color = getColor(tag,"#heart");
 			$.fn.snow({html:'<i class="far fa-heart"></i>',flakeColor:color,leftMove:1000,flakeColor:color});
 			$.fn.snow({html:'<i class="fas fa-heart"></i>',flakeColor:color,leftMove:1000,flakeColor:color});
-		}else if(tag.indexOf("#meteor") != -1){
+		}else if(tag.indexOf("#meteor") != -1){//운석
 			var color = getColor(tag,"#meteor");
 			$.fn.snow({html:'<i class="fas fa-meteor"></i>',maxSize:15,leftMove:-1000,flakeColor:color});
+		}else if(tag.indexOf("#carrot") != -1){//당근
+			var color = getColor(tag,"#carrot");
+			$.fn.snow({html:'<i class="fas fa-carrot"></i>',maxSize:15,leftMove:-1000,flakeColor:color});
+		}else if(tag.indexOf("#comment") != -1){//말풍선
+			var color = getColor(tag,"#comment");
+			$.fn.snow({html:'<i class="fas fa-comment"></i>',maxSize:15,flakeColor:color,newOn: 900});
+			$.fn.snow({html:'<i class="far fa-comment"></i>',maxSize:15,flakeColor:color,newOn: 900});
+			$.fn.snow({html:'<i class="fas fa-comment-dots"></i>',maxSize:15,flakeColor:color,newOn: 900});
+			$.fn.snow({html:'<i class="far fa-comment-dots"></i>',maxSize:15,flakeColor:color,newOn: 900});
+		}else if(tag.indexOf("#twitch") != -1){//트위치 아이콘
+			var color = getColor(tag,"#twitch");
+			$.fn.snow({html:'<i class="fab fa-twitch"></i>',maxSize:15,leftMove:-1000,flakeColor:color,newOn: 900});
+		}else if(tag.indexOf("#umbrella") != -1){//우산
+			var color = getColor(tag,"#umbrella");
+			$.fn.snow({html:'<i class="fas fa-umbrella"></i>',maxSize:15,leftMove:-1000,flakeColor:color,newOn: 900});
+		}else if(tag.indexOf("#umbrella-beach") != -1){//파라솔
+			var color = getColor(tag,"#umbrella-beach");
+			$.fn.snow({html:'<i class="fas fa-umbrella-beach"></i>',maxSize:15,leftMove:-1000,flakeColor:color,newOn: 900});
 		}else{
 			$.fn.snow({html:'.',flakeColor:tag});
 			$.fn.snow({minSize:10,maxSize:20,flakeColor:tag});
