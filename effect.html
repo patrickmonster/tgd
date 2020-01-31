@@ -6,7 +6,9 @@
 		<meta http-equiv="Pragma" content="no-cache">
 		<meta http-equiv="Cache-Control" content="no-cache">
 		<link href="http://549.ipdisk.co.kr/effect/favicon.png" rel="shortcut icon">
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+		<script defer src="./fonts/all.min.js"></script>
 		<style>
 *{
 	margin: 0px;
@@ -40,6 +42,11 @@ body{
 	margin: auto;
 	max-width: 100%;
     max-height: 100%;
+}
+
+image{
+	width: 3vh;
+	height: 3vh;
 }
 		</style>
 		<script>
@@ -87,44 +94,61 @@ window.addStyle=document.addStyle=function(){var a=arguments,b=a.length,c=0;for(
         }, options.newOn);
 		$(window).resize(function (){
 			documentHeight = $(document).height()
-            documentWidth = $(document).width()
+      documentWidth = $(document).width()
 		});
 		return interval;
     };
 })(jQuery);
 
+function getColor(tag,option){
+	var t = option.length;
+	var color = '#' + tag.substring(t);
+	if(color == "#")color += "fff";
+	return color;
+}
+
 $(document).ready( function(){
 	var tag = document.location.href.split("#")[1];
-	if(tag==""||!tag){
-		location.href="./effect.html#chocolate";
-	}else if(tag=="chocolate"){
-		$.fn.snow({html:'<image src="img/cacao.png" style="width:3vh;width:3vh">',minSize:10,maxSize:20, newOn: 1500});
-		$.fn.snow({html:'<image src="img/chocolate.png" style="width:3vh;width:3vh">',minSize:10,maxSize:20, newOn: 1500});
-		$.fn.snow({html:'<image src="img/chocolate-1.png" style="width:3vh;width:3vh">',minSize:10,maxSize:20, newOn: 1500});
-		$.fn.snow({html:'<image src="img/chocolate-box-2.png" style="width:3vh;width:3vh">',minSize:10,maxSize:20, newOn: 3000});
-		$.fn.snow({html:'<image src="img/chocolate-chip.png" style="width:3vh;width:3vh">',minSize:10,maxSize:20, newOn: 3000});
+	// if(tag==""||!tag){
+		// location.href="./effect.html#ffffff";
+	// }else
+	if(tag=="chocolate"){
+		$.fn.snow({html:'<image src="img/cacao.png">',minSize:10,maxSize:20, newOn: 1500});
+		$.fn.snow({html:'<image src="img/chocolate.png">',minSize:10,maxSize:20, newOn: 1500});
+		$.fn.snow({html:'<image src="img/chocolate-1.png">',minSize:10,maxSize:20, newOn: 1500});
+		$.fn.snow({html:'<image src="img/chocolate-box-2.png">',minSize:10,maxSize:20, newOn: 3000});
+		$.fn.snow({html:'<image src="img/chocolate-chip.png">',minSize:10,maxSize:20, newOn: 3000});
 		return;
 	}else if(tag=="cherryblossom") {
-		$.fn.snow({html:'<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-1.png" style="width:3vh;width:3vh">',minSize:10,maxSize:20, newOn: 3000,leftMove:1000});
-		$.fn.snow({html:'<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-2.png" style="width:3vh;width:3vh">',minSize:10,maxSize:20, newOn: 2000,leftMove:1000});
-		$.fn.snow({html:'<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-6.png" style="width:3vh;width:3vh">',minSize:10,maxSize:20, newOn: 2000,leftMove:1000});
-		$.fn.snow({html:'<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-7.png" style="width:3vh;width:3vh">',minSize:10,maxSize:20, newOn: 1000,leftMove:1000});
-		$.fn.snow({html:'<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-8.png" style="width:3vh;width:3vh">',minSize:10,maxSize:20, newOn: 1000,leftMove:1000});
-		$.fn.snow({html:'<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-9.png" style="width:3vh;width:3vh">',minSize:10,maxSize:20, newOn: 1000,leftMove:1000});
+		$.fn.snow({html:'<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-1.png">',minSize:10,maxSize:20, newOn: 3000,leftMove:1000});
+		$.fn.snow({html:'<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-2.png">',minSize:10,maxSize:20, newOn: 2000,leftMove:1000});
+		$.fn.snow({html:'<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-6.png">',minSize:10,maxSize:20, newOn: 2000,leftMove:1000});
+		$.fn.snow({html:'<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-7.png">',minSize:10,maxSize:20, newOn: 1000,leftMove:1000});
+		$.fn.snow({html:'<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-8.png">',minSize:10,maxSize:20, newOn: 1000,leftMove:1000});
+		$.fn.snow({html:'<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-9.png">',minSize:10,maxSize:20, newOn: 1000,leftMove:1000});
 		return;
+	}else{
+		tag = "#"+tag;
+		if(tag.indexOf("#cloud") != -1){
+			var color = getColor(tag,"#cloud");
+			$.fn.snow({html:'<i class="fa fa-cloud"></i>',maxSize:20,flakeColor:color});
+		}else if(tag.indexOf("#cannabis") != -1){
+			var color = getColor(tag,"#cannabis");
+			$.fn.snow({html:'<i class="fas fa-cannabis"></i>',newOn:500,maxSize:20,flakeColor:color});
+			$.fn.snow({html:'<i class="fab fa-canadian-maple-leaf"></i>',newOn:500,maxSize:20,flakeColor:color});
+		}else{
+			$.fn.snow({html:'.',flakeColor:tag});
+			$.fn.snow({minSize:10,maxSize:20,flakeColor:tag});
+		}
 	}
-	tag = "#"+tag;
-	$.fn.snow({html:'.',flakeColor:tag});
-	$.fn.snow({minSize:10,maxSize:20,flakeColor:tag});
 });
 		</script>
 	</head>
 	<body>
-	<!--div class=tree_main></div-->
 	<div class="thumbnail-panart">
 		<img class='max-small' id=panart></img>
 		<img class='max-small' id=panart_cover></img>
-	</div>
+	</div
 	<iframe id="event" style="width:0; height:0;margin:0;border:0;"/>
 	</body>
 </html>
