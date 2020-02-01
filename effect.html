@@ -93,11 +93,50 @@ window.addStyle=document.addStyle=function(){var a=arguments,b=a.length,c=0;for(
                 $(this).remove()
             });
         }, options.newOn);
-		$(window).resize(function (){
-			documentHeight = $(document).height()
-      documentWidth = $(document).width()
-		});
-		return interval;
+				$(window).resize(function (){
+					documentHeight = $(document).height()
+		      documentWidth = $(document).width()
+				});
+			return interval;
+    };
+
+		$.fn.raining = function(options) {
+        var documentHeight = $(document).height(),
+            documentWidth = $(document).width(),
+            defaults = {
+                minSize: 20,
+                maxSize: 30,
+                newOn: 200,
+								html:'|'
+            },
+            options = $.extend({}, defaults, options),
+			$flake = $('<div id="flake" />').css({
+                'position': 'absolute',
+                'top': '-50px'
+            }).html(options.html);
+        var interval = setInterval(function() {
+            var startPositionLeft = Math.random() * documentWidth - 100,
+                startOpacity = 1 + Math.random(),
+                sizeFlake = options.minSize + Math.random() * options.maxSize,
+                endPositionTop = documentHeight - 40,
+                durationFall = (documentHeight) / 2;// 떨어지는 속도
+            $flake.clone().appendTo('body').css({
+                left: startPositionLeft,
+                opacity: startOpacity,
+                'font-size': sizeFlake,
+                color: "#FFFFFF"
+            }).animate({
+                top: endPositionTop,
+                opacity: 0.2
+            }, durationFall, 'linear', function() {
+                $(this).remove()
+            });
+        }, options.newOn);
+				$(window).resize(function (){
+					documentHeight = $(document).height()
+		      documentWidth = $(document).width()
+				});
+			return interval;
     };
 })(jQuery);
 
@@ -111,7 +150,8 @@ function getColor(tag,option){
 $(document).ready( function(){
 	var tag = document.location.href.split("#")[1];
 	if(tag==""||!tag){
-
+		document.addStyle("html{background:#000;}")
+		$.fn.raining();
 	}else
 	if(tag=="chocolate"){
 		$.fn.snow({html:'<image src="img/cacao.png">',minSize:10,maxSize:20, newOn: 1500});
@@ -130,7 +170,11 @@ $(document).ready( function(){
 		return;
 	}else{
 		tag = "#"+tag;
-		if(tag.indexOf("#cloud") != -1){
+		if (tag.indexOf("#raining")){
+			var color = getColor(tag,"#cloud");
+			$.fn.raining({html:'|',maxSize:20, newOn: 50});
+			$.fn.raining({html:'.',maxSize:20, newOn: 50});
+		}else if(tag.indexOf("#cloud") != -1){
 			var color = getColor(tag,"#cloud");
 			$.fn.snow({html:'<i class="fa fa-cloud"></i>',maxSize:20,flakeColor:color});
 		}else if(tag.indexOf("#cannabis") != -1){//단풍
