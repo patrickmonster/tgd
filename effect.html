@@ -170,10 +170,9 @@ $(document).ready( function(){
 		return;
 	}else{
 		tag = "#"+tag;
-		if (tag.indexOf("#raining")){
+		if (tag.indexOf("#raining") != -1){
 			var color = getColor(tag,"#cloud");
-			$.fn.raining({html:'|',maxSize:20, newOn: 50});
-			$.fn.raining({html:'.',maxSize:20, newOn: 50});
+			$.fn.raining();
 		}else if(tag.indexOf("#cloud") != -1){
 			var color = getColor(tag,"#cloud");
 			$.fn.snow({html:'<i class="fa fa-cloud"></i>',maxSize:20,flakeColor:color});
