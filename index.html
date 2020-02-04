@@ -10,37 +10,33 @@ html{
 </head>
 <body>
 <h1>공지</h1>
-임의로 바꿔서 죄송합니다.
-2월중순에 해보려 했던것을, 변경하다 보니 임의로 변경되었습니다.<br>
-현재는 재 변경하여 정상적인 색상으로 나오게 하데,<br>
-해당하는 벚꽃이펙트는 별도 링크로 변경하였습니다.<br>
-<h3>방송화면 지속적으로 변경 예정입니다! 많이 방문해주세요~</h3><br>
-
-<ul>
-	<li>1월 30일 초콜릿 및 벚꽃추가</li>
-	<li>1월 31일 구름및 단풍잎 추가</li>
-	<li>2월 01일 눈/단풍 색상변경기능 / 통합선택으로 변경</li>
-	<li>2월 02일 비 추가</li>
-</ul><br>
-
+<h3>방송화면 지속적으로 변경 예정입니다! 많이 방문해주세요~</h3>
+<div>
+	<button type="button" onclick="var target=this.parentElement.lastElementChild.style;(target.display=='block'?target.display='none':target.display='block')">변경로그 확인</button>
+	<ul style="display:none">
+		<li>1월 30일 초콜릿 및 벚꽃추가</li>
+		<li>1월 31일 구름및 단풍잎 추가</li>
+		<li>2월 01일 눈/단풍 색상변경기능 / 통합선택으로 변경</li>
+		<li>2월 02일 비 추가</li>
+		<li>2월 04일 비 색상 변경 추가</li>
+	</ul>
+</div>
 <h2>Create by neocat</h2>
-
 <h1> 필독사항</h1>
 * 배포는 네오캣짱(본인)이 무료로 직접하고 있습니다<br>
 * 다른분이 배포시에, 적발된다면 본 페이지는 제거됩니다<br>
 * 상업적 용도로 사용하고 계신분이 있으시다면 rsj1120@dongguk.ac.kr 로 메일 신고 부탁드립니다<br>
 * 가지고 싶으신분이 계시다면 rsj1120@dongguk.ac.kr 로 메일(제목 : 방송용 배경화면[방송id])로 메일 한통 남겨주세요~<br>
 or 쪽지도 가능합니다(오류로 인하여 답장이 안되니, 글써주시면 됩니다 ex)아이디가 쓰고싶어하는데 괜찮은가요?)
-
 <h3 style="color:red">무단공유가 이루어져 알게된다면, 링크 지우겠습나다(이펙트 포함)</h3>
 
+<h1 style="font-size:3em">페이지는 보여줘도 되는데... 재발 링크는 가려줘용</h1>
 
-<h2>적용예시(좌:눈 우:벚꽃)</h2>
+<h2>적용예시(좌:폰트이펙트 / 중/오: 이미지 이펙트)</h2>
 <iframe id="view" src="https://patrickmonster.github.io/tgd/effect.html#ffffff" style="background:#000;width:400px;height:400px;"></iframe>
 <iframe src="https://patrickmonster.github.io/tgd/effect.html#cherryblossom" style="background:#000;width:400px;height:400px;"></iframe>
 <iframe src="https://patrickmonster.github.io/tgd/effect.html#chocolate" style="background:#000;width:400px;height:400px;"></iframe><br>
 <br><br>
-
 원하시는 색상을 선택해 주세요!(확인버튼 필수/[벚꽃,초콜릿,비]는 해당없음) <input type='color' id='myBestColor' value='#ffffff' onchange="select_color(this.value)"><br>
 <input type="hidden" id="in_0" value="#">
 <input type="radio" name="chk_info" id="in_1" onclick="select_icon(this.value)" value="#" checked><label for="in_1">눈</label>
@@ -54,34 +50,37 @@ or 쪽지도 가능합니다(오류로 인하여 답장이 안되니, 글써주�
 <input type="radio" name="chk_info" id="in_9" onclick="select_icon(this.value)" value="#twitch"><label for="in_9">트위치</label>
 <input type="radio" name="chk_info" id="in_10" onclick="select_icon(this.value)" value="#umbrella"><label for="in_10">우산</label><br>
 <input type="radio" name="chk_info" id="in_11" onclick="select_icon(this.value)" value="#umbrella-beach"><label for="in_11">파라솔</label>
-<input type="radio" name="chk_info" id="in_11" onclick="select_icon(this.value)" value="#raining"><label for="in_12">비</label><br>
-폰트(눈/구름/단풍)  이펙트 복사하기:<button onclick="copyToClipboard(document.getElementById('in_0').value + getColor())">링크 복사하기</button><br><br>
+<input type="radio" name="chk_info" id="in_12" onclick="select_icon(this.value)" value="#raining"><label for="in_12">비</label><br>
+폰트(눈/구름/단풍등등)  이펙트 복사하기:<button onclick="copyToClipboard(document.getElementById('in_0').value + getColor())">링크 복사하기</button><br><br>
 벚꽃 이펙트 복사하기:<button onclick="copyToClipboard('#cherryblossom')">링크 복사하기</button><br>
 초콜릿이펙트 복사하기:<button onclick="copyToClipboard('#chocolate')">링크 복사하기</button><br><br>
-
-
-<h2><a href="#xsplit">엑스스플릿 설명으로 바로가기</a></h2><br>
-
-0.OBS의 좌측 하단 (소스목록에서 시작합니다)<br><br>
-
-1.브라우저로 추가<br>
-<img src="https://patrickmonster.github.io/tgd/img/%EC%84%A4%EB%AA%851.png" alt="">
-<br>2.이름 설정<br>
-<img src="https://patrickmonster.github.io/tgd/img/%EC%84%A4%EB%AA%852.PNG" alt="">
-<br>3.패널 설정(1920*1080)<br>
-<img src="https://patrickmonster.github.io/tgd/img/%EC%84%A4%EB%AA%853.PNG" alt="">
-
+<h1 style="color:blue">젭알 위에 버튼 눌러주시고 아래로(아래 버튼 설정법)</h1>
+<br>
+<div>
+	<button type="button" onclick="var target=this.parentElement.lastElementChild.style;(target.display=='block'?target.display='none':target.display='block')">OBS설정하기</button>
+	<div style="display:none">
+		0.OBS의 좌측 하단 (소스목록에서 시작합니다)<br><br>
+		1.브라우저로 추가<br>
+		<img src="https://patrickmonster.github.io/tgd/img/%EC%84%A4%EB%AA%851.png" alt="">
+		<br>2.이름 설정<br>
+		<img src="https://patrickmonster.github.io/tgd/img/%EC%84%A4%EB%AA%852.PNG" alt="">
+		<br>3.패널 설정(1920*1080)<br>
+		<img src="https://patrickmonster.github.io/tgd/img/%EC%84%A4%EB%AA%853.PNG" alt="">
+	</div>
+</div>
+<div>
+	<button type="button" onclick="var target=this.parentElement.lastElementChild.style;(target.display=='block'?target.display='none':target.display='block')">X스플릿 설정하기</button>
+	<ul style="display:none">
+		<h1><a id="xsplit">0.엑스스플릿 설정</a></h1>
+		1.Addsorce-> Webpage..클릭<br>
+		<img src="https://patrickmonster.github.io/tgd/img/%EC%84%A4%EB%AA%85X1.PNG" alt="">
+		<br><br>2.복사한 링크 붙혀넣기<br>
+		<img src="https://patrickmonster.github.io/tgd/img/%EC%84%A4%EB%AA%85X3.png" alt="">
+		<br><br><br><br><h1>* 적용확인</h1><br>
+		<img src="https://patrickmonster.github.io/tgd/img/%EC%84%A4%EB%AA%85X4.PNG" alt="">
+	</ul>
+</div>
 <br><br><br><br>
-<h1><a id="xsplit">0.엑스스플릿 설정</a></h1>
-
-1.Addsorce-> Webpage..클릭<br>
-<img src="https://patrickmonster.github.io/tgd/img/%EC%84%A4%EB%AA%85X1.PNG" alt="">
-<br><br>2.복사한 링크 붙혀넣기<br>
-<img src="https://patrickmonster.github.io/tgd/img/%EC%84%A4%EB%AA%85X3.png" alt="">
-<br><br><br><br><h1>* 적용확인</h1><br>
-<img src="https://patrickmonster.github.io/tgd/img/%EC%84%A4%EB%AA%85X4.PNG" alt="">
-
-
 <h3>Create by neocat</h3>
 <script>
 var style = false;
