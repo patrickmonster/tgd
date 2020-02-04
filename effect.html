@@ -63,13 +63,14 @@ window.addStyle=document.addStyle=function(){var a=arguments,b=a.length,c=0;for(
                 maxSize: 50,
                 newOn: 300,
 								html:'&#10052',
+								direction:"top",
                 flakeColor: "#FFFFFF",
 								leftMove:200
             },
             options = $.extend({}, defaults, options),
 			$flake = $('<div id="flake" />').css({
                 'position': 'absolute',
-                'top': '-50px'
+                top: '-50px'
             }).html(options.html);
         var interval = setInterval(function() {
             var startPositionLeft = Math.random() * documentWidth - 100,
@@ -107,6 +108,7 @@ window.addStyle=document.addStyle=function(){var a=arguments,b=a.length,c=0;for(
                 minSize: 20,
                 maxSize: 30,
                 newOn: 200,
+								flakeColor: "#FFFFFF",
 								html:'|'
             },
             options = $.extend({}, defaults, options),
@@ -124,9 +126,53 @@ window.addStyle=document.addStyle=function(){var a=arguments,b=a.length,c=0;for(
                 left: startPositionLeft,
                 opacity: startOpacity,
                 'font-size': sizeFlake,
-                color: "#FFFFFF"
+                color: options.flakeColor
             }).animate({
                 top: endPositionTop,
+                opacity: 0.2
+            }, durationFall, 'linear', function() {
+                $(this).remove()
+            });
+        }, options.newOn);
+				$(window).resize(function (){
+					documentHeight = $(document).height()
+		      documentWidth = $(document).width()
+				});
+			return interval;
+    };$.fn.bottomup = function(options) {
+        var documentHeight = $(document).height(),
+            documentWidth = $(document).width(),
+            defaults = {
+                minSize: 10,
+                maxSize: 50,
+                newOn: 300,
+								html:'&#10052',
+								direction:"top",
+                flakeColor: "#FFFFFF",
+								leftMove:200
+            },
+            options = $.extend({}, defaults, options),
+			$flake = $('<div id="flake" />').css({
+                'position': 'absolute',
+                bottom: '-50px'
+            }).html(options.html);
+        var interval = setInterval(function() {
+            var startPositionLeft = Math.random() * documentWidth - 100,
+                startOpacity = 1 + Math.random(),
+                sizeFlake = options.minSize + Math.random() * options.maxSize,
+                endPositionTop = documentHeight - 40,
+                endPositionLeft = startPositionLeft - 100 + Math.random() * options.leftMove,
+                durationFall = documentHeight * 10 + Math.random() * 5000,
+                rotate = Math.random() * 360;
+            $flake.clone().appendTo('body').css({
+                left: startPositionLeft - (options.leftMove==200?0:options.leftMove),
+                opacity: startOpacity,
+                'font-size': sizeFlake,
+                color: options.flakeColor
+            }).animate({
+                bottom: endPositionTop,
+                left: endPositionLeft,
+                transform: 'rotate('+rotate+'deg)',
                 opacity: 0.2
             }, durationFall, 'linear', function() {
                 $(this).remove()
@@ -150,8 +196,8 @@ function getColor(tag,option){
 $(document).ready( function(){
 	var tag = document.location.href.split("#")[1];
 	if(tag==""||!tag){
-		document.addStyle("html{background:#000;}")
-		$.fn.raining();
+		document.addStyle("html{background:#000;}");
+		$.fn.bottomup({html:"○",minSize:10,maxSize:20,speed:.1, newOn:500});
 	}else
 	if(tag=="chocolate"){
 		$.fn.snow({html:'<image src="img/cacao.png">',minSize:10,maxSize:20, newOn: 1500});
@@ -161,18 +207,21 @@ $(document).ready( function(){
 		$.fn.snow({html:'<image src="img/chocolate-chip.png">',minSize:10,maxSize:20, newOn: 3000});
 		return;
 	}else if(tag=="cherryblossom") {
-		$.fn.snow({html:'<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-1.png">',minSize:10,maxSize:20, newOn: 3000,leftMove:300});
-		$.fn.snow({html:'<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-2.png">',minSize:10,maxSize:20, newOn: 2000,leftMove:300});
-		$.fn.snow({html:'<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-6.png">',minSize:10,maxSize:20, newOn: 2000,leftMove:300});
-		$.fn.snow({html:'<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-7.png">',minSize:10,maxSize:20, newOn: 1000,leftMove:300});
-		$.fn.snow({html:'<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-8.png">',minSize:10,maxSize:20, newOn: 1000,leftMove:300});
-		$.fn.snow({html:'<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-9.png">',minSize:10,maxSize:20, newOn: 1000,leftMove:300});
+		$.fn.snow({html:'<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-1.png">',minSize:10,maxSize:20, newOn: 3000,leftMove:-300});
+		$.fn.snow({html:'<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-2.png">',minSize:10,maxSize:20, newOn: 2000,leftMove:-300});
+		$.fn.snow({html:'<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-6.png">',minSize:10,maxSize:20, newOn: 2000,leftMove:-300});
+		$.fn.snow({html:'<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-7.png">',minSize:10,maxSize:20, newOn: 1000,leftMove:-300});
+		$.fn.snow({html:'<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-8.png">',minSize:10,maxSize:20, newOn: 1000,leftMove:-300});
+		$.fn.snow({html:'<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-9.png">',minSize:10,maxSize:20, newOn: 1000,leftMove:-300});
 		return;
 	}else{
 		tag = "#"+tag;
 		if (tag.indexOf("#raining") != -1){
-			var color = getColor(tag,"#cloud");
-			$.fn.raining();
+			var color = getColor(tag,"#raining");
+			$.fn.raining({flakeColor:color});
+		}else if(tag.indexOf("#bubbble") != -1){
+			var color = getColor(tag,"#bubbble");
+			$.fn.bottomup({html:"○",minSize:10,maxSize:20,speed:.1, newOn:500,flakeColor:color});
 		}else if(tag.indexOf("#cloud") != -1){
 			var color = getColor(tag,"#cloud");
 			$.fn.snow({html:'<i class="fa fa-cloud"></i>',maxSize:20,flakeColor:color});
