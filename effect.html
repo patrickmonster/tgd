@@ -233,6 +233,10 @@ $(document).ready( function(){
 			var color = getColor(tag,"#heart");
 			$.fn.snow({html:'<i class="far fa-heart"></i>',flakeColor:color,leftMove:1000,flakeColor:color});
 			$.fn.snow({html:'<i class="fas fa-heart"></i>',flakeColor:color,leftMove:1000,flakeColor:color});
+		}else if(tag.indexOf("#heartR") != -1){//하트(역)
+			var color = getColor(tag,"#heartR");
+			$.fn.snow({html:'<i class="far fa-heart"></i>',flakeColor:color,leftMove:-1000,flakeColor:color});
+			$.fn.snow({html:'<i class="fas fa-heart"></i>',flakeColor:color,leftMove:-1000,flakeColor:color});
 		}else if(tag.indexOf("#meteor") != -1){//운석
 			var color = getColor(tag,"#meteor");
 			$.fn.snow({html:'<i class="fas fa-meteor"></i>',maxSize:15,leftMove:-1000,flakeColor:color});
