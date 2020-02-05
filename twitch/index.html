@@ -13,7 +13,7 @@ img{
 </head>
 <body>
 	<div id="console" style="font-size:.5em">waiting...</div>
-    <script src="js/chatbot.js"></script>
+    <script src="chatbot.js"></script>
     <script>
 
 $.fn.bottomup = function(options) {
@@ -21,7 +21,7 @@ $.fn.bottomup = function(options) {
             options = $.extend({}, defaults, options),
 			$flake = $('<div id="flake" />').css({
                 position: 'absolute',
-                bottom: '-50px'
+                bottom: '0px'
             }).html(options.html),
 			startPositionLeft = Math.random() * $(document).width() - 100,
 			durationFall = $(document).height() * 10 + Math.random() * 5000;
@@ -38,10 +38,17 @@ $.fn.bottomup = function(options) {
 			$(this).remove()
 		});
     };
+function randomItem(a) {
+  return a[Math.floor(Math.random() * a.length)];
+}
 $(document).ready(function(){
 	var qury = document.location.href.split("?")[1];//
 	if (!qury){
 		document.body.style.background = "#000";// 로드 안함
+		list = [28,301396363,301396373,301396453,301205415,301396357,301396406]
+		setInterval(function(){
+			$.fn.bottomup({html:'<image src="https://static-cdn.jtvnw.net/emoticons/v1/'+randomItem(list)+'/1.0">'});
+		},2000);
 		return;
 	}
 	//var tag = qury.split("#")[1];//tag
