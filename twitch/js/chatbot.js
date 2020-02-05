@@ -57,7 +57,7 @@ chatClient.prototype.onMessage = function onMessage(message){
 				}
             } else if(parsed.command === "PING" || parsed["PING"]) {
                 this.webSocket.send("PONG :" + parsed['PING']);
-				this.onCommand("PONG :" + parsed['PING']);
+				//this.onCommand("PONG :" + parsed['PING']);
             }
         }
     }
@@ -114,7 +114,8 @@ chatClient.prototype.parseMessage = function(rawMessage) {
 			parsedMessage["message"] = rawMessage
 	}else if (rawMessage.indexOf("PING") != -1){
 		console.log(rawMessage)
-		parsedMessage['PING'] = rawMessage.substring(rawMessage.indexOf("PING")+1);
+		parsedMessage['PING'] = rawMessage.substring(rawMessage.indexOf(":")+1);
+		console.log(parsedMessage['PING'])
 	}else {
 		for (var i = 0; i < data.length; i++){
 			var d = data[i].split("=");
