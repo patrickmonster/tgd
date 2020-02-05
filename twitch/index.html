@@ -5,6 +5,14 @@
     <title>Leaderboards</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<style>
+	
+*{
+	margin: 0px;
+	background-color:#0000;
+}
+html{
+	background-color:#0000;
+}
 img{
 	width: 3vh;
 	height: 3vh;
@@ -12,8 +20,7 @@ img{
 	</style>
 </head>
 <body>
-	<div id="console" style="font-size:.5em">waiting...</div>
-    <script src="js/chatbot.js"></script>
+    <script src="chatbot.js"></script>
     <script>
 
 $.fn.bottomup = function(options) {
@@ -33,7 +40,7 @@ $.fn.bottomup = function(options) {
 		}).animate({
 			bottom: $(document).height() - 40,
 			left: startPositionLeft - 100 + Math.random() * 10,
-			opacity: 0.2
+			opacity: 0.5
 		}, durationFall, 'linear', function() {
 			$(this).remove()
 		});
@@ -57,7 +64,7 @@ $(document).ready(function(){
 		var j = o[i].indexOf("=");// = 가 시작하는 포인터
 		options[o[i].substring(0,j)] = o[i].substring(j+1);
 	}
-	console.log(options);
+	//console.log(options);
 	window.chatClient = new chatClient(options);
 	window.chatClient.open();
 	window.chatClient.onEmotes = function(url){
@@ -67,11 +74,10 @@ $(document).ready(function(){
 		$.fn.bottomup({html:message,flakeColor:options.color});
 	};
 	window.chatClient.onCommand = function(message){
-		document.getElementById("console").innerHTML = message;
+		$.fn.bottomup({html:message,flakeColor:options.color});
 	};
 	window.chatClient.webSocket.onclose =function(){
-		console.log("연결이 종료됨! 재연결..");
-		document.getElementById("console").innerHTML = "연결이 종료됨!";
+		$.fn.bottomup({html:"연결재요청!",flakeColor:options.color});
 		setTimeout(function(){
 			window.chatClient.open();
 		},100)
