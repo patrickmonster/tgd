@@ -65,9 +65,9 @@ $(document).ready(function(){
 	window.chatClient.webSocket.onclose =function(){
 		console.log("연결이 종료됨! 재연결..");
 		document.getElementById("console").innerHTML = "연결이 종료됨!";
-		//setTimeout(function(){
-		//	window.chatClient.open();
-		//},100)
+		setTimeout(function(){
+			window.chatClient.open();
+		},100)
 	}
 });
     </script>
