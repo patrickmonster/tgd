@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title>Leaderboards</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="leaderboard.css">
+	<style>
+img{
+	width: 3vh;
+	height: 3vh;
+}
+	</style>
+</head>
+<body>
+	<div id="console" style="font-size:.5em">waiting...</div>
+    <script src="chatbot.js"></script>
+    <script>
+
+$.fn.bottomup = function(options) {
+        var defaults = {size: 15,html:'o',flakeColor:'#000'},
+            options = $.extend({}, defaults, options),
+			$flake = $('<div id="flake" />').css({
+                position: 'absolute',
+                bottom: '-50px'
+            }).html(options.html),
+			startPositionLeft = Math.random() * $(document).width() - 100,
+			durationFall = $(document).height() * 10 + Math.random() * 5000;
+		$flake.appendTo('body').css({
+			left: startPositionLeft,
+			opacity: 1,
+			'font-size': options.size,
+			color: options.flakeColor
+		}).animate({
+			bottom: $(document).height() - 40,
+			left: startPositionLeft - 100 + Math.random() * 10,
+			opacity: 0.2
+		}, durationFall, 'linear', function() {
+			$(this).remove()
+		});
+    };
+$(document).ready(function(){
+	var qury = document.location.href.split("?")[1];//
+	if (!qury){
+		document.body.style.background = "#000";// 로드 안함
+		return;
+	}
+	//var tag = qury.split("#")[1];//tag
+	var o = qury.split("&"),options = {};
+	for(var i in o){
+		var j = o[i].indexOf("=");// = 가 시작하는 포인터
+		options[o[i].substring(0,j)] = o[i].substring(j+1);
+	}
+	console.log(options);
+	window.chatClient = new chatClient(options);
+	window.chatClient.open();
+	window.chatClient.onEmotes = function(url){
+		$.fn.bottomup({html:'<image src="'+url+'">'});
+	};
+	window.chatClient.onHighlighted = function(message){
+		$.fn.bottomup({html:message,flakeColor:options.color});
+	};
+	window.chatClient.onCommand = function(message){
+		document.getElementById("console").innerHTML = message;
+	};
+	window.chatClient.webSocket.onclose =function(){
+		console.log("연결이 종료됨! 재연결..");
+		document.getElementById("console").innerHTML = "연결이 종료됨!";
+		//setTimeout(function(){
+		//	window.chatClient.open();
+		//},100)
+	}
+});
+    </script>
+</body>
+</html>
