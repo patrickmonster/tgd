@@ -14,8 +14,8 @@ html{
 	background-color:#0000;
 }
 img{
-	width: 3vh;
-	height: 3vh;
+	width: 4vh;
+	height: 4vh;
 }
 	</style>
 </head>
@@ -24,7 +24,7 @@ img{
     <script>
 
 $.fn.bottomup = function(options) {
-        var defaults = {size: 15,html:'o',flakeColor:'#000'},
+        var defaults = {size: 15,html:'o',flakeColor:'000'},
             options = $.extend({}, defaults, options),
 			$flake = $('<div id="flake" />').css({
                 position: 'absolute',
@@ -36,7 +36,7 @@ $.fn.bottomup = function(options) {
 			left: startPositionLeft,
 			opacity: 1,
 			'font-size': options.size,
-			color: options.flakeColor
+			color: "#"+options.flakeColor
 		}).animate({
 			bottom: $(document).height() - 40,
 			left: startPositionLeft - 100 + Math.random() * 10,
