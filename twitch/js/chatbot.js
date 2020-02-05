@@ -14,7 +14,7 @@ or in the "license" file accompanying this file. This file is distributed on an 
 var chatClient = function chatClient(options){
     this.username = options.username;
     this.password = options.password;
-    this.channel = options.channel;
+    this.channel = "#"+options.channel;
     this.server = 'irc-ws.chat.twitch.tv';
     this.port = 443;
 }
@@ -36,6 +36,7 @@ chatClient.prototype.onError = function onError(message){
 chatClient.prototype.onMessage = function onMessage(message){
     if(message !== null){
         var parsed = this.parseMessage(message.data);
+		console.log(parsed);
         if(parsed !== null){
             if(parsed.command === "PRIVMSG") {
                 userPoints = localStorage.getItem(parsed.username);
@@ -44,37 +45,46 @@ chatClient.prototype.onMessage = function onMessage(message){
 				if (parsed["emotes"]){
 					var img = "http://static-cdn.jtvnw.net/emoticons/v1/";
 					var emotes = parsed["emotes"].split("/");
-					console.log(emotes)
 					for(var i in emotes){// 이모티콘 리스트
 						var index = emotes[i].indexOf(":")+1;
 						for(var j =0 ; j< emotes[i].substring(index).split(",").length; j++)
 							this.onEmotes(img+emotes[i].substring(0,index-1)+"/3.0");
 					}
-				}else
-					console.log(parsed['display-name'] + ":"+parsed.message);
-            } else if(parsed.command === "PING") {
+				}else if (parsed["msg-id"] == "highlighted-message")
+					this.onHighlighted(parsed.message);
+				else {
+					//console.log(parsed['display-name'] + ":"+parsed.message);
+				}
+            } else if(parsed.command === "PING" || parsed["PING"]) {
                 this.webSocket.send("PONG :" + parsed.message);
-				console.log('핑 수신');
+				this.onCommand("PONG :" + parsed.message);
             }
         }
     }
 };
 
-chatClient.prototype.onEmotes = function(parsed){// 
+chatClient.prototype.onEmotes = function(parsed){
 	console.log(parsed)
+}
+chatClient.prototype.onHighlighted = function(message){
+	console.log(message)
 }
 
 chatClient.prototype.onOpen = function onOpen(){
     var socket = this.webSocket;
-
     if (socket !== null && socket.readyState === 1) {
         console.log('Connecting and authenticating...');
         socket.send('CAP REQ :twitch.tv/tags twitch.tv/commands twitch.tv/membership');
         socket.send('PASS ' + this.password);
         socket.send('NICK ' + this.username);
         socket.send('JOIN ' + this.channel);
+		this.onCommand("Connecting!");
     }
 };
+
+chatClient.prototype.onCommand = function(message){
+	console.log(message);
+}
 
 chatClient.prototype.onSend = function(message){
     var socket = this.webSocket;
@@ -86,12 +96,10 @@ chatClient.prototype.onSend = function(message){
 
 chatClient.prototype.onClose = function(){
     console.log('Disconnected from the chat server.');
-	
 };
 chatClient.prototype.close = function(){
-    if(this.webSocket){
+    if(this.webSocket)
         this.webSocket.close();
-    }
 };
 
 chatClient.prototype.parseMessage = function(rawMessage) {
@@ -134,7 +142,6 @@ function buildLeaderboard(){
     for(var i = 0; i < 10; i++){
         var viewerName = sortedData[i],
             template = $(outputTemplate);
-
         template.find('.rank').text(i + 1);
         template.find('.user-name').text(viewerName);
         template.find('.user-points').text(localStorage[viewerName]);
