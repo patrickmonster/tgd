@@ -36,7 +36,7 @@ chatClient.prototype.onError = function onError(message){
 chatClient.prototype.onMessage = function onMessage(message){
     if(message !== null){
         var parsed = this.parseMessage(message.data);
-		console.log(parsed);
+		//console.log(parsed);
         if(parsed !== null){
             if(parsed.command === "PRIVMSG") {
                 userPoints = localStorage.getItem(parsed.username);
@@ -56,8 +56,8 @@ chatClient.prototype.onMessage = function onMessage(message){
 					//console.log(parsed['display-name'] + ":"+parsed.message);
 				}
             } else if(parsed.command === "PING" || parsed["PING"]) {
-                this.webSocket.send("PONG :" + parsed.message);
-				this.onCommand("PONG :" + parsed.message);
+                this.webSocket.send("PONG :" + parsed['PING']);
+				this.onCommand("PONG :" + parsed['PING']);
             }
         }
     }
@@ -107,12 +107,15 @@ chatClient.prototype.parseMessage = function(rawMessage) {
 	var parsedMessage = {}
 	if (rawMessage[0] == ':'){
 		data = rawMessage.split(" ");
-		parsedMessage["command"] = data[1]
+		parsedMessage["command"] = data[1];
 		if (parsedMessage["command"] == "JOIN")
 			parsedMessage["message"] = "Join user :" + data[2]
 		else 
 			parsedMessage["message"] = rawMessage
-	}else{
+	}else if (rawMessage.indexOf("PING") != -1){
+		console.log(rawMessage)
+		parsedMessage['PING'] = rawMessage.substring(rawMessage.indexOf("PING")+1);
+	}else {
 		for (var i = 0; i < data.length; i++){
 			var d = data[i].split("=");
 			parsedMessage[d[0]] = d[1];
