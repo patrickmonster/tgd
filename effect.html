@@ -18,7 +18,7 @@
 		<link href="http://549.ipdisk.co.kr/effect/favicon.png" rel="shortcut icon">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-		<script type="text/javascript" src="https://patrickmonster.github.io/tgd/js/effect.js"></script>
+		<script type="text/javascript" src="effect.js"></script>
 		<script defer src="https://patrickmonster.github.io/tgd/img/all.min.js"></script>
 		<style>
 *{
@@ -73,10 +73,9 @@ $(document).ready( function(){
 	var tag = document.location.href.split("#")[1];
 	if(tag==""||!tag){
 		document.addStyle("html{background:#000;}");
-		$.fn.snow({html:'<i class="far fa-heart"></i>',flakeColor:color,minSize:10,maxSize:20,leftMove:-300});
-		//$.fn.snow({html:'<image src="img/pngbarn.png">',flakeColor:color,leftMove:-1000,flakeColor:color});
-	}else
-	if(tag=="chocolate"){
+		$.fn.snow({html:'.',flakeColor:tag});
+		$.fn.snow({minSize:10,maxSize:20,flakeColor:tag});
+	}else if(tag=="chocolate"){
 		$.fn.snow({html:'<image src="img/cacao.png">',minSize:10,maxSize:20, newOn: 1500});
 		$.fn.snow({html:'<image src="img/chocolate.png">',minSize:10,maxSize:20, newOn: 1500});
 		$.fn.snow({html:'<image src="img/chocolate-1.png">',minSize:10,maxSize:20, newOn: 1500});
@@ -147,10 +146,5 @@ $(document).ready( function(){
 		</script>
 	</head>
 	<body>
-	<div class="thumbnail-panart">
-		<img class='max-small' id=panart></img>
-		<img class='max-small' id=panart_cover></img>
-	</div
-	<iframe id="event" style="width:0; height:0;margin:0;border:0;"/>
 	</body>
 </html>
