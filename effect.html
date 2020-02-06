@@ -207,8 +207,8 @@ $(document).ready( function(){
 	var tag = document.location.href.split("#")[1];
 	if(tag==""||!tag){
 		document.addStyle("html{background:#000;}");
-		//$.fn.snow({html:'<i class="far fa-heart"></i>',flakeColor:color,leftMove:-1000,flakeColor:color});
-		$.fn.snow({html:'<image src="img/pngbarn.png">',flakeColor:color,leftMove:-1000,flakeColor:color});
+		$.fn.snow({html:'<i class="far fa-heart"></i>',flakeColor:color,leftMove:-1000,flakeColor:color});
+		//$.fn.snow({html:'<image src="img/pngbarn.png">',flakeColor:color,leftMove:-1000,flakeColor:color});
 	}else
 	if(tag=="chocolate"){
 		$.fn.snow({html:'<image src="img/cacao.png">',minSize:10,maxSize:20, newOn: 1500});
