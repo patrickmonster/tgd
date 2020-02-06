@@ -19,7 +19,7 @@
                 }).html(options.html),
           func = function() {
             setTimeout(func,options.newOn);
-            var startPositionLeft = (Math.random() * documentWidth*2) + options.leftMove,
+            var startPositionLeft = (Math.random() * documentWidth*2) + (options.leftMove==200?0:options.leftMove),
                 startOpacity = 1 + Math.random(),
                 sizeFlake = options.minSize + Math.random() * options.maxSize,
                 endPositionLeft = startPositionLeft - 100 + Math.random() * options.leftMove,
