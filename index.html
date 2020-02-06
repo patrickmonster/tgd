@@ -17,6 +17,45 @@ html{
 	background:#ff8298;
 	color:#ffffff;
 }
+html,body{
+  height:100%;
+}
+button{
+  background:#ffffff;
+  color:#ff8298;
+  border:none;
+  position:relative;
+  height:60px;
+  font-size:1.6em;
+  padding:0 2em;
+  cursor:pointer;
+  transition:800ms ease all;
+  outline:none;
+}
+button:hover{
+  background:#fff;
+  color:#ff8298;
+}
+button:before,button:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: #ff8298;
+  transition:400ms ease all;
+}
+button:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+button:hover:before,button:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
 	</style>
 </head>
 <body>
@@ -62,9 +101,9 @@ html{
 <input type="radio" name="chk_info" id="in_11" onclick="select_icon(this.value)" value="#umbrella-beach"><label for="in_11">파라솔</label>
 <input type="radio" name="chk_info" id="in_12" onclick="select_icon(this.value)" value="#raining"><label for="in_12">비</label>
 <input type="radio" name="chk_info" id="in_13" onclick="select_icon(this.value)" value="#bubbble"><label for="in_13">공기방울</label><br>
-폰트(눈/구름/단풍등등)  이펙트 복사하기:<button onclick="copyToClipboard(document.getElementById('in_0').value + getColor())">링크 복사하기</button><br><br>
-벚꽃 이펙트 복사하기:<button onclick="copyToClipboard('#cherryblossom')">링크 복사하기</button><br>
-초콜릿이펙트 복사하기:<button onclick="copyToClipboard('#chocolate')">링크 복사하기</button><br><br>
+<button onclick="copyToClipboard(document.getElementById('in_0').value + getColor())">폰트(눈/구름/단풍등등)  이펙트 복사하기</button><br><br>
+<button onclick="copyToClipboard('#cherryblossom')">벚꽃이펙트 복사하기</button><br>
+<button onclick="copyToClipboard('#chocolate')">초콜릿이펙트 복사하기</button><br><br>
 
 <div>
 	<button type="button" onclick="var target=this.parentElement.lastElementChild.style;(target.display=='block'?target.display='none':target.display='block')">이모지</button>
