@@ -17,20 +17,19 @@
 
 		<link href="http://549.ipdisk.co.kr/effect/favicon.png" rel="shortcut icon">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+		<script type="text/javascript" src="https://patrickmonster.github.io/tgd/js/effect.js"></script>
 		<script defer src="https://patrickmonster.github.io/tgd/img/all.min.js"></script>
 		<style>
 *{
 	margin: 0px;
 	background-color:#0000;
 }
-html{
-	/* background-color:#0000; */
-}
 
 body{
 	width: 100%;/*1920px;*/
 	height: 100%;/*1080px;*/
+	
     overflow:hidden;
 }
 
@@ -64,137 +63,6 @@ Element.prototype.createElement=Element.prototype.C=function(ele){var ele=docume
 window.addScript=document.addScript=function(){var a=arguments,b=a.length,c=0;for(;c<b;c++)document.head.C("script").src=a[c]};
 window.addLink=document.addLink=function(){var a=arguments,b=a.length,c=0;for(;c<b;c++)document.head.C("link").src=a[c]};
 window.addStyle=document.addStyle=function(){var a=arguments,b=a.length,c=0;for(;c<b;c++)document.head.C('style').innerHTML=a[c]};
-(function($) {
-    $.fn.snow = function(options) {
-        var documentHeight = $(document).height(),
-            documentWidth = $(document).width(),
-            defaults = {
-                minSize: 10,
-                maxSize: 50,
-                newOn: 300,
-								html:'&#10052',
-								direction:"top",
-                flakeColor: "#FFFFFF",
-								leftMove:200
-            },
-            options = $.extend({}, defaults, options),
-			$flake = $('<div id="flake" />').css({
-                'position': 'absolute',
-                top: '-50px'
-            }).html(options.html);
-        var interval = setInterval(function() {
-            var startPositionLeft = Math.random() * documentWidth - 100,
-                startOpacity = 1 + Math.random(),
-                sizeFlake = options.minSize + Math.random() * options.maxSize,
-                endPositionTop = documentHeight - 40,
-                endPositionLeft = startPositionLeft - 100 + Math.random() * options.leftMove,
-                durationFall = documentHeight * 10 + Math.random() * 5000,
-                rotate = Math.random() * 360;
-            $flake.clone().appendTo('body').css({
-                left: startPositionLeft - (options.leftMove==200?0:options.leftMove*2 ),
-                opacity: startOpacity,
-                'font-size': sizeFlake,
-                color: options.flakeColor
-            }).animate({
-                top: endPositionTop,
-                left: endPositionLeft,
-                transform: 'rotate('+rotate+'deg)',
-                opacity: 0.2
-            }, durationFall, 'linear', function() {
-                $(this).remove()
-            });
-        }, options.newOn);
-				$(window).resize(function (){
-					documentHeight = $(document).height()
-		      documentWidth = $(document).width()
-				});
-			return interval;
-    };
-
-		$.fn.raining = function(options) {
-        var documentHeight = $(document).height(),
-            documentWidth = $(document).width(),
-            defaults = {
-                minSize: 20,
-                maxSize: 30,
-                newOn: 200,
-								flakeColor: "#FFFFFF",
-								html:'|'
-            },
-            options = $.extend({}, defaults, options),
-			$flake = $('<div id="flake" />').css({
-                'position': 'absolute',
-                'top': '-50px'
-            }).html(options.html);
-        var interval = setInterval(function() {
-            var startPositionLeft = Math.random() * documentWidth - 100,
-                startOpacity = 1 + Math.random(),
-                sizeFlake = options.minSize + Math.random() * options.maxSize,
-                endPositionTop = documentHeight - 40,
-                durationFall = (documentHeight) / 2;// 떨어지는 속도
-            $flake.clone().appendTo('body').css({
-                left: startPositionLeft,
-                opacity: startOpacity,
-                'font-size': sizeFlake,
-                color: options.flakeColor
-            }).animate({
-                top: endPositionTop,
-                opacity: 0.2
-            }, durationFall, 'linear', function() {
-                $(this).remove()
-            });
-        }, options.newOn);
-				$(window).resize(function (){
-					documentHeight = $(document).height()
-		      documentWidth = $(document).width()
-				});
-			return interval;
-    };$.fn.bottomup = function(options) {
-        var documentHeight = $(document).height(),
-            documentWidth = $(document).width(),
-            defaults = {
-                minSize: 10,
-                maxSize: 50,
-                newOn: 300,
-								html:'&#10052',
-								direction:"top",
-                flakeColor: "#FFFFFF",
-								leftMove:200
-            },
-            options = $.extend({}, defaults, options),
-			$flake = $('<div id="flake" />').css({
-                'position': 'absolute',
-                bottom: '-50px'
-            }).html(options.html);
-        var interval = setInterval(function() {
-            var startPositionLeft = Math.random() * documentWidth - 100,
-                startOpacity = 1 + Math.random(),
-                sizeFlake = options.minSize + Math.random() * options.maxSize,
-                endPositionTop = documentHeight - 40,
-                endPositionLeft = startPositionLeft - 100 + Math.random() * options.leftMove,
-                durationFall = documentHeight * 10 + Math.random() * 5000,
-                rotate = Math.random() * 360;
-            $flake.clone().appendTo('body').css({
-                left: startPositionLeft - (options.leftMove==200?0:options.leftMove),
-                opacity: startOpacity,
-                'font-size': sizeFlake,
-                color: options.flakeColor
-            }).animate({
-                bottom: endPositionTop,
-                left: endPositionLeft,
-                transform: 'rotate('+rotate+'deg)',
-                opacity: 0.2
-            }, durationFall, 'linear', function() {
-                $(this).remove()
-            });
-        }, options.newOn);
-				$(window).resize(function (){
-					documentHeight = $(document).height()
-		      documentWidth = $(document).width()
-				});
-			return interval;
-    };
-})(jQuery);
 
 function getColor(tag,option){
 	var t = option.length;
@@ -207,7 +75,7 @@ $(document).ready( function(){
 	var tag = document.location.href.split("#")[1];
 	if(tag==""||!tag){
 		document.addStyle("html{background:#000;}");
-		$.fn.snow({html:'<i class="far fa-heart"></i>',flakeColor:color,leftMove:-1000,flakeColor:color});
+		$.fn.snow({html:'<i class="far fa-heart"></i>',flakeColor:color,minSize:10,maxSize:20,leftMove:-300});
 		//$.fn.snow({html:'<image src="img/pngbarn.png">',flakeColor:color,leftMove:-1000,flakeColor:color});
 	}else
 	if(tag=="chocolate"){
