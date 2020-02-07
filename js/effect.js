@@ -11,7 +11,7 @@
               direction:"top",
               flakeColor: "#FFFFFF",
               leftMove:200
-          },isPlay = True,
+          },isPlay = true,
           options = $.extend({}, defaults, options),
           $flake = $('<div id="flake" />').css({
                     'position': 'absolute',
