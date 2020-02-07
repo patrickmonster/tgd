@@ -322,7 +322,11 @@ $(document).ready( function(){
 		}
 		style.innerHTML="#flake{color:"+color+" !important}";
 	}
-	select_color( getColor());
+	setTimeout(function() {
+		var doc = document.getElementById("effect_frame").contentDocument
+		style = doc.body.C("style");
+		style.innerHTML = "#flake{color:"+$("#keywords").val()+" !important}"
+	}, 1000);
 	$('input[type=range]').on('input', function(){
     var val = $(this).val();
     $(this).css('background', 'linear-gradient(to right, dodgerblue 0%, dodgerblue '+ val +'%, #d5d4d3 ' + val + '%, #d5d4d3 100%)');
