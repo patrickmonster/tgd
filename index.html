@@ -205,7 +205,7 @@ button:hover:before,button:hover:after{
 					<option value="bubbble">공기방울</option>
 				</select>
 			</div>
-			<input type="text" id="keywords" class="form-control" value="#f82984">
+			<input type="text" id="keywords" class="form-control" value="#7300ff">
 		</div>
 		<!-- <div class="slide active">
 			<h1>이펙트를 설정해 주세요(준비중...)</h1>
@@ -289,7 +289,7 @@ $(document).ready( function(){
   });
 	$("#keywords").minicolors({
 		// control: 'hue',
-		defaultValue: 'f82984',
+		defaultValue: '7300ff',
 		format:'hex',
 		change: function(hex, opacity) {
 			var log;
@@ -322,7 +322,7 @@ $(document).ready( function(){
 		}
 		style.innerHTML="#flake{color:"+color+" !important}";
 	}
-	select_color("#f82984");
+	select_color( getColor());
 	$('input[type=range]').on('input', function(){
     var val = $(this).val();
     $(this).css('background', 'linear-gradient(to right, dodgerblue 0%, dodgerblue '+ val +'%, #d5d4d3 ' + val + '%, #d5d4d3 100%)');
