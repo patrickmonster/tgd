@@ -1,136 +1,150 @@
-(function($) {
-  $.fn.snow = function(options) {
-      var documentHeight = $(document).height(),
-          documentWidth = $(document).width(),
-          defaults = {
-              minSize: 10,
-              maxSize: 50,
-              target:"body",
-              newOn: 300,
-              html:'&#10052',
-              direction:"top",
-              flakeColor: "#FFFFFF",
-              leftMove:200
-          },isPlay = true,
-          options = $.extend({}, defaults, options),
-          $flake = $('<div id="flake" />').css({
-                    'position': 'absolute',
-                    top: '-50px'
-                }).html(options.html),
-          func = function() {
-            if (isPlay)
-              setTimeout(func,options.newOn);
-            var startPositionLeft = (Math.random() * documentWidth*(options.leftMove==200?1:1.5)) + (options.leftMove==200?0:options.leftMove),
-                startOpacity = 1 + Math.random(),
-                sizeFlake = options.minSize + Math.random() * options.maxSize,
-                endPositionLeft = startPositionLeft - 100 + Math.random() * options.leftMove,
-                durationFall = documentHeight * 10 + Math.random() * 1000;
-            $flake.clone().appendTo(options.target).css({
-                left: startPositionLeft - (options.leftMove==200?0:options.leftMove*2 ),
-                options:"absolute",
-                opacity: startOpacity,
-                'font-size': sizeFlake,
-                color: options.flakeColor
-            }).animate({
-                top: documentHeight - 10,
-                left: endPositionLeft,
-                opacity: 0.5
-            }, durationFall, 'linear', function() {
-                $(this).remove()
-            });
-          };
-      func();
-      $(window).resize(function (){
-        documentHeight = $(document).height()
-        documentWidth = $(document).width()
-      });
-      return function(){
-        isPlay = false
-      };
-  };
-  $.fn.raining = function(options) {
-    var documentHeight = $(document).height(),
-        documentWidth = $(document).width(),
-        defaults = {
-            minSize: 20,
-            maxSize: 30,
-            target:"body",
-            newOn: 200,
-            flakeColor: "#FFFFFF",
-            html:'|'
-        },
-        options = $.extend({}, defaults, options),
-        $flake = $('<div id="flake" />').css({
-              'position': 'absolute',
-              'top': '-50px'
-          }).html(options.html),
-        func = function() {
-          setTimeout(func,options.newOn);
-          var startPositionLeft = Math.random() * documentWidth - 100,
-              startOpacity = 1 + Math.random(),
-              sizeFlake = options.minSize + Math.random() * options.maxSize,
-              endPositionTop = documentHeight - 40,
-              durationFall = (documentHeight) / 2;// 떨어지는 속도
-          $flake.clone().appendTo(options.target).css({
-              left: startPositionLeft,
-              opacity: startOpacity,
-              'font-size': sizeFlake,
-              color: options.flakeColor
-          }).animate({
-              top: endPositionTop,
-              opacity: 0.4
-          }, durationFall, 'linear', function() {
-              $(this).remove()
-          });
-        };
-      func();
-      $(window).resize(function (){
-        documentHeight = $(document).height()
-        documentWidth = $(document).width()
-      });
-  };
-  $.fn.bottomup = function(options) {
-      var documentHeight = $(document).height(),
-          documentWidth = $(document).width(),
-          defaults = {
-              minSize: 10,
-              maxSize: 50,
-              target:"body",
-              newOn: 300,
-              html:'&#10052',
-              direction:"top",
-              flakeColor: "#FFFFFF",
-              leftMove:200
-          },
-          options = $.extend({}, defaults, options),
-          $flake = $('<div id="flake" />').css({
-              'position': 'absolute',
-              bottom: '-50px'
-          }).html(options.html),
-          func = function() {
-            setTimeout(func, options.newOn);
-            var startPositionLeft = Math.random() * documentWidth - 100,
-                startOpacity = 1 + Math.random(),
-                sizeFlake = options.minSize + Math.random() * options.maxSize,
-                endPositionTop = documentHeight - 40,
-                endPositionLeft = startPositionLeft - 100 + Math.random() * options.leftMove,
-                durationFall = documentHeight * 10 + Math.random() * 5000;
-            $flake.clone().appendTo(options.target).css({
-                left: startPositionLeft - (options.leftMove==200?0:options.leftMove),
-                opacity: startOpacity,
-                'font-size': sizeFlake,
-                color: options.flakeColor
-            }).animate({
-                bottom: endPositionTop,
-                left: endPositionLeft,
-                opacity: 0.2
-            }, durationFall, 'linear', function() {
-                $(this).remove()
-            });
-          };
-      $(window).resize(function (){
-        documentHeight = $(document).height()
-        documentWidth = $(document).width()
-      });
-  };
-})(jQuery);
+
+<!DOCTYPE html>
+<html>
+	<head>
+        <title>Twitch Stream!</title>
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Cache-Control" content="no-cache">
+		<meta http-equiv="expires" content="0">
+		<meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible' />
+		<meta name="viewport" content="width=device-width, user-scalable=no">
+
+		<meta property="og:locale" content="ko_KR" />
+		<meta property="og:site_name" content="네오캣짱">
+		<meta property="og:title" content="방송이펙트">
+		<meta property="og:type" content="website">
+		<meta property="og:description" content="네오캣짱 - 방송이펙트">
+
+		<link href="http://549.ipdisk.co.kr/effect/favicon.png" rel="shortcut icon">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+		<script type="text/javascript" src="https://patrickmonster.github.io/tgd/js/effect.js"></script>
+		<script defer src="https://patrickmonster.github.io/tgd/img/all.min.js"></script>
+		<style>
+*{
+	margin: 0px;
+}
+
+body{
+	width: 100%;/*1920px;*/
+	height: 100%;/*1080px;*/
+  overflow:hidden;
+}
+
+.thumbnail-panart{
+	position: absolute;
+	margin-top: 10px;
+	margin-right: 10px;
+	right: 0;
+	height:30vh;
+	width: 25vh;
+}
+
+.max-small {
+    width: auto; height: auto;
+	position:absolute;
+	top:0;bottom:0;
+	left:0;right:0;
+	border-radius: 7px;
+	margin: auto;
+	max-width: 100%;
+    max-height: 100%;
+}
+
+img{
+	width: 3vh;
+	height: 3vh;
+}
+		</style>
+		<script>
+Element.prototype.createElement=Element.prototype.C=function(ele){var ele=document.createElement(ele);this.appendChild(ele);return ele};
+window.addScript=document.addScript=function(){var a=arguments,b=a.length,c=0;for(;c<b;c++)document.head.C("script").src=a[c]};
+window.addLink=document.addLink=function(){var a=arguments,b=a.length,c=0;for(;c<b;c++)document.head.C("link").src=a[c]};
+window.addStyle=document.addStyle=function(){var a=arguments,b=a.length,c=0;for(;c<b;c++)document.head.C('style').innerHTML=a[c]};
+
+function getColor(tag,option){
+	var t = option.length;
+	var color = '#' + tag.substring(t);
+	if(color == "#")color += "fff";
+	return color;
+}
+
+$(document).ready( function(){
+	var tag = document.location.href.split("#")[1];
+	if(tag==""||!tag){
+		document.addStyle("html{background:#000;}");
+		$.fn.snow({html:'.',flakeColor:tag});
+		$.fn.snow({minSize:10,maxSize:20,flakeColor:tag});
+	}else if(tag=="chocolate"){
+		$.fn.snow({html:'<image src="img/cacao.png">',minSize:10,maxSize:20, newOn: 1500});
+		$.fn.snow({html:'<image src="img/chocolate.png">',minSize:10,maxSize:20, newOn: 1500});
+		$.fn.snow({html:'<image src="img/chocolate-1.png">',minSize:10,maxSize:20, newOn: 1500});
+		$.fn.snow({html:'<image src="img/chocolate-box-2.png">',minSize:10,maxSize:20, newOn: 3000});
+		$.fn.snow({html:'<image src="img/chocolate-chip.png">',minSize:10,maxSize:20, newOn: 3000});
+		return;
+	}else if(tag=="cherryblossom") {
+		$.fn.snow({html:'<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-1.png">',minSize:10,maxSize:20, newOn: 3000,leftMove:-300});
+		$.fn.snow({html:'<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-2.png">',minSize:10,maxSize:20, newOn: 2000,leftMove:-300});
+		$.fn.snow({html:'<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-6.png">',minSize:10,maxSize:20, newOn: 2000,leftMove:-300});
+		$.fn.snow({html:'<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-7.png">',minSize:10,maxSize:20, newOn: 1000,leftMove:-300});
+		$.fn.snow({html:'<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-8.png">',minSize:10,maxSize:20, newOn: 1000,leftMove:-300});
+		$.fn.snow({html:'<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-9.png">',minSize:10,maxSize:20, newOn: 1000,leftMove:-300});
+		return;
+	}else{
+		tag = "#"+tag;
+		if (tag.indexOf("#raining") != -1){
+			var color = getColor(tag,"#raining");
+			$.fn.raining({flakeColor:color});
+		}else if(tag.indexOf("#bubbble") != -1){
+			var color = getColor(tag,"#bubbble");
+			$.fn.bottomup({html:"○",minSize:10,maxSize:20,speed:.1, newOn:500,flakeColor:color});
+		}else if(tag.indexOf("#cloud") != -1){
+			var color = getColor(tag,"#cloud");
+			$.fn.snow({html:'<i class="fa fa-cloud"></i>',maxSize:20,flakeColor:color});
+		}else if(tag.indexOf("#cannabis") != -1){//단풍
+			var color = getColor(tag,"#cannabis");
+			$.fn.snow({html:'<i class="fas fa-cannabis"></i>',newOn:500,maxSize:15,flakeColor:color});
+			$.fn.snow({html:'<i class="fab fa-canadian-maple-leaf"></i>',maxSize:15,flakeColor:color});
+		}else if(tag.indexOf("#heartR") != -1){//하트(역)
+			var color = getColor(tag,"#heartR");
+			$.fn.snow({html:'<i class="far fa-heart"></i>',leftMove:-300,flakeColor:color});
+			$.fn.snow({html:'<i class="fas fa-heart"></i>',leftMove:-300,flakeColor:color});
+		}else if(tag.indexOf("#heart") != -1){//하트
+			var color = getColor(tag,"#heart");
+			$.fn.snow({html:'<i class="far fa-heart"></i>',leftMove:300,flakeColor:color});
+			$.fn.snow({html:'<i class="fas fa-heart"></i>',leftMove:300,flakeColor:color});
+		}else if(tag.indexOf("#meteor") != -1){//운석
+			var color = getColor(tag,"#meteor");
+			$.fn.snow({html:'<i class="fas fa-meteor"></i>',maxSize:15,leftMove:-1000,flakeColor:color});
+		}else if(tag.indexOf("#carrot_f") != -1){//당근(미사일)
+			var color = getColor(tag,"#carrot_f");
+			$.fn.snow({html:'<i class="fas fa-carrot"></i>',maxSize:15,leftMove:-1000,flakeColor:color});
+		}else if(tag.indexOf("#carrot") != -1){//당근
+			var color = getColor(tag,"#carrot");
+			$.fn.snow({html:'<i class="fas fa-carrot"></i>',maxSize:15,flakeColor:color});
+		}else if(tag.indexOf("#comment") != -1){//말풍선
+			var color = getColor(tag,"#comment");
+			$.fn.snow({html:'<i class="fas fa-comment"></i>',maxSize:15,flakeColor:color,newOn: 900});
+			$.fn.snow({html:'<i class="far fa-comment"></i>',maxSize:15,flakeColor:color,newOn: 900});
+			$.fn.snow({html:'<i class="fas fa-comment-dots"></i>',maxSize:15,flakeColor:color,newOn: 900});
+			$.fn.snow({html:'<i class="far fa-comment-dots"></i>',maxSize:15,flakeColor:color,newOn: 900});
+		}else if(tag.indexOf("#twitch") != -1){//트위치 아이콘
+			var color = getColor(tag,"#twitch");
+			$.fn.snow({html:'<i class="fab fa-twitch"></i>',maxSize:15,flakeColor:color,newOn: 900});
+		}else if(tag.indexOf("#umbrella") != -1){//우산
+			var color = getColor(tag,"#umbrella");
+			$.fn.snow({html:'<i class="fas fa-umbrella"></i>',maxSize:15,flakeColor:color,newOn: 900});
+		}else if(tag.indexOf("#umbrella-beach") != -1){//파라솔
+			var color = getColor(tag,"#umbrella-beach");
+			$.fn.snow({html:'<i class="fas fa-umbrella-beach"></i>',maxSize:15,flakeColor:color,newOn: 900});
+		}else{
+			$.fn.snow({html:'.',flakeColor:tag});
+			$.fn.snow({minSize:10,maxSize:20,flakeColor:tag});
+		}
+	}
+});
+		</script>
+	</head>
+	<body>
+	</body>
+</html>
