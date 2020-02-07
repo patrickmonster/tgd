@@ -205,7 +205,7 @@ button:hover:before,button:hover:after{
 					<option value="bubbble">공기방울</option>
 				</select>
 			</div>
-			<input type="text" id="keywords" class="form-control" value="transparent">
+			<input type="text" id="keywords" class="form-control" value="#f82984">
 		</div>
 		<!-- <div class="slide active">
 			<h1>이펙트를 설정해 주세요(준비중...)</h1>
@@ -272,16 +272,13 @@ var myFullpage = new fullpage('#fullpage', {
   navigationTooltips: ['fullPage', 'Open', 'Easy', 'Touch'],
   css3: true,scrollingSpeed: 1000,responsiveHeight: 330,
 	slidesNavigation: true,dragAndMove: true,
-	licenseKey: 'YWx2YXJvdHJpZ28uY29tX0EyMlpISmhaMEZ1WkUxdmRtVT0wWUc=',
-	onLeave: function(index, nextIndex, direction){//현재/이동
-    console.log(index);console.log(nextIndex);
-  }
+	licenseKey: 'YWx2YXJvdHJpZ28uY29tX0EyMlpISmhaMEZ1WkUxdmRtVT0wWUc='
 });
 
 $(document).ready( function(){
 	var selectTarget = $('.selectbox select');
   // focus 가 되었을 때와 focus 를 잃었을 때
-	select_color("#f82984");
+
   selectTarget.on({
     'focus': function() {
       $(this).parent().addClass('focus');
@@ -329,6 +326,7 @@ $(document).ready( function(){
     var val = $(this).val();
     $(this).css('background', 'linear-gradient(to right, dodgerblue 0%, dodgerblue '+ val +'%, #d5d4d3 ' + val + '%, #d5d4d3 100%)');
   });
+	select_color("#f82984");
 });
 
 function getColor(){
