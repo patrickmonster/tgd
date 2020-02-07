@@ -222,8 +222,11 @@ button:hover:before,button:hover:after{
 <button onclick="location.replace('#page5');copyToClipboard(document.getElementById('effect_frame').src + getColor());setTimeout(function(){alert('소스가 복사되었습니다!')},100)">이펙트 복사하기</button>
 			<h3><br>
 				페이지 맨 하단에 디스코드 링크 있습니다<br>
-				등록하여 저작권에 유의해주세요!
-			</h3>
+				등록하여 저작권에 유의해주세요!<br>
+			</h3><br>
+			<a href="#page3" style="color:#fff">obs설정 바로가기</a>
+			<a href="#page4" style="color:#fff">XSplit설정 바로가기</a><br>
+			<a href="#page5" style="color:#fff">디스코드 바로가기</a>
 		</div>
 	</div>
 	<div class="section" id="section1">
@@ -277,7 +280,7 @@ button:hover:before,button:hover:after{
 <script type="text/javascript">
 window.addStyle=document.addStyle=function(){var a=arguments,b=a.length,c=0;for(;c<b;c++)document.head.C('style').innerHTML=a[c]};
 var myFullpage = new fullpage('#fullpage', {
-	anchors: ['page1', 'page2', 'page3', 'page4'],
+	anchors: ['page1', 'page2', 'page3', 'page4','page5'],
   navigationTooltips: ['이펙트 설정', '소계', 'Obs 설정', 'XSplit','Discode 서버'],
 	navigationColor:"#ffffff",
   css3: true,scrollingSpeed: 1000,responsiveHeight: 330,
