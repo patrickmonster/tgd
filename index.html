@@ -43,9 +43,14 @@ html{
 }
 .fp-controlArrow.fp-next{
 	border-color: transparent transparent transparent #0d87ff !important;
+	margin-right: 30px;
 }
 .fp-controlArrow.fp-prev{
 	border-color: transparent #0d87ff transparent transparent !important;
+}
+
+#fp-nav ul li a span, .fp-slidesNav ul li a span{
+	background: #fff;
 }
 
 .selectbox {
@@ -273,9 +278,10 @@ button:hover:before,button:hover:after{
 window.addStyle=document.addStyle=function(){var a=arguments,b=a.length,c=0;for(;c<b;c++)document.head.C('style').innerHTML=a[c]};
 var myFullpage = new fullpage('#fullpage', {
 	anchors: ['page1', 'page2', 'page3', 'page4'],
-  navigationTooltips: ['fullPage', 'Open', 'Easy', 'Touch'],
+  navigationTooltips: ['이펙트 설정', '소계', 'Obs 설정', 'XSplit','Discode 서버'],
+	navigationColor:"#ffffff",
   css3: true,scrollingSpeed: 1000,responsiveHeight: 330,
-	slidesNavigation: true,dragAndMove: true,
+	slidesNavigation: true,dragAndMove: true,navigation: true,
 	licenseKey: 'YWx2YXJvdHJpZ28uY29tX0EyMlpISmhaMEZ1WkUxdmRtVT0wWUc='
 });
 
