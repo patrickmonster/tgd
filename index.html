@@ -214,7 +214,7 @@ button:hover:before,button:hover:after{
 		</div> -->
 		<div class="slide active">
 			<h1>링크를 복사해 주세요!</h1>
-<button onclick="location.replace('#page5');copyToClipboard(document.getElementById('effect_frame').src + getColor());">이펙트 복사하기</button>
+<button onclick="location.replace('#page5');copyToClipboard(document.getElementById('effect_frame').src + getColor());setTimeout(function(){alert('소스가 복사되었습니다!')},100)">이펙트 복사하기</button>
 		</div>
 	</div>
 	<div class="section" id="section1">
@@ -318,15 +318,17 @@ $(document).ready( function(){
 	function select_color(color){
 		if(!style){
 			var doc = document.getElementById("effect_frame").contentDocument
+			console.log(doc);
 			style = doc.body.C("style");
 		}
 		style.innerHTML="#flake{color:"+color+" !important}";
 	}
+	select_color("#f82984");
 	$('input[type=range]').on('input', function(){
     var val = $(this).val();
     $(this).css('background', 'linear-gradient(to right, dodgerblue 0%, dodgerblue '+ val +'%, #d5d4d3 ' + val + '%, #d5d4d3 100%)');
   });
-	select_color("#f82984");
+
 });
 
 function getColor(){
@@ -340,7 +342,6 @@ function copyToClipboard(value) {
   aux.select();
   document.execCommand("copy");
 	document.body.removeChild(aux);
-	alert("소스가 복사되었습니다!");
 }
 </script>
 </body>
