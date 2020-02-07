@@ -11,14 +11,15 @@
               direction:"top",
               flakeColor: "#FFFFFF",
               leftMove:200
-          },
+          },isPlay = True,
           options = $.extend({}, defaults, options),
           $flake = $('<div id="flake" />').css({
                     'position': 'absolute',
                     top: '-50px'
                 }).html(options.html),
           func = function() {
-            setTimeout(func,options.newOn);
+            if (isPlay)
+              setTimeout(func,options.newOn);
             var startPositionLeft = (Math.random() * documentWidth*(options.leftMove==200?1:1.5)) + (options.leftMove==200?0:options.leftMove),
                 startOpacity = 1 + Math.random(),
                 sizeFlake = options.minSize + Math.random() * options.maxSize,
@@ -43,6 +44,9 @@
         documentHeight = $(document).height()
         documentWidth = $(document).width()
       });
+      return function(){
+        isPlay = false
+      };
   };
   $.fn.raining = function(options) {
     var documentHeight = $(document).height(),
@@ -84,7 +88,6 @@
         documentHeight = $(document).height()
         documentWidth = $(document).width()
       });
-    return interval;
   };
   $.fn.bottomup = function(options) {
       var documentHeight = $(document).height(),
@@ -129,6 +132,5 @@
         documentHeight = $(document).height()
         documentWidth = $(document).width()
       });
-    return interval;
   };
 })(jQuery);
