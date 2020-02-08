@@ -24,6 +24,9 @@
 		<link rel="stylesheet" href="https://patrickmonster.github.io/tgd/css/fullpage.min.css">
 	<script defer src="https://patrickmonster.github.io/tgd/js/jquery.minicolors.min.js"></script>
   <link rel="stylesheet" href="https://patrickmonster.github.io/tgd/css/jquery.minicolors.css">
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
 		<style media="screen">
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,
 form,fieldset,input,textarea,p,blockquote,th,td {
@@ -271,6 +274,15 @@ button:hover:before,button:hover:after{
 		</div>
 	</div>
 	<div class="section" id="section4">
+		<ul>
+			<li>
+				<h1>미디어 중지버그</h1>
+				자연적 문제라 최대한 수정해보았으나, 화면 전환시에 중지되는 현상이 있습니다<a href="#page3/3">문재 해결방법</a>
+
+			</li>
+		</ul>
+	</div>
+	<div class="section" id="section5">
 			<iframe src="https://discordapp.com/widget?id=674559799861706762&theme=dark" width="350" height="300" allowtransparency="true" frameborder="0"></iframe><br>
 			사용등록 꼭 하고 사용해 달라구요!<br>
 			여기와서 최신업뎃 소식 들으라구~
@@ -279,10 +291,18 @@ button:hover:before,button:hover:after{
 
 
 <script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', '', { 'optimize_id': 'GTM-PPG7PPS'});
+
+
 window.addStyle=document.addStyle=function(){var a=arguments,b=a.length,c=0;for(;c<b;c++)document.head.C('style').innerHTML=a[c]};
 var myFullpage = new fullpage('#fullpage', {
-	anchors: ['page1', 'page2', 'page3', 'page4','page5'],
-  navigationTooltips: ['이펙트 설정', '소계', 'Obs 설정', 'XSplit','Discode 서버'],
+	anchors: ['page1', 'page2', 'page3', 'page4','page5','page6'],
+  navigationTooltips: ['이펙트 설정', '소계', 'Obs 설정', 'XSplit','공지사항','Discode 서버'],
 	navigationColor:"#ffffff",
   css3: true,scrollingSpeed: 1000,responsiveHeight: 330,
 	slidesNavigation: true,dragAndMove: true,navigation: true,
