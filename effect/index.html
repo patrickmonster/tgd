@@ -110,6 +110,10 @@ $(document).ready(function(){
 			}else{
 				if(option.hasOwnProperty(message[1])){
 					var num = Number(message[2]);
+					if (message[1].indexOf("html") != -1){
+						
+						message[2] = message.slice(2).join(" ");
+					}
 					if (message[2].indexOf("false") != -1)
 						message[2] = false;
 					if(!isNaN(num))
