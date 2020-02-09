@@ -19,7 +19,7 @@ chatClient.prototype.onError = function onError(message){
 };
 chatClient.prototype.onMessage = function onMessage(message){
     if(message !== null){
-        var parsed = this.parseMessage(message.data);
+        var parsed = this.parseMessage(message.data.replace("\n",""));
 		//console.log(parsed);
         if(parsed !== null){
     			switch(parsed.command){
@@ -33,7 +33,7 @@ chatClient.prototype.onMessage = function onMessage(message){
                 this.onHighlighted("<h1>"+parsed["display-name"]+"님이<br>"+parsed["msg-param-recipient-display-name"]+"님께</h1>구독선물을 하였습니다!");
               }else if(parse["msg-param-displayName"]){//msg-param-viewerCount
                 this.onHighlighted("<h1>"+parsed["display-name"]+"님이<br>"+parsed["msg-param-viewerCount"]+"명과</h1>레이드를 왔다!");
-              }else{
+              }else if(paesed["msg-param-months"]){//구독
                  this.onHighlighted("<h1>"+parsed["display-name"]+"님이 "+ parsed["msg-param-months"] + "개월째 구독중!</h1>")
               }
     					break;
