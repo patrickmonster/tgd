@@ -28,6 +28,11 @@ img{
     70% { transform: scale(.5); }
     100% { transform: scale(0); }
 }
+@keyframes opacity_obj {
+    0% {opacity:0}
+    70% {opacity:1}
+    100% {opacity:0}
+}
 	</style>
 </head>
 <body>
@@ -93,17 +98,20 @@ $(document).ready(function(){
 			if (message.length <= 1)
 				this.onSend("?:help/ef:설정할수 있는 옵션/op:옵션/rs:리셋/di:디스코드방");
 		}else if(message[0].indexOf("ef") != -1){
-			this.onSend("옵션값:" + Object.keys(option).join("/"));
+			if (message.length <= 1)
+				this.onSend("옵션값:" + Object.keys(option).join("/"));
 		}else if(message[0].indexOf("op") != -1){
 			if (message.length <= 1)
 				this.onSend("#op [옵션] {설정값}");
-			else if(message.length <= 2){
+			else if(message.length == 2){
 				if(option.hasOwnProperty(message[1]))
 					this.onSend("["+message[1]+"] " + option[message[1]]);
-				else this.onSend("옵션이 존재하지 않습니다!");
+				else this.onSend("옵션이 존재하지 않습니다! - " + message[1]);
 			}else{
 				if(option.hasOwnProperty(message[1])){
 					var num = Number(message[2]);
+					if (message[2].indexOf("false") != -1)
+						message[2] = false;
 					if(!isNaN(num))
 						message[2] = num;
 					option[message[1]] = message[2];
@@ -112,13 +120,15 @@ $(document).ready(function(){
 					this.onSend("옵션이 변경되었습니다! ("+message[1]+"):" + message[2]);
 					localStorage.setItem(options.username,JSON.stringify(option));
 				}else {
-					console.log(message)
-					this.onSend("옵션이 존재하지 않습니다!");
+					this.onSend("옵션이 존재하지 않습니다! + ");
 				}
 			}
 		}else if(message[0].indexOf("rs") != -1){//리셋
 			try {eff()}catch(e){;}
-			eff = $.fn.effect({});
+			option = {minSize: 10,maxSize: 30,newOn: 300,html:'&#10052',rocking:true,glitter:false,anitime:.5,speed:10,direction:"top",flakeColor: "#FFFFFF",leftMove:200,maxEmote:3};
+			eff = $.fn.effect(option);
+			localStorage.setItem(options.username,JSON.stringify(option));
+			this.onSend("봇 초기화");
 		}else if(message[0].indexOf("di") != -1){
 			this.onSend("discord점gg/Th3a6JE 설명및 등록설정(저작권 관리)");
 		}else if(message[0].indexOf("reset") != -1){//리셋
