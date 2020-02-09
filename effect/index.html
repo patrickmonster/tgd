@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title>Leaderboards</title>
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-158025067-2"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+		 <script src="https://patrickmonster.github.io/tgd/effect/chatbot.js"></script>
+	<style>
+
+*{
+	margin: 0px;
+	background-color:#0000;
+}
+body{
+	width: 100%;/*1920px;*/
+	height: 100%;/*1080px;*/
+  overflow:hidden;
+}
+img{
+	width: 4vh;
+	height: 4vh;
+}
+@keyframes heartbeat {
+    0% { transform: scale(0); }
+    70% { transform: scale(.5); }
+    100% { transform: scale(0); }
+}
+	</style>
+</head>
+<body>
+    <script>
+
+function randomItem(a) {
+  return a[Math.floor(Math.random() * a.length)];
+}
+var eff = null,option;
+$(document).ready(function(){
+	var qury = document.location.href.split("?")[1];
+	if (!qury){
+		document.body.style.background = "#000";// 로드 안함
+		list = [28,301396363,301396373,301396453,301205415,301396357,301396406]
+		setInterval(function(){
+			$.fn.bottomup({html:'<image src="https://static-cdn.jtvnw.net/emoticons/v1/'+randomItem(list)+'/1.0">'});
+		},2000);
+		return;
+	}
+	//var tag = qury.split("#")[1];//tag
+
+
+	var o = qury.split("&"),options = {},effects = [];
+	for(var i in o){
+		var j = o[i].indexOf("=");// = 가 시작하는 포인터
+		options[o[i].substring(0,j)] = o[i].substring(j+1);
+	}
+	options = $.extend({}, {count:1},options)
+	window.chatClient = new chatClient(options);
+	option = JSON.parse(localStorage.getItem(options.username));
+	console.log(option);
+	if(!option){
+		option = {minSize: 10,maxSize: 30,newOn: 300,html:'&#10052',rocking:true,glitter:false,anitime:.5,speed:10,direction:"top",flakeColor: "#FFFFFF",leftMove:200};
+		$.fn.bottomup({html:"옵션값이 초기셋팅으로 설정됨"});
+		localStorage.setItem(options.username,JSON.stringify(option));
+	}else {
+		eff = $.fn.effect(option);
+	}
+	window.chatClient.open();
+	window.chatClient.console = $.fn.bottomup(options);
+	window.chatClient.onEmotes = function(url){
+		callMessage({html:'<img src="'+url+'">'},options.count);
+	};
+	window.chatClient.onHighlighted = function(message){
+		callMessage({html:message,flakeColor:options.color},options.count);
+	};
+	window.chatClient.onBits= function(bit,name,message){
+		callMessage({html:"<h1>"+name+"님 "+bit+"비트후원</h1><br>" + message,flakeColor:options.color},options.count);
+	};
+	window.chatClient.onConsole = function(message){
+		$.fn.bottomup({html:message,flakeColor:options.color});
+	};
+	window.chatClient.webSocket.onclose =function(){
+		$.fn.bottomup({html:"연결재요청!",flakeColor:options.color});
+		setTimeout(function(){
+			window.chatClient.open();
+		},100)
+	};
+	window.chatClient.onCommand =function(message){
+		if(message[0].indexOf("레봇") != -1)
+			this.onSend("화면 이펙트용으로 구성된 네오캣짱(rsj1120)님 노예입니다!(스트리머 오버레이에서 동작중...)");
+		else if(message[0].indexOf("?") != -1){
+			if (message.length <= 1)
+				this.onSend("?:help/ef:설정할수 있는 옵션/op:옵션/rs:리셋/di:디스코드방");
+		}else if(message[0].indexOf("ef") != -1){
+			this.onSend("옵션값:" + Object.keys(option).join("/"));
+		}else if(message[0].indexOf("op") != -1){
+			if (message.length <= 1)
+				this.onSend("#op [옵션] {설정값}");
+			else if(message.length <= 2){
+				if(option.hasOwnProperty(message[1]))
+					this.onSend("["+message[1]+"] " + option[message[1]]);
+				else this.onSend("옵션이 존재하지 않습니다!");
+			}else{
+				if(option.hasOwnProperty(message[1])){
+					option[message[1]] = message[2];
+					try {eff()}catch(e){;}
+					eff = $.fn.effect(option);
+					this.onSend("옵션이 변경되었습니다! ("+message[1]+"):" + message[2]);
+					localStorage.setItem(options.username,JSON.stringify(option));
+				}else this.onSend("옵션이 존재하지 않습니다!");
+			}
+		}else if(message[0].indexOf("rs") != -1){//리셋
+			try {eff()}catch(e){;}
+			eff = $.fn.effect({});
+		}else if(message[0].indexOf("di") != -1){
+			this.onSend("discord점gg/Th3a6JE");
+		}
+	};
+	function callMessage(option,count){
+		for(var i = 0; i < count;i++)
+			window.chatClient.console(option);
+	}
+
+});
+    </script>
+</body>
+</html>
