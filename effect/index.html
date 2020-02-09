@@ -60,7 +60,7 @@ $(document).ready(function(){
 	option = JSON.parse(localStorage.getItem(options.username));
 	console.log(option);
 	if(!option){
-		option = {minSize: 10,maxSize: 30,newOn: 300,html:'&#10052',rocking:true,glitter:false,anitime:.5,speed:10,direction:"top",flakeColor: "#FFFFFF",leftMove:200};
+		option = {minSize: 10,maxSize: 30,newOn: 300,html:'&#10052',rocking:true,glitter:false,anitime:.5,speed:10,direction:"top",flakeColor: "#FFFFFF",leftMove:200,maxEmote:3};
 		$.fn.bottomup({html:"옵션값이 초기셋팅으로 설정됨"});
 		localStorage.setItem(options.username,JSON.stringify(option));
 	}else {
@@ -103,8 +103,11 @@ $(document).ready(function(){
 				else this.onSend("옵션이 존재하지 않습니다!");
 			}else{
 				if(option.hasOwnProperty(message[1])){
+					if(message[2].match(/^[0-9]+\.?[0-9]+$/))
+						message[2] = Number(message[2]);
 					option[message[1]] = message[2];
 					try {eff()}catch(e){;}
+					// option.split(";")
 					eff = $.fn.effect(option);
 					this.onSend("옵션이 변경되었습니다! ("+message[1]+"):" + message[2]);
 					localStorage.setItem(options.username,JSON.stringify(option));
@@ -114,10 +117,16 @@ $(document).ready(function(){
 			try {eff()}catch(e){;}
 			eff = $.fn.effect({});
 		}else if(message[0].indexOf("di") != -1){
-			this.onSend("discord점gg/Th3a6JE");
+			this.onSend("discord점gg/Th3a6JE 설명및 등록설정(저작권 관리)");
+		}else if(message[0].indexOf("reset") != -1){//리셋
+			this.onSend("화면을 다시 불러옵니다...");
+			setTimeout(function(){
+				location.reload();
+			},1000);
 		}
 	};
 	function callMessage(option,count){
+		count = option.maxEmote % count;
 		for(var i = 0; i < count;i++)
 			window.chatClient.console(option);
 	}
