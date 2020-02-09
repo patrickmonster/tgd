@@ -19,7 +19,7 @@ chatClient.prototype.onError = function onError(message){
 };
 chatClient.prototype.onMessage = function onMessage(message){
     if(message !== null){
-        var parsed = this.parseMessage(message.data.replace("\n",""));
+        var parsed = this.parseMessage(message.data.replace("\n","").replace("\r",""));
 		//console.log(parsed);
         if(parsed !== null){
     			switch(parsed.command){
