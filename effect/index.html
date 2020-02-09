@@ -103,8 +103,9 @@ $(document).ready(function(){
 				else this.onSend("옵션이 존재하지 않습니다!");
 			}else{
 				if(option.hasOwnProperty(message[1])){
-					if(message[2].match(/^[0-9]+\.?[0-9]+$/))
+					try{
 						message[2] = Number(message[2]);
+					}catch(e){;}
 					option[message[1]] = message[2];
 					try {eff()}catch(e){;}
 					// option.split(";")
