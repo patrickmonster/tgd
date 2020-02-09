@@ -104,7 +104,7 @@ $(document).ready(function(){
 			}else{
 				if(option.hasOwnProperty(message[1])){
 					var num = Number(message[2]);
-					if(isNun(num))
+					if(isNaN(num))
 						message[2] = num;
 					option[message[1]] = message[2];
 					try {eff()}catch(e){;}
