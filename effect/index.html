@@ -103,9 +103,9 @@ $(document).ready(function(){
 				else this.onSend("옵션이 존재하지 않습니다!");
 			}else{
 				if(option.hasOwnProperty(message[1])){
-					try{
-						message[2] = Number(message[2]);
-					}catch(e){;}
+					var num = Number(message[2]);
+					if(num != NaN)
+						message[2] = num;
 					option[message[1]] = message[2];
 					try {eff()}catch(e){;}
 					// option.split(";")
