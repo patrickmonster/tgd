@@ -38,11 +38,10 @@ chatClient.prototype.onMessage = function onMessage(message){
               }
     					break;
     				case "PRIVMSG":
+              if (parsed["@ban-duration"])return;//벤 유저
     					// userPoints = localStorage.getItem(parsed.username);
-              console.log(parsed);
     					//if(userPoints === null)localStorage.setItem(parsed.username, 10);
     					//else localStorage.setItem(parsed.username, parseFloat(userPoints) + 0.25);// 포인트 제도
-    					if (parsed["@ban-duration"])return;//벤 유저
     					if (parsed["emotes"]){
     						var img = "http://static-cdn.jtvnw.net/emoticons/v1/";
     						var emotes = parsed["emotes"].split("/");
@@ -131,7 +130,6 @@ chatClient.prototype.parseMessage = function(rawMessage) {
 		parsedMessage['PING'] = rawMessage.substring(rawMessage.indexOf(":")+1);
 		console.log(parsedMessage['PING'])
 	}else {
-    console.log();
 		for (var i = 0; i < data.length; i++){
 			var d = data[i].split("=");
 			parsedMessage[d[0]] = d[1];
@@ -214,7 +212,7 @@ $.fn.effect = function(options) {
 						sp=((options.direction=="top"||options.direction=="left")?'-50px':documentHeight-10),
 						ep=((options.direction=="top"||options.direction=="left")?documentHeight-10:'-50px');
 				if (options.glitter)//사용자 애니메이션
-					ele.css("animation"," heartbeat "+options.anitime+"s infinite")
+					ele.css("animation",options.glitter+" "+options.anitime+"s infinite")
 				if(options.direction == "none"){
 					ele.css({
 						top: (Math.random() * documentWidth*(options.leftMove==200?1:1.5)),
@@ -261,7 +259,7 @@ $.fn.bottomup = function(options) {
             }),
 			startPositionLeft = ($(document).width()/4);
 		return function(message){
-			$flake.appendTo('body').html(message).css({
+			$flake.clone().appendTo('body').html(message).css({
 				left: startPositionLeft + Math.random() * ($(document).width()/2) - 100,
 			}).animate({
 				bottom: $(document).height() - 40,
