@@ -7,7 +7,7 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
-		 <script src="https://patrickmonster.github.io/tgd/effect/chatbot.js"></script>
+		 <script src="chatbot.js"></script>
 	<style>
 
 *{
@@ -48,7 +48,7 @@ $(document).ready(function(){
 		document.body.style.background = "#000";// 로드 안함
 		list = [28,301396363,301396373,301396453,301205415,301396357,301396406]
 		setInterval(function(){
-			$.fn.bottomup({html:'<image src="https://static-cdn.jtvnw.net/emoticons/v1/'+randomItem(list)+'/1.0">'});
+			$.fn.bottomup({html:'<image src="https://static-cdn.jtvnw.net/emoticons/v1/'+randomItem(list)+'/1.0">'}).call(this);
 		},2000);
 		return;
 	}
@@ -63,30 +63,30 @@ $(document).ready(function(){
 	options = $.extend({}, {count:1},options)
 	window.chatClient = new chatClient(options);
 	option = JSON.parse(localStorage.getItem(options.username));
-	console.log(option);
 	if(!option){
 		option = {minSize: 10,maxSize: 30,newOn: 300,html:'&#10052',rocking:true,glitter:false,anitime:.5,speed:10,direction:"top",flakeColor: "#FFFFFF",leftMove:200,maxEmote:3};
-		$.fn.bottomup({html:"옵션값이 초기셋팅으로 설정됨"});
 		localStorage.setItem(options.username,JSON.stringify(option));
 	}else {
 		eff = $.fn.effect(option);
 	}
+
 	window.chatClient.open();
 	window.chatClient.console = $.fn.bottomup(options);
 	window.chatClient.onEmotes = function(url){
-		callMessage({html:'<img src="'+url+'">'},options.count);
+		this.onConsole({html:'<img src="'+url+'">'});
 	};
 	window.chatClient.onHighlighted = function(message){
-		callMessage({html:message,flakeColor:options.color},options.count);
+		this.onConsole({html:message,flakeColor:options.color});
 	};
 	window.chatClient.onBits= function(bit,name,message){
-		callMessage({html:"<h1>"+name+"님 "+bit+"비트후원</h1><br>" + message,flakeColor:options.color},options.count);
+		this.onConsole({html:"<h1>"+name+"님 "+bit+"비트후원</h1><br>" + message,flakeColor:options.color});
 	};
 	window.chatClient.onConsole = function(message){
-		$.fn.bottomup({html:message,flakeColor:options.color});
+		for(var i =0; i < option.maxEmote;i+=1)
+			window.chatClient.console(message['html']);
 	};
 	window.chatClient.webSocket.onclose =function(){
-		$.fn.bottomup({html:"연결재요청!",flakeColor:options.color});
+		window.chatClient.console("연결재요청!");
 		setTimeout(function(){
 			window.chatClient.open();
 		},100)
@@ -111,7 +111,7 @@ $(document).ready(function(){
 				if(option.hasOwnProperty(message[1])){
 					var num = Number(message[2]);
 					if (message[1].indexOf("html") != -1){
-						
+
 						message[2] = message.slice(2).join(" ");
 					}
 					if (message[2].indexOf("false") != -1)
@@ -142,11 +142,6 @@ $(document).ready(function(){
 			},1000);
 		}
 	};
-	function callMessage(option,count){
-		count = option.maxEmote % count;
-		for(var i = 0; i < count;i++)
-			window.chatClient.console(option);
-	}
 
 });
     </script>
