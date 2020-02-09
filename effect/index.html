@@ -104,11 +104,10 @@ $(document).ready(function(){
 			}else{
 				if(option.hasOwnProperty(message[1])){
 					var num = Number(message[2]);
-					if(num != NaN)
+					if(isNun(num))
 						message[2] = num;
 					option[message[1]] = message[2];
 					try {eff()}catch(e){;}
-					// option.split(";")
 					eff = $.fn.effect(option);
 					this.onSend("옵션이 변경되었습니다! ("+message[1]+"):" + message[2]);
 					localStorage.setItem(options.username,JSON.stringify(option));
