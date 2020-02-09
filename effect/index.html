@@ -111,7 +111,10 @@ $(document).ready(function(){
 					eff = $.fn.effect(option);
 					this.onSend("옵션이 변경되었습니다! ("+message[1]+"):" + message[2]);
 					localStorage.setItem(options.username,JSON.stringify(option));
-				}else this.onSend("옵션이 존재하지 않습니다!");
+				}else {
+					console.log(message)
+					this.onSend("옵션이 존재하지 않습니다!");
+				}
 			}
 		}else if(message[0].indexOf("rs") != -1){//리셋
 			try {eff()}catch(e){;}
