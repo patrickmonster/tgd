@@ -47,8 +47,9 @@ $(document).ready(function(){
 	if (!qury){
 		document.body.style.background = "#000";// 로드 안함
 		list = [28,301396363,301396373,301396453,301205415,301396357,301396406]
+		var ele = $.fn.bottomup();
 		setInterval(function(){
-			$.fn.bottomup({html:'<image src="https://static-cdn.jtvnw.net/emoticons/v1/'+randomItem(list)+'/1.0">'}).call(this);
+			ele('<image src="https://static-cdn.jtvnw.net/emoticons/v1/'+randomItem(list)+'/1.0">');
 		},2000);
 		return;
 	}
@@ -76,10 +77,10 @@ $(document).ready(function(){
 		this.onConsole({html:'<img src="'+url+'">'});
 	};
 	window.chatClient.onHighlighted = function(message){
-		this.onConsole({html:message,flakeColor:options.color});
+		window.chatClient.console(message);
 	};
 	window.chatClient.onBits= function(bit,name,message){
-		this.onConsole({html:"<h1>"+name+"님 "+bit+"비트후원</h1><br>" + message,flakeColor:options.color});
+		window.chatClient.console("<h1>"+name+"님 "+bit+"비트후원</h1><br>" + message+"</h1>");
 	};
 	window.chatClient.onConsole = function(message){
 		for(var i =0; i < option.maxEmote;i+=1)
