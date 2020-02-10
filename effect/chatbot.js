@@ -247,25 +247,35 @@ $.fn.effect = function(options) {
 		isPlay = false
 	};
 };
+
+
 $.fn.bottomup = function(options) {
-        var defaults = {size: 1,html:'o',flakeColor:'000'},
-            options = $.extend({}, defaults, options),
-			$flake = $('<div id="flake" />').css({
+  var defaults = {size: 15,flakeColor:'#000'},
+      options = $.extend({}, defaults, options),
+    	$flake = $('<div id="flake" />').css({
                 position: 'absolute',
-                bottom: '0px',
-								color: "#"+options.flakeColor,
-								opacity: 1,
-								'font-size': options.size + "em",
-            }),
-			startPositionLeft = ($(document).width()/4);
-		return function(message){
-			$flake.clone().appendTo('body').html(message).css({
-				left: startPositionLeft + Math.random() * ($(document).width()/2) - 100,
-			}).animate({
-				bottom: $(document).height() - 40,
-				left: startPositionLeft - 100 + Math.random() * 10,
-				opacity: 0.5
-			}, $(document).height() * 10 + Math.random() * 5000, 'linear', function() {$(this).remove()});
-		};
+                opacity: 1,
+              	'font-size': options.size,
+              	color: options.flakeColor,
+                bottom: '0px'
+            });
+  return function(txt){
+    console.log(txt)
+    var startPositionLeft = ($(document).width()/4) + Math.random() * ($(document).width()/2) - 100,
+      durationFall = $(document).height() * 10 + Math.random() * 5000;
+    $flake.clone().appendTo('body').html(txt).css({
+    	left: startPositionLeft,
+    }).animate({
+    	bottom: $(document).height() - 40,
+    	left: startPositionLeft - 100 + Math.random() * 10,
+    	opacity: 0.5
+    }, durationFall, 'linear', function() {
+    	$(this).remove()
+    });
+  }
 };
+
+
+
+
 })(jQuery);
