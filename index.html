@@ -19,13 +19,11 @@
 		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 		<script type="text/javascript" src="https://patrickmonster.github.io/tgd/js/effect.js"></script>
 		<script defer src="https://patrickmonster.github.io/tgd/img/all.min.js"></script>
-		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-158025067-1"></script>
+
 		<script type="text/javascript" src="https://patrickmonster.github.io/tgd/js/fullpage.js"></script>
 		<link rel="stylesheet" href="https://patrickmonster.github.io/tgd/css/fullpage.min.css">
 	<script defer src="https://patrickmonster.github.io/tgd/js/jquery.minicolors.min.js"></script>
   <link rel="stylesheet" href="https://patrickmonster.github.io/tgd/css/jquery.minicolors.css">
-
-<!-- Global site tag (gtag.js) - Google Analytics -->
 		<style media="screen">
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,
 form,fieldset,input,textarea,p,blockquote,th,td {
@@ -190,18 +188,21 @@ button:hover:before,button:hover:after{
 		</style>
 </head>
 <body>
-<iframe id="effect_frame" src="https://patrickmonster.github.io/tgd/effect.html#heartR" style="position:absolute;width:100%;height:100%;top:0"></iframe>
+<iframe id="effect_frame" src="https://patrickmonster.github.io/effect/?effect=star" style="position:absolute;width:100%;height:100%;top:0"></iframe>
 <div id="fullpage">
 	<div class="section active" id="section0">
 		<div class="slide active">
 			<h1>방송화면 이펙트</h1>CreateBy. neocat<br>
 			<div class="selectbox" style="margin:auto">
-				<label for="select">하트</label>
+				<label for="select">별</label>
 				<select id="option1">
+
+					<option value="cherryblossom" select>벚꽃(이미지)</option>
+					<option value="cherryblossom2" select>벚꽃2(이미지)</option>
 					<option value="">눈</option>
 					<option value="cannabis">단풍</option>
 					<option value="cloud">구름</option>
-					<option value="heart" select>하트</option>
+					<option value="heart">하트</option>
 					<option value="carrot">당근</option>
 					<option value="meteor">운석</option>
 					<option value="comment">말풍선</option>
@@ -210,18 +211,16 @@ button:hover:before,button:hover:after{
 					<option value="umbrella-beach">파라솔</option>
 					<option value="raining">비</option>
 					<option value="bubbble">공기방울</option>
+					<option value="star" select>별</option>
 				</select>
 			</div>
 			<input type="text" id="keywords" class="form-control" value="#7300ff">
+			<br>링크복사 ->
+			<br>출처 등록을 위해 <a href="#page6">디코방</a>을 와주세요!
 		</div>
-		<!-- <div class="slide active">
-			<h1>이펙트를 설정해 주세요(준비중...)</h1>
-			<h3 style="display:inline-block">기울기</h3><input type="range" value="20" max="100" style="width:300px;'background: linear-gradient(to right, dodgerblue 0%, dodgerblue 20%, #d5d4d3 20%, #d5d4d3 100%)"><br>
-			<h3 style="display:inline-block">속도</h3><input type="range" value="0" max="5" style="width:300px;">
-		</div> -->
 		<div class="slide active">
 			<h1>링크를 복사해 주세요!</h1>
-<button onclick="location.replace('#page5');copyToClipboard(document.getElementById('effect_frame').src + getColor());setTimeout(function(){alert('소스가 복사되었습니다!')},100)">이펙트 복사하기</button>
+<button onclick="location.replace('#page5');copyToClipboard(document.getElementById('effect_frame').src +''+ getColor());setTimeout(function(){alert('소스가 복사되었습니다!')},100)">이펙트 복사하기</button>
 			<h3><br>
 				페이지 맨 하단에 디스코드 링크 있습니다<br>
 				등록하여 저작권에 유의해주세요!<br>
@@ -232,10 +231,21 @@ button:hover:before,button:hover:after{
 		</div>
 	</div>
 	<div class="section" id="section1">
-			<div class="slide active" style="background:url(img/img1.jpg) no-repeat;"><div style="text-shadow: 0 0 10px #ff5252;margin-right: 20px;margin-top: 30vh;width:500px;float:right;position:inherit;right:0;background:#fff;box-shadow: 0 0 20px 6px #0d87ff;border-radius:25px;"><h1 style="right:51%;top:30%;position:inherit;">밋밋한 방송화면...<br>조금 다른 효과를 주고싶으신가요?</h1><h4 style="bottom:0;right:50%;position:inherit;">銀子(13869612)님의 작품</h4></div></div>
-			<div class="slide" style="background:url(img/img2.jpg) no-repeat;"><div style="text-shadow: 0 0 10px #484efd;margin-left: 20px;width:500px;background:#fff;box-shadow: 0 0 20px 6px #0d87ff;border-radius:25px;"><h1 style="left:51%;top:30%;position:inherit;">어떤 환경이든<br>적용이 가능합니다</h1><h4 style="bottom:0;right:0;position:inherit;">マッタン(6890797)님의 작품</h4></div></div>
-			<div class="slide" style="background:url(img/img3.jpg) no-repeat;"><div style="text-shadow: 0 0 10px #ff00f8;margin-right: 20px;margin-bottom: 50vh;width:500px;float:right;position:inherit;right:0;background:#fff;box-shadow: 0 0 20px 6px #0d87ff;border-radius:25px;"><h1 style="left:51%;top:30%;position:inherit;">Just Chatting을 좀 더 <br>풍부하게 꾸며보세요</h1><h4 style="bottom:0;right:0;position:inherit;">たけなし(10360273)님의 작품</h4></div></div>
-			<div></div>
+			<div class="slide active"><video src="https://clips-media-assets2.twitch.tv/AT-cm%7C615788930.mp4" controls style="width:80%;height:80%:min-width:500px;min-height:300px;"></video>
+				<h4 style="bottom:0;right:50%;position:inherit;font-size:2em;text-shadow:0 0 20px #ff5252;">뻑데미(jymin2174)님의 방송</h4>
+			</div>
+			<div class="slide">
+				<video src="https://clips-media-assets2.twitch.tv/AT-cm%7C612081983.mp4" controls style="width:80%;height:80%:min-width:500px;min-height:300px;"></video>
+				<h4 style="bottom:0;right:50%;position:inherit;font-size:2em;text-shadow:0 0 20px #484efd;">처음(first_7)님의 방송</h4>
+			</div>
+			<div class="slide">
+				<video src="https://clips-media-assets2.twitch.tv/36815523280-offset-9122.mp4" controls style="width:80%;height:80%:min-width:500px;min-height:300px;"></video>
+				<h4 style="bottom:0;right:50%;position:inherit;font-size:2em;text-shadow:0 0 20px #ff5260;">아트(essssea1120)님의 방송</h4>
+			</div>
+			<div class="slide">
+				<video src="https://clips-media-assets2.twitch.tv/AT-cm%7C619489047.mp4" controls style="width:80%;height:80%:min-width:500px;min-height:300px;"></video>
+				<h4 style="bottom:0;right:50%;position:inherit;font-size:2em;text-shadow:0 0 20px #588e83;">키릉(kiromi)님의 방송</h4>
+			</div>
 	</div>
 	<div class="section" id="section2">
 		<div class="slide active" style="height:100%">
@@ -290,12 +300,6 @@ button:hover:before,button:hover:after{
 
 
 <script type="text/javascript">
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-
-gtag('config', 'UA-158025067-1');
-
 window.addStyle=document.addStyle=function(){var a=arguments,b=a.length,c=0;for(;c<b;c++)document.head.C('style').innerHTML=a[c]};
 var myFullpage = new fullpage('#fullpage', {
 	anchors: ['page1', 'page2', 'page3', 'page4','page5','page6'],
@@ -331,7 +335,7 @@ $(document).ready( function(){
 	var style = false;
   selectTarget.change(function() {
     var select_name = $(this).children('option:selected').text();
-		var select_val = "https://patrickmonster.github.io/tgd/effect.html#"+$(this).children('option:selected').val();
+		var select_val = "https://patrickmonster.github.io/effect/?effect="+$(this).children('option:selected').val();
 		$("#effect_frame").attr("src","about:blank");
 		setTimeout(function() {
 			$("#effect_frame").attr("src",select_val);
