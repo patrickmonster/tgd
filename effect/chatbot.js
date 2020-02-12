@@ -17,6 +17,14 @@ chatClient.prototype.open = function open(){
 chatClient.prototype.onError = function onError(message){
   console.log('Error: ' + message);
 };
+chatClient.property.users = [];
+chatClient.prototype.addUser = function(user){
+  this.users.push(user);
+}
+chatClient.prototype.removeUser = function(user){
+  var i = user.indexOf(user);
+  this.users.pop(i);
+}
 chatClient.prototype.onMessage = function onMessage(message){
   if(message !== null){
       var parsed = this.parseMessage(message.data.replace("\n","").replace("\r",""));
@@ -119,9 +127,8 @@ chatClient.prototype.parseMessage = function(rawMessage) {
         // if (parsedMessage["user-type"].length > 1)
         // parsedMessage["message"] = parsedMessage["user-type"].splice(1).join("=")
       }
-
-        var message = data[data.length-1].split(":");
-        parsedMessage["message"] = message.slice(2).join(":");
+      var message = data[data.length-1].split(":");
+      parsedMessage["message"] = message.slice(2).join(":");
     }
   return parsedMessage;
 }
@@ -139,7 +146,6 @@ function buildLeaderboard(){
       template.find('.rank').text(i + 1);
       template.find('.user-name').text(viewerName);
       template.find('.user-points').text(localStorage[viewerName]);
-
       leaderboard.append(template);
   }
 }
