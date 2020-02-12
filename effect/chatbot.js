@@ -1,281 +1,162 @@
-  var chatClient = function chatClient(options){
-    this.username = options.username;
-    this.password = options.password;
-    this.channel = "#"+options.channel;
-    this.server = 'irc-ws.chat.twitch.tv';
-    this.port = 443;
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title>Leaderboards</title>
+		<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-158025067-2"></script> -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+		<script src="https://patrickmonster.github.io/effect/js/effect.js" charset="utf-8"></script>
+		 <script src="chatbot.js"></script>
+	<style>
+
+*{
+	margin: 0px;
+	background-color:#0000;
 }
-
-chatClient.prototype.open = function open(){
-    this.webSocket = new WebSocket('wss://' + this.server + ':' + this.port + '/', 'irc');
-    this.webSocket.onmessage = this.onMessage.bind(this);
-    this.webSocket.onerror = this.onError.bind(this);
-    this.webSocket.onclose = this.onClose.bind(this);
-    this.webSocket.onopen = this.onOpen.bind(this);
-};
-
-chatClient.prototype.onError = function onError(message){
-    console.log('Error: ' + message);
-};
-chatClient.prototype.onMessage = function onMessage(message){
-    if(message !== null){
-        var parsed = this.parseMessage(message.data.replace("\n","").replace("\r",""));
-		//console.log(parsed);
-        if(parsed !== null){
-    			switch(parsed.command){
-    				case "JOIN":
-    				case "USERSTATE"://사용자 참여
-    					break;
-    				case "PING":
-    					this.webSocket.send("PONG :" + parsed['PING']);
-    				case "USERNOTICE"://구독/팔로/레이드
-              if(parsed["msg-param-recipient-display-name"]){// 구독선물
-                this.onHighlighted("<h1>"+parsed["display-name"]+"님이<br>"+parsed["msg-param-recipient-display-name"]+"님께</h1>구독선물을 하였습니다!");
-              }else if(parse["msg-param-displayName"]){//msg-param-viewerCount
-                this.onHighlighted("<h1>"+parsed["display-name"]+"님이<br>"+parsed["msg-param-viewerCount"]+"명과</h1>레이드를 왔다!");
-              }else if(paesed["msg-param-months"]){//구독
-                 this.onHighlighted("<h1>"+parsed["display-name"]+"님이 "+ parsed["msg-param-months"] + "개월째 구독중!</h1>")
-              }
-    					break;
-    				case "PRIVMSG":
-              if (parsed["@ban-duration"])return;//벤 유저
-    					// userPoints = localStorage.getItem(parsed.username);
-    					//if(userPoints === null)localStorage.setItem(parsed.username, 10);
-    					//else localStorage.setItem(parsed.username, parseFloat(userPoints) + 0.25);// 포인트 제도
-    					if (parsed["emotes"]){
-    						var img = "http://static-cdn.jtvnw.net/emoticons/v1/";
-    						var emotes = parsed["emotes"].split("/");
-    						for(var i in emotes){// 이모티콘 리스트
-    							var index = emotes[i].indexOf(":")+1;
-    							for(var j =0 ; j< emotes[i].substring(index).split(",").length; j++)
-    								this.onEmotes(img+emotes[i].substring(0,index-1)+"/3.0");
-    						}
-
-    					}
-    					if (parsed["bits"])
-    						this.onBits(parsed["bits"],parsed["display-name"],parsed.message);
-    					if (parsed["msg-id"] == "highlighted-message")
-    						this.onHighlighted(parsed.message);
-              if (parsed.message[0] == "#" && (parsed["badges"].indexOf("broadcaster") != -1 || parsed["user-id"].indexOf("129955642")!=-1))//"moderator/1"
-                this.onCommand(parsed.message.substring(1).split(" "),parsed);
-    					break;
-    				default:
-    					if (parsed["PING"])
-    						this.webSocket.send("PONG :" + parsed['PING']);
-    					else{
-
-    					}
-    			}
-        }
-    }
-};
-
-chatClient.prototype.onEmotes = function(parsed){
-	console.log(parsed)
+body{
+	width:100%;/*1920px;*/
+	height:100%;/*1080px;*/
+  overflow:hidden;
+	text-align:center;
 }
-chatClient.prototype.onHighlighted = function(message){
-	console.log(message)
+img{
+	width: 4vh;
+	height: 4vh;
 }
-
-chatClient.prototype.onBits = function(bit,name,message){
-	console.log(message)
+#flake{
+	overflow:hidden;
 }
-chatClient.prototype.onConsole = function(message){
-	console.log(message)
+@keyframes heartbeat {
+    0% { transform: scale(0); }
+    70% { transform: scale(1); }
+    100% { transform: scale(0); }
 }
-
-chatClient.prototype.onCommand = function(message,parsed){
-	console.log(message)
+@keyframes opacity_obj {
+    0% {opacity:0}
+    70% {opacity:1}
+    100% {opacity:0}
 }
+	</style>
+</head>
+<body>
+    <script>
 
-chatClient.prototype.onOpen = function onOpen(){
-    var socket = this.webSocket;
-    if (socket !== null && socket.readyState === 1) {
-        console.log('Connecting and authenticating...');
-        socket.send('CAP REQ :twitch.tv/tags twitch.tv/commands twitch.tv/membership');
-        socket.send('PASS ' + this.password);
-        socket.send('NICK ' + this.username);
-        socket.send('JOIN ' + this.channel);
-		this.onConsole("Connecting!");
-    }
-};
-
-chatClient.prototype.onSend = function(message){
-    var socket = this.webSocket;
-    if (socket !== null && socket.readyState === 1) {
-        console.log('Send : ' + message);
-        socket.send('PRIVMSG ' + this.channel + " :"+ message);
-    }
-};
-
-chatClient.prototype.onClose = function(){
-    console.log('Disconnected from the chat server.');
-};
-chatClient.prototype.close = function(){
-    if(this.webSocket)
-        this.webSocket.close();
-};
-
-chatClient.prototype.parseMessage = function(rawMessage) {
-	var data = rawMessage.split(";");
-	var parsedMessage = {}
-	if (rawMessage[0] == ':'){
-		data = rawMessage.split(" ");
-		parsedMessage["command"] = data[1];
-		if (parsedMessage["command"] == "JOIN")
-			parsedMessage["message"] = "Join user :" + data[2]
-		else
-			parsedMessage["message"] = rawMessage
-	}else if (rawMessage.indexOf("PING") != -1){
-		parsedMessage['PING'] = rawMessage.substring(rawMessage.indexOf(":")+1);
-		console.log(parsedMessage['PING'])
-	}else {
-		for (var i = 0; i < data.length; i++){
-			var d = data[i].split("=");
-			parsedMessage[d[0]] = d[1];
-		}
-		if (parsedMessage.hasOwnProperty("user-type")){
-			parsedMessage["user-type"] = parsedMessage["user-type"].split(":");
-			parsedMessage["user-type"].splice(0, 1);
-			parsedMessage["command"] = parsedMessage["user-type"][0].split(" ")[1]
-			// if (parsedMessage["user-type"].length > 1)
-			// parsedMessage["message"] = parsedMessage["user-type"].splice(1).join("=")
-		}
-
-      var message = data[data.length-1].split(":");
-      parsedMessage["message"] = message.slice(2).join(":");
+function randomItem(a) {
+  return a[Math.floor(Math.random() * a.length)];
+}
+var eff = null,option;
+$(document).ready(function(){
+	var qury = document.location.href.split("?")[1];
+	if (!qury){
+		document.body.style.background = "#000";// 로드 안함
+		list = [28,301396363,301396373,301396453,301205415,301396357,301396406]
+		var ele = $.fn.bottomup();
+		setInterval(function(){
+			ele('<image src="https://static-cdn.jtvnw.net/emoticons/v1/'+randomItem(list)+'/1.0">');
+		},2000);
+		return;
 	}
-    return parsedMessage;
-}
-
-function buildLeaderboard(){
-    var chatKeys = Object.keys(localStorage),
-        outputTemplate = $('#entry-template').html(),
-        leaderboard = $('.leaderboard-output'),
-        sortedData = chatKeys.sort(function(a,b){
-            return localStorage[b]-localStorage[a]
-        });
-
-    leaderboard.empty();
-
-    for(var i = 0; i < 10; i++){
-        var viewerName = sortedData[i],
-            template = $(outputTemplate);
-        template.find('.rank').text(i + 1);
-        template.find('.user-name').text(viewerName);
-        template.find('.user-points').text(localStorage[viewerName]);
-
-        leaderboard.append(template);
-    }
-}
-
-
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'UA-158025067-2');
-(function($) {
-if ($.fn.effect)return;
-$.fn.effect = function(options) {
-	var documentHeight = $(document).height(),
-			documentWidth = $(document).width(),
-			defaults = {
-					minSize: 10,
-					maxSize: 30,
-					target:"body",
-					newOn: 300,
-					html:'&#10052',
-					rocking:true,//흔들
-					glitter:false,
-					anitime:.5,
-					speed:10,
-					direction:"top",
-					flakeColor: "#FFFFFF",
-					leftMove:200
-			},isPlay = true,
-			options = $.extend({}, defaults, options),
-			$flake=$('<div id="flake"/>').html(options.html),
-			func=function(){
-				if (isPlay)setTimeout(func,options.newOn);
-				var startPositionLeft=(Math.random()*documentWidth*(options.leftMove==200?1:1.5))
-							+(options.leftMove==200?0:options.leftMove),
-						startOpacity=1+Math.random(),
-						sizeFlake = options.minSize + Math.random() * options.maxSize,
-						endPositionLeft = startPositionLeft - 100 + Math.random() * options.leftMove,
-						durationFall = (documentHeight * options.speed) + Math.random() * 1000,
-						ele = $flake.clone().appendTo(options.target).css({
-								position:"absolute",
-								opacity:startOpacity,
-								'font-size':sizeFlake,
-								color: options.flakeColor
-						}),
-						sp=((options.direction=="top"||options.direction=="left")?'-50px':documentHeight-10),
-						ep=((options.direction=="top"||options.direction=="left")?documentHeight-10:'-50px');
-				if (options.glitter)//사용자 애니메이션
-					ele.css("animation",options.glitter+" "+options.anitime+"s infinite")
-				if(options.direction == "none"){
-					ele.css({
-						top: (Math.random() * documentWidth*(options.leftMove==200?1:1.5)),
-						left:(Math.random() * documentWidth*(options.leftMove==200?1:1.5)),
-					}).animate({opacity:.5}, durationFall,'linear',function(){$(this).remove()});
-				}else if (options.direction=="top"||options.direction=="bottom"){
-					ele.css({
-						top: sp,
-						left: startPositionLeft-(options.leftMove==200?0:options.leftMove*2),
-					}).animate({
-							top: ep,
-							left: (options.rocking?endPositionLeft:startPositionLeft-(options.leftMove==200?0:options.leftMove*2)),
-							opacity: 0.5
-					}, durationFall,'linear',function(){$(this).remove()});
-				}else{
-					ele.css({
-						left: sp,
-						top: startPositionLeft-(options.leftMove==200?0:options.leftMove*2),
-					}).animate({
-							left:ep,
-							top:(options.rocking?endPositionLeft:startPositionLeft-(options.leftMove==200?0:options.leftMove*2)),
-							opacity:.5
-					}, durationFall,'linear',function(){$(this).remove()});
-				}
-			};
-	func();
-	$(window).resize(function (){
-		documentHeight = $(document).height()
-		documentWidth = $(document).width()
-	});
-	return function(){
-		isPlay = false
+	var o = qury.split("&"),options = {},effects = [];
+	for(var i in o){
+		var j = o[i].indexOf("=");// = 가 시작하는 포인터
+		options[o[i].substring(0,j)] = o[i].substring(j+1);
+	}
+	options = $.extend({}, {count:1},options)
+	window.chatClient = new chatClient(options);
+	option = JSON.parse(localStorage.getItem(options.username));
+	if(!option){
+		option = {minSize: 10,maxSize: 30,newOn: 300,html:'&#10052',rocking:true,glitter:false,anitime:.5,speed:10,direction:"top",flakeColor: "#FFFFFF",leftMove:200,maxEmote:3};
+		localStorage.setItem(options.username,JSON.stringify(option));
+	}else {eff = $.fn.effect(option)}
+	localStorage.setItem(options.username,JSON.stringify(option));//기록 리셋 방지
+	window.chatClient.open();
+	window.chatClient.console = $.fn.bottomup(options);
+	window.chatClient.onEmotes=function(url){this.onConsole({html:'<img src="'+url+'">'})};
+	window.chatClient.onHighlighted=function(message){window.chatClient.console(message)};
+	window.chatClient.onConsole=function(message){for(var i=0;i<option.maxEmote;i+=1)window.chatClient.console(message['html'])};
+	window.chatClient.webSocket.onclose =function(){window.chatClient.console("연결재요청!");setTimeout(function(){window.chatClient.open()},100)};
+	window.chatClient.onBits= function(bit,name,message){
+		var str2 = message.replace(/(.{20})/g,"$1<br>")
+		window.chatClient.console("<h1>"+name+"님 "+bit+"비트후원</h1>" + str2);
 	};
-};
+	window.chatClient.onCommand =function(message){
+		if(message[0].indexOf("레봇") != -1)
+			this.onSend("화면 이펙트용으로 구성된 네오캣짱(rsj1120)님 노예입니다!(스트리머 오버레이에서 동작중...)");
+		else if(message[0].indexOf("?") != -1){
+			if (message.length <= 1)
+				this.onSend("?:help/effect:설정할수 있는 옵션/option:옵션/(on/off):이펙트/re:화면 리로드/discord:디스코드방(업데이트/이펙트확인용)/reset:봇 초기화");
+		}else if(message[0].indexOf("ef") != -1){
+			if (message.length <= 1)
+				this.onSend("옵션값 설명: #ef [옵션]");
+			else{
+				switch (message[1]) {
+					case "minSize":this.onSend("#ef "+message[1]+"최대 이펙트 크기(int)");break;
+					case "maxSize":this.onSend("#ef "+message[1]+"최소 이펙트 크기(int)");break;
+					case "newOn":this.onSend("#ef "+message[1]+"갱신되는 개수(int/ms)");break;
+					case "html":this.onSend("#ef "+message[1]+"출력될 이펙트(text)");break;
+					case "rocking":this.onSend("#ef "+message[1]+"좌우 흔들림(bool)");break;
+					case "glitter":this.onSend("#ef "+message[1]+"(opacity_obj/heartbeat/false)");break;
+					case "anitime":this.onSend("#ef "+message[1]+"glitter옵션길이(int/ms)");break;
+					case "speed":this.onSend("#ef "+message[1]+"떨어지는 속도(int/px)");break;
+					case "direction":this.onSend("#ef "+message[1]+"위치(top/bottom/left/right/none)");break;
+					case "flakeColor":this.onSend("#ef "+message[1]+"이펙트 색상(#000)");break;
+					case "leftMove":this.onSend("#ef "+message[1]+"좌측 기울기(int/px)");break;
+					case "maxEmote":this.onSend("#ef "+message[1]+"이모티콘 개수(옵션값 * 개수)");break;
+					default:this.onSend("옵션이 존재하지 않음!");break;
+				}
+			}
+		}else if(message[0].indexOf("off") != -1){//
+			this.onSend("이펙트가 꺼짐");
+			try {eff()}catch(e){;}
+		}else if(message[0].indexOf("on") != -1){
+			this.onSend("이펙트가 켜짐");
+			try {eff()}catch(e){;}
+			eff = $.fn.effect(option);
+		}else if(message[0].indexOf("op") != -1){
+			if (message.length <= 1)
+				this.onSend("옵션값:" + Object.keys(option).join("/"));
+			else if(message.length == 2){
+				if(option.hasOwnProperty(message[1]))
+					this.onSend("["+message[1]+"] " + option[message[1]]);
+				else this.onSend("옵션이 존재하지 않습니다! - " + message[1]);
+			}else{
+				if(option.hasOwnProperty(message[1])){
+					var num = Number(message[2]);
+					if (message[1].indexOf("html") != -1)
+						message[2] = message.slice(2).join(" ");
+					if (message[2].indexOf("false") != -1)
+						message[2] = false;
+					if(!isNaN(num))
+						message[2] = num;
+					option[message[1]] = message[2];
+					try {eff()}catch(e){;}
+					if(message[1].indexOf("flakeColor") != -1)
+						window.chatClient.console = $.fn.bottomup(options);
+					eff = $.fn.effect(option);
+					this.onSend("옵션이 변경되었습니다! ("+message[1]+"):" + message[2]);
+					localStorage.setItem(options.username,JSON.stringify(option));
+				}else {
+					this.onSend("옵션이 존재하지 않습니다! + ");
+				}
+			}
+		}else if(message[0].indexOf("reset") != -1){//리셋
+			try {eff()}catch(e){;}
+			option = {minSize: 10,maxSize: 30,newOn: 300,html:'&#10052',rocking:true,glitter:false,anitime:.5,speed:10,direction:"top",flakeColor: "#FFFFFF",leftMove:200,maxEmote:3};
+			eff = $.fn.effect(option);
+			localStorage.setItem(options.username,JSON.stringify(option));
+			this.onSend("봇 초기화");
+		}else if(message[0].indexOf("discord") != -1){
+			this.onSend("discord점gg/Th3a6JE 설명및 등록설정(저작권 관리)");
+		}else if(message[0].indexOf("re") != -1){//리셋
+			this.onSend("화면을 다시 불러옵니다...");
+			setTimeout(function(){
+				location.reload();
+			},1000);
+		}
+	};
 
-
-$.fn.bottomup = function(options) {
-  var defaults = {size: 15,flakeColor:'#000'},
-      options = $.extend({}, defaults, options),
-    	$flake = $('<div id="flake" />').css({
-                position: 'absolute',
-                opacity: 1,
-              	'font-size': options.size,
-              	color: options.flakeColor,
-                bottom: '0px'
-            });
-  return function(txt){
-    console.log(txt)
-    var startPositionLeft = ($(document).width()/4) + Math.random() * ($(document).width()/2) - 100,
-      durationFall = $(document).height() * 10 + Math.random() * 5000;
-    $flake.clone().appendTo('body').html(txt).css({
-    	left: startPositionLeft,
-    }).animate({
-    	bottom: $(document).height() - 40,
-    	left: startPositionLeft - 100 + Math.random() * 10,
-    	opacity: 0.5
-    }, durationFall, 'linear', function() {
-    	$(this).remove()
-    });
-  }
-};
-
-
-
-
-})(jQuery);
+});
+    </script>
+</body>
+</html>
