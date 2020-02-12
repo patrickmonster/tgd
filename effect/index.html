@@ -4,7 +4,8 @@
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <title>Leaderboards</title>
 		<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-158025067-2"></script> -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+		<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> -->
+		<script src="fontawesome.js" charset="utf-8"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 		<script src="https://patrickmonster.github.io/effect/js/effect.js" charset="utf-8"></script>
 		 <script src="chatbot.js"></script>
@@ -85,7 +86,7 @@ $(document).ready(function(){
 			this.onSend("화면 이펙트용으로 구성된 네오캣짱(rsj1120)님 노예입니다!(스트리머 오버레이에서 동작중...)");
 		else if(message[0].indexOf("?") != -1){
 			if (message.length <= 1)
-				this.onSend("?:help/effect:설정할수 있는 옵션/option:옵션/(on/off):이펙트/re:화면 리로드/discord:디스코드방(업데이트/이펙트확인용)/reset:봇 초기화");
+				this.onSend("?:help/effect:설정할수 있는 옵션/option:옵션/(on/off):이펙트/re:화면 리로드/(ad/rm):이펙트 권한(유저이름)/discord:디스코드방(업데이트/이펙트확인용)/reset:봇 초기화");
 		}else if(message[0].indexOf("ef") != -1){
 			if (message.length <= 1)
 				this.onSend("옵션값 설명: #ef [옵션]");
@@ -113,6 +114,11 @@ $(document).ready(function(){
 			this.onSend("이펙트가 켜짐");
 			try {eff()}catch(e){;}
 			eff = $.fn.effect(option);
+		}else if(message[0].indexOf("ad") != -1){
+			this.addUser("")
+			this.onSend("이펙트가 켜짐");
+		}else if(message[0].indexOf("rm") != -1){
+			this.onSend("이펙트가 켜짐");
 		}else if(message[0].indexOf("op") != -1){
 			if (message.length <= 1)
 				this.onSend("옵션값:" + Object.keys(option).join("/"));
