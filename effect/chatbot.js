@@ -17,13 +17,12 @@ chatClient.prototype.open = function open(){
 chatClient.prototype.onError = function onError(message){
   console.log('Error: ' + message);
 };
-chatClient.property.users = [];
 chatClient.prototype.addUser = function(user){
-  this.users.push(user);
+  // this.users.push(user);
 }
 chatClient.prototype.removeUser = function(user){
-  var i = user.indexOf(user);
-  this.users.pop(i);
+  // var i = user.indexOf(user);
+  // this.users.pop(i);
 }
 chatClient.prototype.onMessage = function onMessage(message){
   if(message !== null){
