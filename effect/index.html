@@ -116,7 +116,7 @@ $(document).ready(function(){
 				else if (message.length <= 2){
 					this.onSend("유저:"+user["display-id"]+"("+user["user-id"] + ")");
 				}else{
-					this.onSend(message[2]+" "+user["display-id"]);
+					this.onSend(message[2]+" "+user["display-id"]+" "+message.slice(3).join(" "));
 				}
 			}
 		}else if(message[0].indexOf("onm") != -1){
