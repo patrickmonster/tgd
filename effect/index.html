@@ -49,7 +49,7 @@ function randomItem(a) {
 }
 var eff = null,option;
 $(document).ready(function(){
-	var qury = document.location.href.split("?")[1];
+	var qury = document.location.href.split("?")[1],isEffect = true;
 	if (!qury){
 		document.body.style.background = "#000";// 로드 안함
 		list = [28,301396363,301396373,301396453,301205415,301396357,301396406]
@@ -72,8 +72,12 @@ $(document).ready(function(){
 		option = {minSize: 10,maxSize: 30,newOn: 300,html:'&#10052',rocking:true,
 				glitter:false,anitime:.5,speed:10,direction:"top",flakeColor: "#FFFFFF",
 				leftMove:200,maxEmote:3,size:30};
-		localStorage.setItem(options.username,JSON.stringify(option));
-	}else {eff = $.fn.effect(option)}
+	}
+	
+	if(localStorage.getItem(options.username+"-effect")=='1')
+		isEffect = true;
+	else isEffect = false;
+	if(isEffect)eff = $.fn.effect(option);
 	localStorage.setItem(options.username,JSON.stringify(option));//기록 리셋 방지
 	window.chatClient.open();
 	window.chatClient.console = $.fn.bottomup(options);
@@ -133,11 +137,13 @@ $(document).ready(function(){
 			this.onSend("이펙트가 켜짐");
 			try {eff()}catch(e){;}
 			eff = $.fn.effect(option);
+			isEffect = true;
+			localStorage.setItem(options.username+"-effect",1);
 		}else if(message[0].indexOf("off") != -1){//
 			this.onSend("이펙트가 꺼짐");
 			try {eff()}catch(e){;}
-		}else if(message[0].indexOf("rm") != -1){
-			this.onSend("이펙트가 켜짐");
+			isEffect = false;
+			localStorage.setItem(options.username+"-effect",0);
 		}else if(message[0].indexOf("op") != -1){
 			if (message.length <= 1)
 				this.onSend("옵션값:" + Object.keys(option).join("/"));
@@ -177,6 +183,7 @@ $(document).ready(function(){
 					try {eff()}catch(e){;}
 					if(message[1].indexOf("flakeColor") != -1 || message[1].indexOf("size") != -1)
 						window.chatClient.console = $.fn.bottomup(option);
+					if(isEffect)
 					eff = $.fn.effect(option);
 					this.onSend("옵션이 변경되었습니다! ("+message[1]+"):" + message[2]);
 					localStorage.setItem(options.username,JSON.stringify(option));
