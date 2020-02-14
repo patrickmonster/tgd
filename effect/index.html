@@ -107,9 +107,6 @@ $(document).ready(function(){
 					default:this.onSend("옵션이 존재하지 않음!");break;
 				}
 			}
-		}else if(message[0].indexOf("off") != -1){//
-			this.onSend("이펙트가 꺼짐");
-			try {eff()}catch(e){;}
 		}else if(message[0].indexOf("fu") != -1){
 			if (message.length <= 1)
 				this.onSend("#fu [사용자닉네임] {명령}");
@@ -122,18 +119,21 @@ $(document).ready(function(){
 					this.onSend(message[2]+" "+user["display-id"]);
 				}
 			}
-		}else if(message[0].indexOf("on") != -1){
-			this.onSend("이펙트가 켜짐");
-			try {eff()}catch(e){;}
-			eff = $.fn.effect(option);
-		}else if(message[0].indexOf("rm") != -1){
-			this.onSend("이펙트가 켜짐");
 		}else if(message[0].indexOf("onm") != -1){
 			this.onSend("매니저 모드");
 			this.isMood = true;
 		}else if(message[0].indexOf("offm") != -1){
 			this.onSend("비 매니져 모드");
 			this.isMood = false;
+		}else if(message[0].indexOf("on") != -1){
+			this.onSend("이펙트가 켜짐");
+			try {eff()}catch(e){;}
+			eff = $.fn.effect(option);
+		}else if(message[0].indexOf("off") != -1){//
+			this.onSend("이펙트가 꺼짐");
+			try {eff()}catch(e){;}
+		}else if(message[0].indexOf("rm") != -1){
+			this.onSend("이펙트가 켜짐");
 		}else if(message[0].indexOf("op") != -1){
 			if (message.length <= 1)
 				this.onSend("옵션값:" + Object.keys(option).join("/"));
