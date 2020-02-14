@@ -10,8 +10,6 @@ function Stack(max){
 	this.get=function(){return this.data}
 	this.all=function(a,l){l=[];for(a=0;a<this.top;a++)l.push(this.data[a]);return l;}
 }
-
-
 var chatClient = function chatClient(options){
   this.username = options.username;
   this.password = options.password;
@@ -22,7 +20,6 @@ var chatClient = function chatClient(options){
   this.port = 443;
   console.log(this);
 }
-
 chatClient.prototype.open = function open(){
   this.webSocket = new WebSocket('wss://' + this.server + ':' + this.port + '/', 'irc');
   this.webSocket.onmessage = this.onMessage.bind(this);
@@ -30,14 +27,9 @@ chatClient.prototype.open = function open(){
   this.webSocket.onclose = this.onClose.bind(this);
   this.webSocket.onopen = this.onOpen.bind(this);
 };
-
-chatClient.prototype.onError = function onError(message){
-  console.log('Error: ' + message);
-};
 chatClient.prototype.onMessage = function onMessage(message){
   if(message !== null){
       var parsed = this.parseMessage(message.data.replace("\n","").replace("\r",""));
-  //console.log(parsed);
       if(parsed !== null){
         switch(parsed.command){
           case "JOIN":
@@ -95,6 +87,7 @@ chatClient.prototype.finduser = function(nickname){
 		  return i;
 	return false;
 };
+chatClient.prototype.onError = function onError(message){console.log('Error: ' + message)};
 chatClient.prototype.onEmotes = function(parsed){console.log(parsed)};
 chatClient.prototype.onHighlighted = function(message){console.log(message)};
 chatClient.prototype.onBits = function(bit,name,message){console.log(message)};
@@ -166,37 +159,7 @@ function buildLeaderboard(){
       leaderboard.append(template);
   }
 }
-
-
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'UA-158025067-2');
-(function($) {
-$.fn.bottomup = function(options) {
-var defaults = {size: 15,flakeColor:'#000'},
-    options = $.extend({}, defaults, options),
-    $flake = $('<div id="flake" />').css({
-              position: 'absolute',
-              display:'block',
-              opacity: 1,
-              'font-size': options.size,
-              color: options.flakeColor,
-              bottom: '0px'
-          });
-return function(txt){
-  console.log(txt)
-  var startPositionLeft = ($(document).width()/4) + Math.random() * ($(document).width()/2) - 100,
-    durationFall = $(document).height() * 10 + Math.random() * 5000;
-  $flake.clone().appendTo('body').html(txt).css({
-    left: startPositionLeft,
-  }).animate({
-    bottom: $(document).height() - 40,
-    left: startPositionLeft - 100 + Math.random() * 10,
-    opacity: 0.5
-  }, durationFall, 'linear', function() {
-    $(this).remove()
-  });
-}
-};
-})(jQuery);
