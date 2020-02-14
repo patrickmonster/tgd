@@ -92,7 +92,7 @@ $(document).ready(function(){
 	window.chatClient.onCommand =function(message){
 		if(message[0].indexOf("레봇") != -1)
 			this.onSend("화면 이펙트용으로 구성된 네오캣짱(rsj1120)님 노예입니다!(스트리머 오버레이에서 동작중...)");
-		else if(message[0].indexOf("?") != -1){
+		else if(message[0][0]=="?"){
 			if (message.length <= 1)
 				this.onSend("?:help/effect:설정할수있는옵션/option:옵션/(on/off):이펙트/re:화면 리로드/(onm/offm):이펙트 권한(매니져)/fu:유저검색/명령/discord:디스코드방(업데이트/이펙트확인용)/reset:봇 초기화");
 		}else if(message[0].indexOf("ef") != -1){
