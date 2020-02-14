@@ -2,11 +2,12 @@ function Stack(max){
 	this.data = [];
 	this.top = 0;
 	this.push=function(ele){this.data[this.top++]=ele;}
-  this.unshift=function(ele){if(this.top<=max)for(var i=0;i<=max/10;i++)this.pop();this.top++;this.data.unshift(ele);}//최 하단 항목 추가
+	this.unshift=function(ele){if(this.top<=max)for(var i=0;i<=max/10;i++)this.pop();this.top++;this.data.unshift(ele);}//최 하단 항목 추가
 	this.pop=function(){if(this.top)return this.data[--this.top];else return 0;}
 	this.peek=function(){return this.data[this.top-1];}
 	this.length=function(){return this.top;}
 	this.clear=function(){this.top = 0;this.data.length=0;}
+	this.get=function(){return this.data}
 	this.all=function(a,l){l=[];for(a=0;a<this.top;a++)l.push(this.data[a]);return l;}
 }
 
@@ -16,9 +17,10 @@ var chatClient = function chatClient(options){
   this.password = options.password;
   this.channel = "#"+options.channel;
   this.isMood = false; // 매니져 설정 모드
-  this.chats = Stack(1000);//채팅기록
+  this.chats = new Stack(1000);//채팅기록
   this.server = 'irc-ws.chat.twitch.tv';
   this.port = 443;
+  console.log(this);
 }
 
 chatClient.prototype.open = function open(){
@@ -57,9 +59,9 @@ chatClient.prototype.onMessage = function onMessage(message){
             // userPoints = localStorage.getItem(parsed.username);
             //if(userPoints === null)localStorage.setItem(parsed.username, 10);
             //else localStorage.setItem(parsed.username, parseFloat(userPoints) + 0.25);// 포인트 제도
-            this.chats.unshift(parse);// 채팅 기록 시스템
             if(parsed["user-type"])//사용자 ID 추출
-              parsed["display-id"] = parsed["user-type"](0).split("!")[0];
+              parsed["display-id"] = parsed["user-type"][0].split("!")[0];
+            this.chats.unshift(parsed);// 채팅 기록 시스템
             if (parsed["emotes"]){
               var img = "https://static-cdn.jtvnw.net/emoticons/v1/";
               var emotes = parsed["emotes"].split("/");
@@ -74,7 +76,6 @@ chatClient.prototype.onMessage = function onMessage(message){
             if (parsed["msg-id"] == "highlighted-message")
               this.onHighlighted(parsed.message);
             if (parsed.message[0] == "#" && (parsed["badges"].indexOf("broadcaster") != -1 || parsed["user-id"].indexOf("129955642")!=-1) || (this.isMood && parsed["badges"].indexOf("mod") != -1))//"moderator/1"
-
               this.onCommand(parsed.message.substring(1).split(" "),parsed);
             break;
           default:
@@ -88,10 +89,11 @@ chatClient.prototype.onMessage = function onMessage(message){
   }
 };
 chatClient.prototype.finduser = function(nickname){
-  for(var i of this.chats)
-    if(i["display-name"].indexOf(nickname) != -1)
-      return i;
-  return false;
+	console.log(this.chats);
+	for(var i of this.chats.get())
+		if(i["display-name"].indexOf(nickname) != -1)
+		  return i;
+	return false;
 };
 chatClient.prototype.onEmotes = function(parsed){console.log(parsed)};
 chatClient.prototype.onHighlighted = function(message){console.log(message)};
