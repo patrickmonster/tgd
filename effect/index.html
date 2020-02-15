@@ -148,11 +148,6 @@ $(document).ready(function(){
 			eff = $.fn.effect(option);
 			isEffect = true;
 			localStorage.setItem(options.username+"-effect",1);
-		}else if(message[0].indexOf("chat") != -1){//
-			out("이펙트가 꺼짐");
-			try {eff()}catch(e){;}
-			isChat = false;
-			localStorage.setItem(options.username+"-effect",0);
 		}else if(message[0].indexOf("off") != -1){//
 			out("이펙트가 꺼짐");
 			try {eff()}catch(e){;}
@@ -174,6 +169,10 @@ $(document).ready(function(){
 							message[2] = '<i class="fas fa-'+message[3]+'"></i>';
 						else if (message[2].indexOf("far") != -1)
 							message[2] = '<i class="far fa-'+message[3]+'"></i>';
+						else if (message[2].indexOf("fal") != -1)
+							message[2] = '<i class="fal fa-'+message[3]+'"></i>';
+						else if (message[2].indexOf("fad") != -1)
+							message[2] = '<i class="fad fa-'+message[3]+'"></i>';
 						else if (message[2].indexOf("img") != -1)
 							message[2] = '<img src='+message[3]+'></img>';
 						else{
@@ -214,7 +213,7 @@ $(document).ready(function(){
 			localStorage.setItem(options.username,JSON.stringify(option));
 			out("봇 초기화");
 		}else if(message[0].indexOf("discord") != -1){
-			out("discord점gg/Th3a6JE 설명및 등록설정(저작권 관리)");
+			this.onSend("discord점gg/Th3a6JE 설명및 등록설정(저작권 관리)");
 		}else if(message[0].indexOf("re") != -1){//리셋
 			out("화면을 다시 불러옵니다...");
 			setTimeout(function(){
