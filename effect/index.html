@@ -59,8 +59,7 @@ $(document).ready(function(){
 	// options = $.extend({}, {count:1},options)
 	window.chatClient = new chatClient($.extend({}, {count:1,loop:false},options));
 	option = JSON.parse(localStorage.getItem(options.username));
-	if(!option || !option.count){
-		if(!option.count)
+	if(!option || !option.hasOwnProperty("count")){
 			// this.onSend("이펙트 버전이 업데이트 되어 초기화됨!");
 		option ={
         minSize: 10,maxSize: 50,
@@ -74,6 +73,8 @@ $(document).ready(function(){
         count:20,//개수
 				maxEmote:2,
     };
+		if(!option.hasOwnProperty("count"))
+			localStorage.setItem(options.username,JSON.stringify(option));
 	}
 
 	if(localStorage.getItem(options.username+"-effect")=='1')
