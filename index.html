@@ -320,7 +320,7 @@
 		var selectTarget = $('.selectbox select');
 		var func = function() {
 	    var select_name = $(this).children('option:selected').text();
-			var select_val = "https://patrickmonster.github.io/effect/v.2/?effect="+$(".selectbox select").children('option:selected').val()+"&count="+($("#count_selecter").val()*10);
+			var select_val = "https://patrickmonster.github.io/effect/v.2/?effect="+$(".selectbox select").children('option:selected').val()+"&count="+($("#count_selecter").val());
 			$("#effect_frame").attr("src","about:blank");
 			setTimeout(function() {
 				$("#effect_frame").attr("src",select_val);
