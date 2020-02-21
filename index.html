@@ -1,3 +1,4 @@
+
 	<!-- <!DOCTYPE html> -->
 	<html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -24,6 +25,40 @@
 			<link rel="stylesheet" href="https://patrickmonster.github.io/tgd/css/fullpage.min.css">
 		<script defer src="https://patrickmonster.github.io/tgd/js/jquery.minicolors.min.js"></script>
 	  <link rel="stylesheet" href="https://patrickmonster.github.io/tgd/css/jquery.minicolors.css">
+	<script>
+
+function randomItem(a) {return a[Math.floor(Math.random() * a.length)]}
+(function($) {
+$.fn.bottomup = function(options) {//단일모드
+  var defaults = {size: 15,flakeColor:'#000',sizeEmote:15},
+      options = $.extend({}, defaults, options),
+    	$flake = $('<div id="flake" />').css({
+                position: 'absolute',opacity: 1,
+              	'font-size': options.size,
+              	color: options.flakeColor,
+                bottom: '0px'
+            });
+  return function(txt){
+	if(!txt)return;
+    var startPositionLeft = ($(document).width()/2) + Math.random() * ($(document).width()/2) - 100,
+		durationFall = $(document).height() * 10 + Math.random() * 5000,
+		obj = $flake.clone().appendTo('body').html(txt)
+
+	if(txt.indexOf("<img")!=-1)
+		$(obj).children("img").css({"width":options.sizeEmote+"vh","height":options.sizeEmote+"vh"});
+	obj.css({
+    	left: startPositionLeft,
+    }).animate({
+    	bottom: $(document).height() - 40,
+    	left: startPositionLeft - 100 + Math.random() * 10,
+    	opacity: 0.5
+    }, durationFall, 'linear', function() {
+    	$(this).remove()
+    });
+  }
+};
+})(jQuery);
+	</script>
 			<style media="screen">
 	body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,
 	form,fieldset,input,textarea,p,blockquote,th,td {
@@ -233,11 +268,15 @@
 					페이지 맨 하단에 디스코드 링크 있습니다<br>
 					등록하여 저작권에 유의해주세요!<br>
 				</h3><br>
+				<h2>이모지 & 이펙트 - 베타</h2>
+				<input id="user_id" type="text" style="width:200px;height:30px;margin-top:20px" placeholder="트위치 아이디를 입력 해 주세요!"></input><br>
+				<button onclick="if(!$('#user_id').val()){alert('아이디를 입력해 주세요!');return;}copyToClipboard('https://patrickmonster.github.io/effect/chat_emote/?channel='+$('#user_id').val());setTimeout(function(){alert('소스가 복사되었습니다!\n하단으로 내려, 적용해주세요!')},100)">이모지&이펙트 복사하기</button><br>
 				<a href="#page3" style="color:#fff">Obs설정 바로가기</a>
 				<a href="#page4" style="color:#fff">XSplit설정 바로가기</a><br>
 				<a href="#page5" style="color:#fff">디스코드 바로가기</a><br>
 				<a href="http://twip.kr/rsj1120"><img src="https://support.twip.kr/hc/ko/article_attachments/115000604248/24a1542046c733bcf73ccd10e54c61e4.png"></img></a></iframe><br>
-				아무것도 없는 개발자를 위해 기부해주세요...ㅠㅠ/(서버비용 청구서 무서벙)
+				아무것도 없는 개발자를 위해 기부해주세요...ㅠㅠ/(서버비용 청구서 무서벙)<br>
+
 			</div>
 		</div>
 		<div class="section" id="section1">
@@ -253,6 +292,10 @@
 				<div class="slide">
 					<iframe src="https://clips.twitch.tv/embed?clip=ArborealSquarePterodactylYouWHY" frameborder="0" allowfullscreen="true" height="378" width="620"></iframe>
 					<h4 style="bottom:0;right:50%;position:inherit;font-size:2em;text-shadow:0 0 20px #ff5260;">아트(essssea1120)님의 방송</h4>
+				</div>
+				<div class="slide">
+					<iframe src="https://player.twitch.tv/?autoplay=false&video=v555418783" frameborder="0" allowfullscreen="true" scrolling="no" height="378" width="620"></iframe>
+					<h4 style="bottom:0;right:50%;position:inherit;font-size:2em;text-shadow:0 0 20px #ff5260;">이모지 & 이펙트 소계/테스트 버전</h4>
 				</div>
 		</div>
 		<!-- <div class="section" id="section1"></div> -->
@@ -295,7 +338,7 @@
 			<ul>
 				<li>
 					<h1>미디어 중지버그</h1>
-					자연적 문제라 최대한 수정해보았으나, 화면 전환시에 중지되는 현상이 있습니다
+					자연적 문제라 최대한 수정해보았으나, 화면 전환시에 중지되는 현상이 있습니다<br>
 					<img src="https://cdn.discordapp.com/attachments/665169070567456780/680030006583623724/6e5564b318f49d54.PNG"></img>
 					<img src="https://media.discordapp.net/attachments/678445771250597898/679030903711727754/X5.PNG"></img>
 
@@ -321,7 +364,13 @@
 	});
 
 	$(document).ready( function(){
-		var selectTarget = $('.selectbox select');
+		var selectTarget = $('.selectbox select'),
+			list = [28,301396363,301396373,301396453,301205415,301396357,301396406]
+		var ele = $.fn.bottomup({target:"#effect_emote"});
+		setInterval(function(){
+			ele('<image src="https://static-cdn.jtvnw.net/emoticons/v1/'+randomItem(list)+'/1.0">');
+		},2000);
+
 		var func = function() {
 	    var select_name = $(this).children('option:selected').text();
 			var select_val = "https://patrickmonster.github.io/effect/v.2/?effect="+$(".selectbox select").children('option:selected').val()+"&count="+($("#count_selecter").val());
