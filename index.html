@@ -69,7 +69,7 @@ form,fieldset,input,textarea,p,blockquote,th,td {
 }
 html{
 	background:#000;
-	color:#fff;
+	color:#fff !important;
 }
 .section{
 	text-align:center;
@@ -328,7 +328,7 @@ input[type=checkbox].css-checkbox:checked+label.css-label{
 		<div class="slide">
 			<h1>링크를 복사해 주세요!</h1>
 			<button onclick="copyToClipboard(document.getElementById('effect_frame').src +'&color='+ getColor());setTimeout(function(){alert('소스가 복사되었습니다!')},100)">이펙트 복사하기</button><br><br>
-			<h2>이모지 & 이펙트 - 베타</h2><a href="#page2/3" style="color:#fff" >소계영상</a>
+			<h2>이모지 & 이펙트 - 베타</h2><a href="#page2/2" style="color:#fff" >소계영상</a>
 			<input id="user_id" type="text" style="width:200px;height:30px;margin-bottom:10px" placeholder="트위치 아이디를 입력 해 주세요!"></input><br>
 			<button onclick="if(!$('#user_id').val()){alert('아이디를 입력해 주세요!');return;}copyToClipboard('https://patrickmonster.github.io/effect/chat_emote/?channel='+$('#user_id').val());setTimeout(function(){alert('소스가 복사되었습니다!\n하단으로 내려, 적용해주세요!')},100)">이모지&이펙트 복사하기</button><br>
 			<a href="#page3" style="color:#fff">Obs설정 바로가기</a>
@@ -341,27 +341,40 @@ input[type=checkbox].css-checkbox:checked+label.css-label{
 			아무것도 없는 개발자를 위해 기부해주세요...ㅠㅠ/(서버비용 청구서 무서벙)<br>
 		</div>
 	</div>
+
 	<div class="section" id="section1">
 			<div class="slide active">
-				<iframe src="https://clips.twitch.tv/embed?clip=AlluringOnerousSashimiKevinTurtle&autoplay=false" frameborder="0" allowfullscreen="true" height="378" width="620"></iframe>
-				<h4 style="bottom:0;right:50%;position:inherit;font-size:2em;text-shadow:0 0 20px #484efd;">처음(first_7)님의 방송</h4><br>
+				<iframe src="https://clips.twitch.tv/embed?clip=RockyHomelyToothEleGiggle&autoplay=false" frameborder="0" allowfullscreen="true" height="378" width="620"></iframe>
+				<iframe src="https://clips.twitch.tv/embed?clip=AnnoyingRepleteDonutPrimeMe&autoplay=false" frameborder="0" allowfullscreen="true" height="378" width="620"></iframe>
+				<h4 style="bottom:0;right:50%;position:inherit;font-size:2em;text-shadow:0 0 20px #484efd;"><a href="https://www.twitch.tv/dalbammi" target="_blank" style="color:#fff;text-decoration:none;">_밤새(dalbammi)님의 방송</a></h4><br>
 				<h4>이모지 & 이펙트/ 커미션용</h4>
 			</div>
 			<div class="slide">
-				<iframe src="https://clips.twitch.tv/embed?clip=TenderSwissEyeballBCWarrior&autoplay=false" frameborder="0" allowfullscreen="true" height="378" width="620"></iframe>
-				<h4 style="bottom:0;right:50%;position:inherit;font-size:2em;text-shadow:0 0 20px #ff5252;">츄뎀(jymin2174)님의 방송</h4>
-			</div>
-			<div class="slide">
-				<iframe src="https://clips.twitch.tv/embed?clip=ArborealSquarePterodactylYouWHY&autoplay=false" frameborder="0" allowfullscreen="true" height="378" width="620"></iframe>
-				<h4 style="bottom:0;right:50%;position:inherit;font-size:2em;text-shadow:0 0 20px #ff5260;">아트(essssea1120)님의 방송</h4>
+				<iframe src="https://clips.twitch.tv/embed?clip=AlluringOnerousSashimiKevinTurtle&autoplay=false" frameborder="0" allowfullscreen="true" height="378" width="620"></iframe>
+				<h4 style="bottom:0;right:50%;position:inherit;font-size:2em;text-shadow:0 0 20px #484efd;"><a href="https://www.twitch.tv/first_7" target="_blank" style="color:#fff;text-decoration:none;">처음(first_7)님의 방송</a></h4><br>
+				<h4>이모지 & 이펙트/ 커미션용</h4>
 			</div>
 			<div class="slide">
 				<iframe src="https://player.twitch.tv/?autoplay=false&video=v555418783&autoplay=false" frameborder="0" allowfullscreen="true" scrolling="no" height="378" width="620"></iframe>
 				<h4 style="bottom:0;right:50%;position:inherit;font-size:2em;text-shadow:0 0 20px #ff5260;">이모지 & 이펙트 소계/테스트 버전</h4>
 			</div>
 	</div>
-	<!-- <div class="section" id="section1"></div> -->
 	<div class="section" id="section2">
+			<div class="slide">
+				<iframe src="https://clips.twitch.tv/embed?clip=TenderSwissEyeballBCWarrior&autoplay=false" frameborder="0" allowfullscreen="true" height="378" width="620"></iframe>
+				<h4 style="bottom:0;right:50%;position:inherit;font-size:2em;text-shadow:0 0 20px #ff5252;"><a href="https://www.twitch.tv/jymin2174" target="_blank" style="color:#fff;text-decoration:none;">츄뎀(jymin2174)님의 방송</a></h4>
+			</div>
+			<div class="slide">
+				<iframe src="https://clips.twitch.tv/embed?clip=UnsightlyShakingWrenchOMGScoots&autoplay=false" frameborder="0" allowfullscreen="true" height="378" width="620"></iframe>
+				<h4 style="bottom:0;right:50%;position:inherit;font-size:2em;text-shadow:0 0 20px #ff5260;"><a href="https://www.twitch.tv/bly_j" target="_blank" style="color:#fff;text-decoration:none;">_블리__(bly_j)님의 방송</a></h4>
+			</div>
+			<div class="slide">
+				<iframe src="https://clips.twitch.tv/embed?clip=ArborealSquarePterodactylYouWHY&autoplay=false" frameborder="0" allowfullscreen="true" height="378" width="620"></iframe>
+				<h4 style="bottom:0;right:50%;position:inherit;font-size:2em;text-shadow:0 0 20px #ff5260;"><a href="https://www.twitch.tv/essssea1120" target="_blank" style="color:#fff;text-decoration:none;">아트(essssea1120)님의 방송</a></h4>
+			</div>
+	</div>
+	<!-- <div class="section" id="section1"></div> -->
+	<div class="section" id="section3">
 		<div class="slide active" style="height:100%">
 			<h1>OBS 설정</h1>
 			소스목록에서 + 버튼을 눌러 소스를 추가합니다<br>
@@ -381,7 +394,7 @@ input[type=checkbox].css-checkbox:checked+label.css-label{
 			<img src="https://patrickmonster.github.io/tgd/img/%EC%84%A4%EB%AA%855.PNG" style="padding:10px">
 		</div>
 	</div>
-	<div class="section" id="section3">
+	<div class="section" id="section4">
 		<div class="slide active" style="height:100%">
 			<h1>XSplit 설정</h1>
 			맨 하단에 Addsorce를 눌러 Webpage를 눌러줍니다<br>
@@ -406,8 +419,8 @@ input[type=checkbox].css-checkbox:checked+label.css-label{
 <script type="text/javascript">
 window.addStyle=document.addStyle=function(){var a=arguments,b=a.length,c=0;for(;c<b;c++)document.head.C('style').innerHTML=a[c]};
 var myFullpage = new fullpage('#fullpage', {
-	anchors: ['page1', 'page2', 'page3', 'page4','page5','page6'],
-  navigationTooltips: ['이펙트 설정', '소계', 'Obs 설정', 'XSplit','공지사항','Discode 서버/기부'],
+	anchors: ['page1','page2', 'page2-1', 'page3', 'page4','page5','page6'],
+  navigationTooltips: ['이펙트 설정','이모지 & 이펙트', '소계', 'Obs 설정', 'XSplit','공지사항'],
 	navigationColor:"#ffffff",
   css3: true,scrollingSpeed: 1000,responsiveHeight: 330,
 	slidesNavigation: true,dragAndMove: true,navigation: true,
