@@ -1,5 +1,6 @@
 
 
+
 <!doctype html>
 <html>
 <head>
@@ -16,12 +17,12 @@
 function randomItem(a) {return a[Math.floor(Math.random() * a.length)]}
 (function($) {
 $.fn.bottomup = function(options) {//단일모드
-  var defaults = {size: 15,flakeColor:'#000'},
+  var defaults = {size: 15,color:'#000'},
       options = $.extend({}, defaults, options),
     	$flake = $('<div id="flake" />').css({
                 position: 'absolute',opacity: 1,
               	'font-size': options.size,
-              	color: options.flakeColor,
+              	color: options.color,
                 bottom: '0px'
             });
   return function(txt){
@@ -64,17 +65,17 @@ $(document).ready(function(){
 	if(!option || !option.hasOwnProperty("count")){
 			// this.onSend("이펙트 버전이 업데이트 되어 초기화됨!");
 		option ={
-        minSize: 10,maxSize: 50,
-        text:'&#10052',
-        direction:"top",
-        color: "#fff",
-				anitime:1000,glitter:false,//애니메이션
-        startOpacity:1,endOpacity:.2,time:300,//시작/끝 애니매이션(투명도)
-        move_direction:"left",move:200,//흔들림 방향
-        delay:10000,speed:10,anitiming:"linear",
-        count:20,//개수
-				maxEmote:2,
-    };
+			minSize: 10,maxSize: 50,
+			text:'&#10052',
+			direction:"top",
+			color: "#fff",
+			anitime:1000,glitter:false,//애니메이션
+			startOpacity:1,endOpacity:.2,time:300,//시작/끝 애니매이션(투명도)
+			move_direction:"left",move:200,//흔들림 방향
+			delay:10000,speed:10,anitiming:"linear",
+			count:20,//개수
+			maxEmote:2,size:15
+		};
 		if(!option.hasOwnProperty("count"))
 			localStorage.setItem(options.username,JSON.stringify(option));
 	}
@@ -237,11 +238,11 @@ $(document).ready(function(){
 	        text:'&#10052',
 	        direction:"top",
 	        color: "#fff",
-					anitime:1000,glitter:false,//애니메이션
+			anitime:1000,glitter:false,//애니메이션
 	        startOpacity:1,endOpacity:.2,time:300,//시작/끝 애니매이션(투명도)
 	        move_direction:"left",move:200,//흔들림 방향
 	        delay:10000,speed:10,anitiming:"linear",
-	        count:20,maxEmote:2,
+	        count:20,maxEmote:2,size:15
 	    };
 			eff = $.fn.effect(option);
 			localStorage.setItem(options.username,JSON.stringify(option));
