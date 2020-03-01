@@ -10,7 +10,6 @@
     <script>
 //기본 연결 환경
 window.oauth_client_id = "g1rhyzp1s7y2d755xqjn1otspdgvc3";
-
 window.oauth_redirect_uri = "https://patrickmonster.github.io/tgd/twitch/tts.html";
 
 var voices = [];
@@ -23,7 +22,7 @@ if (window.speechSynthesis.onvoiceschanged !== undefined) {
 }
 
 $(document).ready(function(){
-	const oauth = localStorage.getItem("oauth"),users=[];
+	const oauth = localStorage.getItem("oauth");
 	window.channelname = getParams("channel");
 	if(!oauth)permiss();
 	if(!window.channelname){
@@ -33,28 +32,18 @@ $(document).ready(function(){
 	}
 	window.chatClient = new chatClient({port:443,channel:window.channelname,username:window.channelname,password:oauth});//접속채널
 	window.chatClient.open();
-	window.chatClient.onJoin=function(name){
-		if(users.indexOf(name)!=-1)return;
-		users.push(name);
-		if(name==window.channelname)return;
-		this.getUser(name,function(data){
-			var user=JSON.parse(data)["users"][0];
-			console.log(user);
-			var txt=user["display_name"]+$("#ui_greetings_op").val(),
-				i = $("<li/>").html(txt);
-			$("#ui_chatting").append(i);
-			scrollChat();
-			if(!$("input:checkbox[id='ui_chatting_join']").is(":checked"))return;
-			tts(txt);
-			window.chatClient.onSend(txt)
-		});
+	window.chatClient.onJoin=function(user){
+		if($("input:checkbox[id='ui_chatting_hidden']").is(":checked"))join(user);
+		else{
+			if(users.indexOf(id)!=-1)return;
+			users.push(id);
+		}
 	}
-	window.chatClient.webSocket.onclose=function(){
-		console.log("서버와 연결재요청!");
-		// setTimeout(function(){window.chatClient.open()},100)
-	};
+	window.chatClient.webSocket.onclose=function(){;};
 	window.chatClient.onBits=function(bit,name,message){tts(name+"님 "+bit+"비트후원 감사합니다!")};
 	window.chatClient.onChating =function(parsed){
+		if(users.indexOf(parsed["display-id"])==-1)
+			join(parsed["display-id"]);
 		if(parsed["badges"].indexOf("broadcaster")!=-1){
 			var i = $("<li/>").html(parsed["message"]);
 			$("#ui_chatting").append(i);
@@ -63,9 +52,48 @@ $(document).ready(function(){
 		}
 	};
 	//데이터값 설정
+	get_checkbox.call($("input:checkbox[id='ui_chatting_chat_tts']"))
+	get_checkbox.call($("input:checkbox[id='ui_chatting_join']"))
+	get_checkbox.call($("input:checkbox[id='ui_chatting_tts']"))
+	get_checkbox.call($("input:checkbox[id='ui_chatting_hidden']"))
 	get_input.call($("#ui_greetings_op"));
-	$("input:checkbox[id='ui_chatting_join']").attr("checked",localStorage.getItem("tts_ui_chatting_join")==1);
 });
+
+var users=[];
+//!$("input:checkbox[id='ui_chatting_hidden']").is(":checked")
+function join(id){
+	if(users.indexOf(id)!=-1)return;
+	users.push(id);
+	updateUser();
+	if(id==window.channelname)return;
+	window.chatClient.getUser(id,function(data){
+		var user=JSON.parse(data)["users"][0];
+		var txt=user["display_name"]+$("#ui_greetings_op").val();
+		$("#ui_chatting").append($("<li/>").html(txt));
+		scrollChat();
+		if($("input:checkbox[id='ui_chatting_join']").is(":checked"))
+			window.chatClient.onSend(txt)
+		if($("input:checkbox[id='ui_chatting_tts']").is(":checked"))
+			tts(txt);
+	});
+}
+
+function updateUser(){
+	var e = $("#ui_chatting_user"),v="";
+	for(var u of users)v+=u+"<br>";
+	e.html(v);
+}
+
+function sendChat(){
+	var ele=$("#ui_chatting_in"),msg=ele.val();
+	if(!msg||msg.length<=0)return
+	$("#ui_chatting").append($("<li/>").html(msg));
+	//$("#ui_chatting").prepend($("<li/>").html(msg));
+	ele.val("");
+	scrollChat();
+	window.chatClient.onSend(msg);
+	if($("input:checkbox[id='ui_chatting_tts']").is(":checked"))tts(msg);
+}
 
 function permiss(){//https://lastorder.xyz/chatreader-kor/speech.html 참고
 	if (document.location.hash!==""&&document.location.hash.indexOf("access_token")!==-1){
@@ -182,20 +210,13 @@ function getChannel(oauth){//스트리머 채널값 가져오기
 	return channel;
 }
 
-function sendChat(){
-	var ele=$("#ui_chatting_in"),msg=ele.val();
-	if(!msg||msg.length<=0)return
-	$("#ui_chatting").append($("<li/>").html(msg));
-	//$("#ui_chatting").prepend($("<li/>").html(msg));
-	ele.val("");
-	console.log(msg);
-	scrollChat();
-	tts(msg);
-	window.chatClient.onSend(msg)
-}
 function scrollChat(){
 	var chat=document.getElementById("ui_chatting");
 	$("#ui_chatting").animate({"scrollTop":chat.scrollHeight - chat.clientHeight},300);
+}
+function get_checkbox(){//
+	var e=$(this);
+	e.attr("checked",localStorage.getItem("tts_"+e.attr("id"))==1);
 }
 function set_input(){//
 	var e=$(this);
@@ -234,10 +255,18 @@ input[type="range"]::-webkit-slider-thumb{
 <body>
 	<div class="">
 		<nav style="display:inline;float:left">
-			<input id=ui_chatting_join type="checkbox" onchange="localStorage.setItem('tts_ui_chatting_join',$(this).is(':checked')?1:0);" name="인사" value="" checked>인사 맨트:{닉네임}<input id="ui_greetings_op" onkeydown="if(event.keyCode!=13)return;set_input.call(this)" type="text" name="님 어서오세요." value="님 어서오세요.">
+			<input id=ui_chatting_chat_tts type="checkbox" onchange="localStorage.setItem('tts_ui_chatting_chat_tts',$(this).is(':checked')?1:0);" name="채팅tts" checked><label for="ui_chatting_chat_tts">채팅tts</label>
+			<input id=ui_chatting_tts type="checkbox" onchange="localStorage.setItem('tts_ui_chatting_tts',$(this).is(':checked')?1:0);" name="tts" checked><label for="ui_chatting_tts">tts</label>
+			<input id=ui_chatting_join type="checkbox" onchange="localStorage.setItem('tts_ui_chatting_join',$(this).is(':checked')?1:0);" name="인사" checked><label for="ui_chatting_join">인사</label>
+			<input id=ui_chatting_hidden type="checkbox" onchange="localStorage.setItem('tts_ui_chatting_hidden',$(this).is(':checked')?1:0);" name="관음" checked><label for="ui_chatting_hidden">관음</label><br>
+			맨트:{닉네임}<input id="ui_greetings_op" onkeydown="if(event.keyCode!=13)return;set_input.call(this)" type="text" name="님 어서오세요." value="님 어서오세요.">
 			<ul id=ui_chatting style="padding:0;list-style:none;width:300px;height:300px;overflow-y:auto;overflow-x:hidden;background:yellow"></ul>
 			<input id=ui_chatting_in   type="text" onkeydown="if(event.keyCode!=13)return;sendChat();" style="width:240px">
 			<button id=ui_chatting_bt type="button" name="button" onclick="sendChat()">전 송</button>
+		</nav>
+		<nav>
+			<!-- 채팅 유저 -->
+			<div id=ui_chatting_user style="width:100px;height:350px;overflow-x:hidden;overflow-y:auto;background:yellow"></div>
 		</nav>
 		<nav style="display:none/*inline*/">
 			<div class="">
