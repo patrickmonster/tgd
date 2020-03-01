@@ -10,7 +10,9 @@
     <script>
 //기본 연결 환경
 window.oauth_client_id = "g1rhyzp1s7y2d755xqjn1otspdgvc3";
+
 window.oauth_redirect_uri = "https://patrickmonster.github.io/tgd/twitch/tts.html";
+window.oauth_redirect_uri = "http://549.ipdisk.co.kr/chatbot/tts.html"
 
 var voices = [];
 function setVoiceList() {
@@ -50,7 +52,7 @@ $(document).ready(function(){
 	}
 	window.chatClient.webSocket.onclose=function(){
 		console.log("서버와 연결재요청!");
-		setTimeout(function(){window.chatClient.open()},100)
+		// setTimeout(function(){window.chatClient.open()},100)
 	};
 	window.chatClient.onBits=function(bit,name,message){tts(name+"님 "+bit+"비트후원 감사합니다!")};
 	window.chatClient.onChating =function(parsed){
@@ -63,7 +65,7 @@ $(document).ready(function(){
 	};
 	//데이터값 설정
 	get_input.call($("#ui_greetings_op"));
-
+	$("input:checkbox[id='ui_chatting_join']").attr("checked",localStorage.getItem("tts_ui_chatting_join")==1);
 });
 
 function permiss(){//https://lastorder.xyz/chatreader-kor/speech.html 참고
@@ -233,7 +235,7 @@ input[type="range"]::-webkit-slider-thumb{
 <body>
 	<div class="">
 		<nav style="display:inline;float:left">
-			<input id=ui_chatting_join type="checkbox" name="인사" value="">인사 맨트:{닉네임}<input id="ui_greetings_op" onkeydown="if(event.keyCode!=13)return;set_input.call(this)" type="text" name="님 어서오세요." value="님 어서오세요.">
+			<input id=ui_chatting_join type="checkbox" onchange="localStorage.setItem('tts_ui_chatting_join',$(this).is(':checked')?1:0);" name="인사" value="" checked>인사 맨트:{닉네임}<input id="ui_greetings_op" onkeydown="if(event.keyCode!=13)return;set_input.call(this)" type="text" name="님 어서오세요." value="님 어서오세요.">
 			<ul id=ui_chatting style="padding:0;list-style:none;width:300px;height:300px;overflow-y:auto;overflow-x:hidden;background:yellow"></ul>
 			<input id=ui_chatting_in   type="text" onkeydown="if(event.keyCode!=13)return;sendChat();" style="width:240px">
 			<button id=ui_chatting_bt type="button" name="button" onclick="sendChat()">전 송</button>
