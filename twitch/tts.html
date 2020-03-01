@@ -22,7 +22,7 @@ if (window.speechSynthesis.onvoiceschanged !== undefined) {
 }
 
 $(document).ready(function(){
-	const oauth = localStorage.getItem("oauth");
+	const oauth = localStorage.getItem("oauth"),users=[];
 	window.channelname = getParams("channel");
 	if(!oauth)permiss();
 	if(!window.channelname){
@@ -33,6 +33,9 @@ $(document).ready(function(){
 	window.chatClient = new chatClient({port:443,channel:window.channelname,username:window.channelname,password:oauth});//접속채널
 	window.chatClient.open();
 	window.chatClient.onJoin=function(name){
+		if(users.indexOf(name)!=-1)return;
+		users.push(name);
+		if(!$("input:checkbox[id='ui_chatting_join']").is(":checked"))return;
 		if(name==window.channelname)return;
 		this.getUser(name,function(data){
 			var user=JSON.parse(data)["users"][0];
@@ -58,6 +61,9 @@ $(document).ready(function(){
 			tts(parsed.message);
 		}
 	};
+	//데이터값 설정
+	get_input.call($("#ui_greetings_op"));
+
 });
 
 function permiss(){//https://lastorder.xyz/chatreader-kor/speech.html 참고
@@ -190,15 +196,15 @@ function scrollChat(){
 	var chat=document.getElementById("ui_chatting");
 	$("#ui_chatting").animate({"scrollTop":chat.scrollHeight - chat.clientHeight},300);
 }
-// function chatUsers(user){
-// 	var xmlhttp = new XMLHttpRequest(),data="";
-// 	xmlhttp.onreadystatechange=function(){if(this.readyState==4&&this.status==200)data=this.responseText};
-// 	xmlhttp.open("GET","https://api.twitch.tv/kraken/users?login="+user,false);
-// 	xmlhttp.setRequestHeader("accept","application/vnd.twitchtv.v5+json");
-// 	xmlhttp.setRequestHeader('Authorization','OAuth '+localStorage.getItem("oauth"));
-// 	xmlhttp.send();
-// 	return data;
-// }
+function set_input(){//
+	var e=$(this);
+	localStorage.setItem("tts_"+e.attr("id"),e.val());
+	return e.val();
+}
+function get_input(){//
+	var data = localStorage.getItem("tts_"+this.attr("id"));
+	if(data)this.val(data);
+}
 
 </script>
 	<style>
@@ -227,10 +233,10 @@ input[type="range"]::-webkit-slider-thumb{
 <body>
 	<div class="">
 		<nav style="display:inline;float:left">
-			<input type="checkbox" name="인사" value="">인사 맨트:{닉네임}<input id="ui_greetings_op" type="text" name="님 어서오세요." value="님 어서오세요.">
+			<input id=ui_chatting_join type="checkbox" name="인사" value="">인사 맨트:{닉네임}<input id="ui_greetings_op" onkeydown="if(event.keyCode!=13)return;set_input.call(this)" type="text" name="님 어서오세요." value="님 어서오세요.">
 			<ul id=ui_chatting style="padding:0;list-style:none;width:300px;height:300px;overflow-y:auto;overflow-x:hidden;background:yellow"></ul>
-			<input id=ui_chatting_in type="text" onkeydown="event.keyCode==13&&sendChat()" style="width:240px">
-			<button id=ui_chatting_bt type="button" name="button" onclick="sendChat()">테스트</button>
+			<input id=ui_chatting_in   type="text" onkeydown="if(event.keyCode!=13)return;sendChat();" style="width:240px">
+			<button id=ui_chatting_bt type="button" name="button" onclick="sendChat()">전 송</button>
 		</nav>
 		<nav style="display:none/*inline*/">
 			<div class="">
