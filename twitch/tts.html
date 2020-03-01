@@ -34,10 +34,10 @@ $(document).ready(function(){
 	window.chatClient.open();
 	window.chatClient.onJoin=function(user){
 		if($("input:checkbox[id='ui_chatting_hidden']").is(":checked"))join(user);
-		else{
-			if(users.indexOf(id)!=-1)return;
-			users.push(id);
-		}
+		// else{
+		// 	if(users.indexOf(id)!=-1)return;
+		// 	users.push(id);
+		// }
 	}
 	window.chatClient.webSocket.onclose=function(){;};
 	window.chatClient.onBits=function(bit,name,message){tts(name+"님 "+bit+"비트후원 감사합니다!")};
@@ -59,7 +59,7 @@ $(document).ready(function(){
 	get_input.call($("#ui_greetings_op"));
 });
 
-var users=[];
+var users=["nightbot","twipkr","bbangddeock","ssakdook"];
 //!$("input:checkbox[id='ui_chatting_hidden']").is(":checked")
 function join(id){
 	if(users.indexOf(id)!=-1)return;
