@@ -36,7 +36,6 @@ $(document).ready(function(){
 	window.chatClient.onJoin=function(name){
 		if(users.indexOf(name)!=-1)return;
 		users.push(name);
-		if(!$("input:checkbox[id='ui_chatting_join']").is(":checked"))return;
 		if(name==window.channelname)return;
 		this.getUser(name,function(data){
 			var user=JSON.parse(data)["users"][0];
@@ -45,6 +44,7 @@ $(document).ready(function(){
 				i = $("<li/>").html(txt);
 			$("#ui_chatting").append(i);
 			scrollChat();
+			if(!$("input:checkbox[id='ui_chatting_join']").is(":checked"))return;
 			tts(txt);
 			window.chatClient.onSend(txt)
 		});
