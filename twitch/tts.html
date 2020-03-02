@@ -8,6 +8,8 @@
 		<!-- <script src="https://patrickmonster.github.io/effect/v.2/js/chat.js"></script> -->
 		<script src="https://patrickmonster.github.io/tgd/twitch/js/chat.tts.js" charset="utf-8"></script>
 		<script src="https://rawcdn.githack.com/blueimp/JavaScript-MD5/v2.10.0/js/md5.min.js"></script>
+		<script defer src="https://patrickmonster.github.io/tgd/js/jquery.minicolors.min.js"></script>
+	  <link rel="stylesheet" href="https://patrickmonster.github.io/tgd/css/jquery.minicolors.css">
     <script>
 //기본 연결 환경
 window.oauth_client_id = "g1rhyzp1s7y2d755xqjn1otspdgvc3";
@@ -49,7 +51,8 @@ $(document).ready(function(){
 			var i = $("<li/>").html(parsed["message"]);
 			$("#ui_chatting").append(i);
 			scrollChat();
-			tts(parsed.message);
+
+			if($("input:checkbox[id='ui_chatting_chat_tts']").is(":checked"))tts(parsed.message);
 		}
 	};
 	//데이터값 설정
@@ -60,6 +63,10 @@ $(document).ready(function(){
 	get_input.call($("#ui_greetings_op"));
 	$("#timer_font").change(function(){
 		window.chatClient.onSend('#시간 폰트 '+$(this).children('option:selected').val())
+	});
+
+	$("#color_selecter").minicolors({
+		defaultValue: '673AB7',format:'hex'
 	});
 });
 
@@ -240,6 +247,11 @@ function copyToClipboard(value) {
   document.execCommand("copy");
 	document.body.removeChild(aux);
 }
+
+function getColor(){
+	 var color = document.getElementById('color_selecter').value + "";
+	 return color.substring(1);
+}
 </script>
 	<style>
 *{
@@ -295,7 +307,9 @@ input[type="range"]::-webkit-slider-thumb{
 				<option value="2" select>폰트2</option>
 				<option value="3" select>폰트3</option>
 				<option value="4" select>폰트4</option>
-			</select>
+			</select><br>
+			<input type="text" id="color_selecter" class="form-control" value="#7300ff">
+			<button onclick="window.chatClient.onSend('#시간 색상 '+getColor())">변 경</button><br><br>
 		</nav>
 		<nav style="display:none/*inline*/">
 			<div class="">
