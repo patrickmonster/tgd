@@ -51,35 +51,49 @@ body {
     <script>
 
 Element.prototype.createElement=Element.prototype.C=function(ele){var ele=document.createElement(ele);this.appendChild(ele);return ele};
-window.addStyle=document.addStyle=function(){var a=arguments,b=a.length,c=0;for(;c<b;c++)document.head.C('style').innerHTML=a[c]};
+window.addStyle=document.addStyle=function(){var a=arguments,b=a.length,c=document.head.C('style');c.innerHTML=a[0];return c};
 $(document).ready(function(){
   var qury = document.location.href.split("#")[1],index=1,color="673AB7",
     style=document.addStyle("#clock{font-family:'f"+index+"';color:#"+color+"}");
   if (!qury)qury="rsj1120";
+  console.log(style);
   window.chatClient = new chatClient({channel:qury});
   window.chatClient.open();
   window.chatClient.webSocket.onclose =function(){};
   window.chatClient.onCommand =function(message){
     if(message[0].indexOf("시간")!=-1){
-      var func={
+      if(message.length<=1){
+        if(isPause)pauseAndStart();
+        style.innerHTML="#clock{font-family:'f"+index+"';color:#"+color+"}";
+        startTime = new Date();
+      }
+      ({
         "리셋":function(){
           startTime = new Date();
         },"설정":function(){
 
-        },"일시정지":pauseAndStart,"시작":pauseAndStart,
+        },"일시정지":function(){
+          if(!isPause)pauseAndStart();
+          pauseAndStart();
+        },"시작":function(){
+          if(isPause)pauseAndStart();
+          pauseAndStart();
+        },
         "정지":function(){},"폰트":function(i){
           if(["1","2","3","4"].indexOf(i)!=-1){
             index=i;
-            style.innerHTML="#clock{font-family:'f"+index+"';color:#'"+color+"'}";
+            style.innerHTML="#clock{font-family:'f"+index+"';color:#"+color+"}";
           }
         },"색상":function(i){
           if(i.length==6){
             color=i;
-            style.innerHTML="#clock{font-family:'f"+index+"';color:#'"+color+"'}";
+            style.innerHTML="#clock{font-family:'f"+index+"';color:#"+color+"}";
           }
         },"제거":function(){
+          if(!isPause)pauseAndStart();
+          style.innerHTML="#clock{font-family:'f"+index+"';color:#"+color+"00}";
         }
-      }[message[1]](message[2]);
+      }[message[1]])(message[2]);
     }
   };
 });
@@ -138,12 +152,10 @@ var pauseAndStart = function() {
         isPause = false;
         var term = new Date() - pauseTime;
         startTime = new Date(startTime.getTime() + term);
-        pauseEl.innerText = "Pause";
         interval = setInterval(setTime, 500);
     } else {
         isPause = true;
         pauseTime = new Date();
-        pauseEl.innerText = "Start";
         clearInterval(interval);
     }
 };
