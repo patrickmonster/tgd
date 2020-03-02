@@ -6,26 +6,21 @@
     <style>
 @font-face {
     font-family: "f1";
-    src: url("//patrickmonster.github.io/tgd/font/SFDigitalReadout-Medium.ttf") format('truetype');
+    src: url("//patrickmonster.github.io/tgd/font/to-the-king.ttf") format('truetype');
 }
 @font-face {
   font-family: 'f2';
-  src: url('//patrickmonster.github.io/tgd/font/SFDigitalReadout-Medium.ttf') format('truetype');
+  src: url('//patrickmonster.github.io/tgd/font/digital-7.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'f3';
-  src: url('//patrickmonster.github.io/tgd/font/SFDigitalReadout-Medium.ttf') format('truetype');
+  src: url('//patrickmonster.github.io/tgd/font/TickingTimebombBB.ttf') format('truetype');
 }
 
 @font-face {
   font-family: 'f4';
   src: url('//patrickmonster.github.io/tgd/font/SFDigitalReadout-Medium.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'f5';
-   src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWebLight.ttf') format('truetype');
 }
 
 body {
@@ -72,15 +67,16 @@ $(document).ready(function(){
           startTime = new Date();
         },"설정":function(){
 
-        },"일시정지":function(){
-          if(isPause)pauseAndStart();
-          pauseAndStart();
         },"시작":function(){
           if(!isPause)pauseAndStart();
           pauseAndStart();
         },
-        "정지":function(){},"폰트":function(i){
+        "정지":function(){
+          if(isPause)pauseAndStart();
+          pauseAndStart();
+        },"폰트":function(i){
           if(["1","2","3","4"].indexOf(i)!=-1){
+            console.log(i);
             index=i;
             style.innerHTML="#clock{font-family:'f"+index+"';color:#"+color+"}";
           }
