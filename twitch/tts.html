@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html>
 <head>
@@ -57,6 +58,9 @@ $(document).ready(function(){
 	get_checkbox.call($("input:checkbox[id='ui_chatting_tts']"))
 	get_checkbox.call($("input:checkbox[id='ui_chatting_hidden']"))
 	get_input.call($("#ui_greetings_op"));
+	$("#timer_font").change(function(){
+		window.chatClient.onSend('#시간 폰트 '+$(this).children('option:selected').val())
+	});
 });
 
 var users=["nightbot","twipkr","bbangddeock","ssakdook","==제외리스트=="];
@@ -228,6 +232,14 @@ function get_input(){//
 	if(data)this.val(data);
 }
 
+function copyToClipboard(value) {
+  var aux = document.createElement("input");
+  aux.setAttribute("value", value);
+  document.body.appendChild(aux);
+  aux.select();
+  document.execCommand("copy");
+	document.body.removeChild(aux);
+}
 </script>
 	<style>
 *{
@@ -264,9 +276,26 @@ input[type="range"]::-webkit-slider-thumb{
 			<input id=ui_chatting_in   type="text" onkeydown="if(event.keyCode!=13)return;sendChat();" style="width:240px">
 			<button id=ui_chatting_bt type="button" name="button" onclick="sendChat()">전 송</button>
 		</nav>
+		<nav style="display:inline;float:left">
+			<!-- 채팅 유저 -->
+			채팅 유저
+			<div id=ui_chatting_user style="width:130px;height:350px;overflow-x:hidden;overflow-y:auto;background:yellow"></div>
+		</nav>
 		<nav>
 			<!-- 채팅 유저 -->
-			<div id=ui_chatting_user style="width:130px;height:350px;overflow-x:hidden;overflow-y:auto;background:yellow"></div>
+			타이머<br>
+			<button id=ui_chatting_bt type="button" name="button" onclick="copyToClipboard('https://patrickmonster.github.io/tgd/twitch/time.html#'+window.channelname);setTimeout(function(){alert('링크가 복사되었습니다!')},100)">링크복사</button><br>
+			<button onclick="window.chatClient.onSend('#시간')">시 간</button><br>
+			<button onclick="window.chatClient.onSend('#시간 제거')">제 거</button><br>
+			<button onclick="window.chatClient.onSend('#시간 시작')">시 작</button><br>
+			<button onclick="window.chatClient.onSend('#시간 정지')">정 지</button><br>
+			<button onclick="window.chatClient.onSend('#시간 리셋')">리 셋</button><br>
+			<select id="timer_font">
+				<option value="1" select>폰트1</option>
+				<option value="2" select>폰트2</option>
+				<option value="3" select>폰트3</option>
+				<option value="4" select>폰트4</option>
+			</select>
 		</nav>
 		<nav style="display:none/*inline*/">
 			<div class="">
