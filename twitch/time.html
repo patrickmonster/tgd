@@ -73,10 +73,10 @@ $(document).ready(function(){
         },"설정":function(){
 
         },"일시정지":function(){
-          if(!isPause)pauseAndStart();
+          if(isPause)pauseAndStart();
           pauseAndStart();
         },"시작":function(){
-          if(isPause)pauseAndStart();
+          if(!isPause)pauseAndStart();
           pauseAndStart();
         },
         "정지":function(){},"폰트":function(i){
