@@ -23,13 +23,16 @@
   src: url('//patrickmonster.github.io/tgd/font/SFDigitalReadout-Medium.ttf') format('truetype');
 }
 
+html{
+  background: transparent !important;
+}
 body {
     overflow: hidden;
     text-align: center;
     vertical-align: middle;
     height: 100vh;
     position:relative;
-    background: rgba(0, 0, 0, 0);
+    background: transparent !important;
     margin: 0 auto;
 }
 
@@ -65,6 +68,8 @@ $(document).ready(function(){
       ({
         "리셋":function(){
           startTime = new Date();
+        },"카운트":function(){
+
         },"설정":function(){
 
         },"시작":function(){
