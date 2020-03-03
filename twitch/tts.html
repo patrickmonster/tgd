@@ -1,4 +1,5 @@
 
+
 <!doctype html>
 <html>
 <head>
@@ -51,7 +52,6 @@ $(document).ready(function(){
 			var i = $("<li/>").html(parsed["message"]);
 			$("#ui_chatting").append(i);
 			scrollChat();
-
 			if($("input:checkbox[id='ui_chatting_chat_tts']").is(":checked"))tts(parsed.message);
 		}
 	};
@@ -89,6 +89,7 @@ function join(id){
 	});
 }
 
+
 function updateUser(){
 	var e = $("#ui_chatting_user"),v="";
 	for(var u of users)v+=u+"<br>";
@@ -103,7 +104,7 @@ function sendChat(){
 	ele.val("");
 	scrollChat();
 	window.chatClient.onSend(msg);
-	if($("input:checkbox[id='ui_chatting_tts']").is(":checked"))tts(msg);
+	if($("input:checkbox[id='ui_chatting_chat_tts']").is(":checked"))tts(msg);
 }
 
 function permiss(){//https://lastorder.xyz/chatreader-kor/speech.html 참고
