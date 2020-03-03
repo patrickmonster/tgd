@@ -428,7 +428,7 @@ $(document).ready( function(){
 	var list = [28,301396363,301396373,301396453,301205415,301396357,301396406],
 		ele = $.fn.bottomup({target:"#effect_emote"}),option={
 			effect:$("#option1").children('option:selected').val(),target:"#effect_bord"
-		},onStop=()=>{},style=document.addStyle("#flake{color:"+$("#color_selecter").val()+"}");
+		},onStop=()=>{},style=document.addStyle("#flake{color:"+$("#color_selecter").val()+" !important}");
 	setInterval(function(){ele('<img src="https://static-cdn.jtvnw.net/emoticons/v1/'+randomItem(list)+'/1.0">');},4000);
 
 	function clearAll(){$(option.target).html("")};
@@ -458,7 +458,7 @@ $(document).ready( function(){
 	});
 	$("#color_selecter").minicolors({
 		defaultValue:'7300ff',format:'hex',
-		change:function(hex,opacity){style=document.addStyle("#flake{color:"+$("#color_selecter").val()+"}");}
+		change:function(hex,opacity){style=document.addStyle("#flake{color:"+$("#color_selecter").val()+" !important}");}
 	});
 	$("#count_selecter").change(function(){
 		option.count=$("#count_selecter").val();
