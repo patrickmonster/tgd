@@ -30,7 +30,6 @@ nav{
 }
 </style>
 <script type="text/javascript">
-
 Element.prototype.createElement=Element.prototype.C=function(ele){var ele=document.createElement(ele);this.appendChild(ele);return ele};
 window.addScript=document.addScript=function(a,b){b=document.head.C('script');b.src=a;return b};
 window.addLink=document.addLink=function(a,b){b=document.head.C('link');b.src=a;return b};
@@ -48,6 +47,7 @@ if(!commandSant.channel){
 commandSant.chat =function(parsed){
 	if(users.indexOf(parsed["display-id"])==-1)
 		join(parsed["display-id"],parsed["display-name"]);
+	if(["#","!","*"].indexOf(parsed.message[0])!=-1)return;
 	if(parsed["badges"].indexOf("broadcaster")!=-1){
 		if(document.getElementById("ui_chatting_chat_tts").checked)
 			tts(parsed.hasOwnProperty("emotes_message")?parsed["emotes_message"]:parsed.message);
