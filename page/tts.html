@@ -1,0 +1,153 @@
+<nav id="" style="display:inline;float:left">
+	<input id=ui_chatting_chat_tts type="checkbox" onchange="localStorage.setItem('tts_ui_chatting_chat_tts',this.checked?1:0);" name="채팅tts" checked><label for="ui_chatting_chat_tts">채팅tts</label>
+	<input id=ui_chatting_tts type="checkbox" onchange="localStorage.setItem('tts_ui_chatting_tts',this.checked?1:0);" name="tts" checked><label for="ui_chatting_tts">인사tts</label>
+	<input id=ui_chatting_join type="checkbox" onchange="localStorage.setItem('tts_ui_chatting_join',this.checked?1:0);" name="인사" checked><label for="ui_chatting_join">자동인사</label>
+	<input id=ui_chatting_hidden type="checkbox" onchange="localStorage.setItem('tts_ui_chatting_hidden',this.checked?1:0);" name="관음" checked><label for="ui_chatting_hidden">관음</label><br>
+	맨트:{닉네임}<input id="ui_greetings_op" onkeydown="if(event.keyCode!=13)return;set_input.call(this)" type="text" name="님 어서오세요." value="님 어서오세요.">
+	<!-- <ul id=ui_chatting style="padding:0;list-style:none;width:300px;height:300px;overflow-y:auto;overflow-x:hidden;background:yellow;color:#000"></ul>
+	<input id=ui_chatting_in   type="text" onkeydown="if(event.keyCode!=13)return;commandSant.chat({badges:'broadcaster','display-id':commandSant.user.name,'message':this.value});this.value=''" style="width:240px"> -->
+	<br><iframe id=chat_ui frameborder="0" scrolling="no" height="500" width="350"></iframe>
+	<!-- <button id=ui_chatting_bt type="button" name="button" onclick="commandSant.chat({badges:'broadcaster','display-id':commandSant.user.name,'message':document.getElementById('ui_chatting_in').value});document.getElementById('ui_chatting_in').value=''">전 송</button> -->
+</nav>
+<nav style="display:inline;float:left">
+	<!-- 채팅 유저 -->
+	채팅 유저<br>
+	<div id=ui_chatting_user></div>
+</nav>
+
+<style media="screen">
+nav{
+	margin:10px
+}
+#ui_chatting_user{
+	width:130px;
+	height:350px;
+	overflow-x:hidden;
+	overflow-y:auto;
+	background:#ffffff;
+	color:#000;
+	margin-top:21px;
+}
+</style>
+<script type="text/javascript">
+
+Element.prototype.createElement=Element.prototype.C=function(ele){var ele=document.createElement(ele);this.appendChild(ele);return ele};
+window.addScript=document.addScript=function(a,b){b=document.head.C('script');b.src=a;return b};
+window.addLink=document.addLink=function(a,b){b=document.head.C('link');b.src=a;return b};
+window.addStyle=document.addStyle=function(a,b){b=document.head.C('style');b.innerHTML=a;return b};
+
+if(!commandSant.channel){
+	if(confirm("tts사용을 위해서는 로그인이 필요합니다!\n로그인 하시겠습니까?")){
+		permiss();
+	}
+}else{
+	document.getElementById("chat_ui").src="https://www.twitch.tv/embed/"+commandSant.channel.username+"/chat";
+}
+
+
+commandSant.chat =function(parsed){
+	if(users.indexOf(parsed["display-id"])==-1)
+		join(parsed["display-id"],parsed["display-name"]);
+	if(parsed["badges"].indexOf("broadcaster")!=-1){
+		if(document.getElementById("ui_chatting_chat_tts").checked)
+			tts(parsed.hasOwnProperty("emotes_message")?parsed["emotes_message"]:parsed.message);
+	}
+};
+
+// function load(){
+get_checkbox.call(document.getElementById("ui_chatting_chat_tts"))
+get_checkbox.call(document.getElementById("ui_chatting_tts"))
+get_checkbox.call(document.getElementById("ui_chatting_join"))
+get_checkbox.call(document.getElementById("ui_chatting_hidden"))
+
+
+function join(id,name){
+	if(users.indexOf(id)!=-1)return;
+	users.push(id);
+	updateUser();
+	if(id==window.channelname)return;
+	commandSant.channel.getUser(id,function(data){
+		var user=JSON.parse(data)["users"][0];
+		var txt=user["display_name"]+document.getElementById("ui_greetings_op").value;
+		if(document.getElementById("ui_chatting_join").checked)
+			commandSant.channel.onSend(txt)
+		if(document.getElementById("ui_chatting_tts").checked)
+				tts(txt);
+	});
+}
+updateUser();
+
+function updateUser(){
+	var e = document.getElementById("ui_chatting_user"),v="";
+	for(var i in users){if(i<users_lenght)continue;v+=users[i]+"<br>"}
+	e.innerHTML=v;
+}
+
+function updateTTSUser(){
+	var e = document.getElementById("ui_chatting_tts_user"),v="";
+	for(var i in users){if(i<users_lenght)continue;v+=users[i]+"<br>"}
+	e.innerHTML=v;
+}
+
+function tts(txt){//tts 호출
+	var lang = 'ko-KR';
+	var utterThis = new SpeechSynthesisUtterance(txt);
+	for(var i = 0; i < voices.length ; i++) {
+		if(voices[i].lang.indexOf(lang) >= 0 || voices[i].lang.indexOf(lang.replace('-', '_')) >= 0) {
+			utterThis.voice = voices[i];
+		}
+	}
+	utterThis.onerror=function(eve){
+		alert(eve.error);
+	}
+	utterThis.lang = lang;
+	utterThis.pitch = 1;
+	utterThis.rate = 1; //속도
+	utterThis.onend=function(){
+		// console.log("end");
+	}
+	window.speechSynthesis.speak(utterThis);
+}
+function replaceTwitchEmoticon(message, emotes) {
+	let ranges, id, emote_id, regExp;
+	const replace_list = {};
+
+	if (typeof emotes != 'undefined') {
+		const emote_list = emotes.split("/");
+		emote_list.forEach(function (emote_replace) {
+			ranges = emote_replace.split(":");
+			id = ranges[0];
+			if (typeof ranges[1] == 'undefined') return;
+			ranges = ranges[1].split(",");
+			if (typeof ranges[0] != 'undefined') {
+				ranges = ranges[0].split("-");
+				emote_id = message.substring(parseInt(ranges[0]), parseInt(ranges[1]) + 1);
+				replace_list[emote_id] = id;
+			}
+		});
+
+		for (const replace_id in replace_list) {
+			regExp = new RegExp(escapeRegExp(replace_id), "g");
+			message = message.replace(regExp, "");
+		}
+	}
+
+	return message;
+}
+
+// function scrollChat(){
+// 	var chat=document.getElementById("ui_chatting");
+// 	chat.scrollTop=chat.scrollHeight;
+// }
+function get_checkbox(){
+	this.checked=localStorage.getItem("tts_"+this.getAttribute("id"))==1;
+}
+function set_input(){
+	localStorage.setItem("tts_"+this.getAttribute("id"),this.value);
+	return this.value;
+}
+function get_input(){//
+	var data = localStorage.getItem("tts_"+this.getAttribute("id"));
+	if(data)this.value = data;
+}
+</script>

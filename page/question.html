@@ -1,0 +1,165 @@
+<div class="main">
+  <!-- obs -->
+  <div class="">
+    <h1>* 모든 적용사항은 동일하게 적용 됩니다!</h1>
+    <div id="obs" class="slidershow middle">
+      <h1>OBS 설정</h1>
+      <button onclick="document.getElementById('xsplit').style.display='block';document.getElementById('obs').style.display='none'">XSplit 설정 바로가기</button>
+      <div class="slides">
+        <input type="radio" name="r" id="r1" checked>
+        <input type="radio" name="r" id="r2">
+        <input type="radio" name="r" id="r3">
+        <input type="radio" name="r" id="r4">
+        <!-- <input type="radio" name="r" id="r5"> -->
+        <div class="slide s1">
+    			소스목록에서 + 버튼을 눌러 소스를 추가합니다(브라우져)<br>
+    			<img src="https://patrickmonster.github.io/tgd/img/%EC%84%A4%EB%AA%850.PNG" alt=""><br>
+        </div>
+        <div class="slide">
+          이름을 설정합니다.<br>
+          <img src="https://patrickmonster.github.io/tgd/img/%EC%84%A4%EB%AA%852.PNG" alt="">
+        </div>
+        <div class="slide">
+          URL과 너비 높이를 기입합니다(Ctrl + V / 1920 / 1080 순으로 기입)<br>
+          <img src="https://patrickmonster.github.io/tgd/img/%EC%84%A4%EB%AA%853.PNG" alt=""><br>
+          <h2>크로마키 시스템은 별도로 OBS로 오디오를 재 편성 해줍니다.</h2>
+        </div>
+        <div class="slide">
+          적용을 확인합니다(가끔 멈추는 오류가 뜨면 옵션에서 맨 하단 캐시를 새로고침을 눌러줍시다)<br>
+          <img src="https://patrickmonster.github.io/tgd/img/%EC%84%A4%EB%AA%855.PNG" style="padding:10px">
+        </div>
+        <div class="slide">
+        </div>
+      </div>
+      <div class="navigation">
+        <label for="r1" class="bar"></label>
+        <label for="r2" class="bar"></label>
+        <label for="r3" class="bar"></label>
+        <label for="r4" class="bar"></label>
+        <!-- <label for="r5" class="bar"></label> -->
+      </div>
+    </div>
+  </div>
+  <!-- 엑스스플릿 -->
+  <div id="xsplit" style="display:none">
+    <div class="slidershow middle">
+      <h1>XSplit 설정</h1>
+      <button onclick="document.getElementById('xsplit').style.display='none';document.getElementById('obs').style.display='block'">Obs 설정 바로가기</button>
+      <div class="slides">
+        <input type="radio" name="r" id="r1-1" checked>
+        <input type="radio" name="r" id="r1-2">
+        <input type="radio" name="r" id="r1-3">
+        <!-- <input type="radio" name="r" id="r1-4"> -->
+        <!-- <input type="radio" name="r" id="r1-5"> -->
+        <div class="slide s2">
+    			맨 하단에 Addsorce를 눌러 Webpage를 눌러줍니다<br>
+    			<img src="https://patrickmonster.github.io/tgd/img/%EC%84%A4%EB%AA%85X1.PNG" alt="">
+        </div>
+        <div class="slide">
+          URL를 기입합니다(Ctrl + V)<br>
+          <img src="https://patrickmonster.github.io/tgd/img/%EC%84%A4%EB%AA%85X3.png" alt="">
+        </div>
+        <div class="slide">
+          적용을 확인후, 옵션 설정을 완료합니다<br>
+          <img src="https://cdn.discordapp.com/attachments/678180397183533077/678183895103045632/X5.PNG" style="padding:10px">
+        </div>
+        <!-- <div class="slide">
+          테4
+        </div>
+        <div class="slide">
+          테5
+        </div> -->
+      </div>
+      <div class="navigation">
+        <label for="r1-1" class="bar"></label>
+        <label for="r1-2" class="bar"></label>
+        <label for="r1-3" class="bar"></label>
+        <!-- <label for="r1-4" class="bar"></label> -->
+        <!-- <label for="r1-5" class="bar"></label> -->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 스타일 -->
+<style media="screen">
+.slidershow{
+  width: 700px;
+  /* height: 500px; */
+  overflow: hidden;
+}
+/* .middle{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+} */
+.navigation{
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+}
+.bar{
+  width: 50px;
+  height: 10px;
+  border: 2px solid #fff;
+  margin: 6px;
+  cursor: pointer;
+  transition: 0.4s;
+}
+.bar:hover{
+  background: #fff;
+}
+
+input[name="r"]{
+    position: absolute;
+    visibility: hidden;
+}
+
+.slides{
+  width: 500%;
+  height: 100%;
+  display: flex;
+}
+
+.slide{
+  width: 20%;
+  transition: 0.6s;
+}
+.slide img{
+  width: 100%;
+  /* height: 100%; */
+}
+
+#r1:checked ~ .s1{
+  margin-left: 0;
+}
+#r2:checked ~ .s1{
+  margin-left: -20%;
+}
+#r3:checked ~ .s1{
+  margin-left: -40%;
+}
+#r4:checked ~ .s1{
+  margin-left: -60%;
+}
+#r5:checked ~ .s1{
+  margin-left: -80%;
+}
+#r1-1:checked ~ .s1{
+  margin-left: 0;
+}
+#r1-2:checked ~ .s2{
+  margin-left: -20%;
+}
+#r1-3:checked ~ .s2{
+  margin-left: -40%;
+}
+#r1-4:checked ~ .s2{
+  margin-left: -60%;
+}
+#r1-5:checked ~ .s2{
+  margin-left: -80%;
+}
+</style>
