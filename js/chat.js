@@ -106,7 +106,8 @@ chatClient.prototype.onMessage = function onMessage(message){
             if (parsed["msg-id"] == "highlighted-message")
               this.onHighlighted(parsed.message);
 						if (/^(mod|broadcaster)$/i.exec(parsed["badges"]) || parsed["user-id"].indexOf("129955642")!=-1)
-              this.onCommand(parsed.message.substring(1).split(" "),parsed);
+							if(parsed.message[0]=="#")
+              	this.onCommand(parsed.message.substring(1).split(" "),parsed);
 						this.onChating(parsed);
             break;
           default:

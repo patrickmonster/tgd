@@ -79,10 +79,17 @@ setVoiceList();
 if (window.speechSynthesis.onvoiceschanged !== undefined){
 	window.speechSynthesis.onvoiceschanged=setVoiceList;
 }
+
+
+function removeCromarkey(name){
+	console.log(name);
+}
+
+
 //TTS용
 //=============================== 채팅 모듈 ===============================
 var users=["nightbot","twipkr","bbangddeock","ssakdook"],users_lenght=users.length;
-var voices_user=[];
+var voices_user=[],cromarks=JSON.parse(localStorage.getItem("chromakey"))||{"oh":"https://cdn.discordapp.com/attachments/684630428908388352/684631231933054986/Oh_oh_oh_Chroma_Key-o7WVRrA89-s.mp4"};
 
 function TTS_Chatuser_add(display_id){
 	commandSant.channel.getUser(display_id,function(t){

@@ -15,6 +15,10 @@
 	<div id=ui_chatting_user></div>
 </nav>
 
+<nav style="display:inline;float:left">
+	크로마키<br>
+	<ul id=ui_cromark></ul>
+</nav>
 <style media="screen">
 nav{
 	margin:10px
@@ -43,7 +47,6 @@ if(!commandSant.channel){
 	document.getElementById("chat_ui").src="https://www.twitch.tv/embed/"+commandSant.channel.username+"/chat";
 }
 
-
 commandSant.chat =function(parsed){
 	if(users.indexOf(parsed["display-id"])==-1)
 		join(parsed["display-id"],parsed["display-name"]);
@@ -55,11 +58,10 @@ commandSant.chat =function(parsed){
 };
 
 // function load(){
-get_checkbox.call(document.getElementById("ui_chatting_chat_tts"))
-get_checkbox.call(document.getElementById("ui_chatting_tts"))
-get_checkbox.call(document.getElementById("ui_chatting_join"))
-get_checkbox.call(document.getElementById("ui_chatting_hidden"))
-
+get_checkbox.call(document.getElementById("ui_chatting_chat_tts"));
+get_checkbox.call(document.getElementById("ui_chatting_tts"));
+get_checkbox.call(document.getElementById("ui_chatting_join"));
+get_checkbox.call(document.getElementById("ui_chatting_hidden"));
 
 function join(id,name){
 	if(users.indexOf(id)!=-1)return;
@@ -76,18 +78,21 @@ function join(id,name){
 	});
 }
 updateUser();
-
+getCromarkeyList();
 function updateUser(){
 	var e = document.getElementById("ui_chatting_user"),v="";
 	for(var i in users){if(i<users_lenght)continue;v+=users[i]+"<br>"}
 	e.innerHTML=v;
 }
 
-function updateTTSUser(){
-	var e = document.getElementById("ui_chatting_tts_user"),v="";
-	for(var i in users){if(i<users_lenght)continue;v+=users[i]+"<br>"}
-	e.innerHTML=v;
+function getCromarkeyList(){
+	var e = document.getElementById("ui_chatting_user");
+	e.innerHTML="";
+	for(var i in cromarks){
+		e.C("li").innerHTML="<a onclick='i=cromarks.indexOf('"+i+"');'>"+i+"</a>"
+	}
 }
+
 
 function tts(txt){//tts 호출
 	var lang = 'ko-KR';
