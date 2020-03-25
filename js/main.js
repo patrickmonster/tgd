@@ -4,7 +4,7 @@ window.addLink=document.addLink=function(a,b){b=document.head.C('link');b.src=a;
 window.addStyle=document.addStyle=function(a,b){b=document.head.C('style');b.innerHTML=a;return b};
 
 window.oauth_client_id = "g1rhyzp1s7y2d755xqjn1otspdgvc3";
-window.oauth_redirect_uri = "https://patrickmonster.github.io/tgd/";
+window.oauth_redirect_uri = "http://549.ipdisk.co.kr/chatbot/";
 //채팅
 let commandSant = {
 	command:null,channel:null,user:{}, conn:0,chat:0,chats:[],
@@ -80,25 +80,35 @@ if (window.speechSynthesis.onvoiceschanged !== undefined){
 	window.speechSynthesis.onvoiceschanged=setVoiceList;
 }
 
-
-function removeCromarkey(name){
-	console.log(name);
+function callCromarkey(name){
+	commandSant.command.onSend("*"+name);
 }
 
+function removeCromarkey(name){
+	delete cromarks[name];
+	reCromarkey();
+	commandSant.command.onSend(commandSant.channel.channel+" #영상 "+name+" \'");
+	localStorage.setItem("chromakey",JSON.stringify(cromarks));
+}
+
+function addCromarkey(name,url,a){
+	if(!url||a)alert("잘못된 형식");
+	cromarks[name] = url;
+	reCromarkey();
+	commandSant.command.onSend("#영상 "+name+" "+url);
+	localStorage.setItem("chromakey",JSON.stringify(cromarks));
+}
 
 //TTS용
 //=============================== 채팅 모듈 ===============================
 var users=["nightbot","twipkr","bbangddeock","ssakdook"],users_lenght=users.length;
-var voices_user=[],cromarks=JSON.parse(localStorage.getItem("chromakey"))||{"oh":"https://cdn.discordapp.com/attachments/684630428908388352/684631231933054986/Oh_oh_oh_Chroma_Key-o7WVRrA89-s.mp4"};
-
+var voices_user=[],cromarks=JSON.parse(localStorage.getItem("chromakey"))||{"oh":"https://cdn.discordapp.com/attachments/684630428908388352/684631231933054986/Oh_oh_oh_Chroma_Key-o7WVRrA89-s.mp4"},
+	reCromarkey;
 function TTS_Chatuser_add(display_id){
 	commandSant.channel.getUser(display_id,function(t){
 		var u=JSON.parse(t)["users"][0];
 		voices_user.push([display_id,"<a onclick=''></a>"]);
 	})
-}
-function  TTS_Chatuser_remove(display_id){
-
 }
 
 
@@ -119,7 +129,6 @@ function ChatConnect(oauth){// 사용자 채널에 연결
 		commandSant.user=JSON.parse(t)["users"][0];
 		var ele =document.getElementById("login");
 		voices_user.push([commandSant.user["display-id"],"<a onclick=''>"+commandSant.user["display-name"]+"</a>"]);
-
 
 		users.push(commandSant.user["name"]);
 		users_lenght=users.length;
