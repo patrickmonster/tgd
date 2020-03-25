@@ -95,7 +95,7 @@ function addCromarkey(name,url,a){
 	if(!url||a)alert("잘못된 형식");
 	cromarks[name] = url;
 	reCromarkey();
-	commandSant.command.onSend("#영상 "+name+" "+url);
+	commandSant.command.onSend(commandSant.channel.channel+" #영상 "+name+" "+url);
 	localStorage.setItem("chromakey",JSON.stringify(cromarks));
 }
 
