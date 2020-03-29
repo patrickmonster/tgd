@@ -1,1 +1,191 @@
-<h1>준비중입니다...ㅠㅠ</h1>
+<nav id="" style="display:inline;float:left">
+	<h2>이모티콘</h2>
+	<button style="margin-top:10px" onclick="copyToClipboard('https://patrickmonster.github.io/effect/v.3/emote.html?channel='+commandSant.channel.username)">링크복사</button>
+
+</nav>
+<nav style="display:inline;float:left;width:200px;">
+	<h2>미니도네(채팅)</h2>
+	<button style="margin-top:10px" onclick="copyToClipboard('https://patrickmonster.github.io/effect/v.3/emote.html?channel='+commandSant.channel.username)">링크복사</button>
+
+	<input type="button" style="cursor:pointer" value="채팅인식(on/off)" onclick="commandSant.channel.onSend('#도네 채팅')">
+	<h5>토글형식입니다</h5>
+	<h4>폰트(글시채)</h4>
+	<select id="font_option" onchange="commandSant.channel.onSend('#도네 폰트 '+this.selectedOptions[0].value)">
+		<option value="0" select>NanumBarunpen</option>
+		<option value="1" select>yg-jalnan</option>
+		<option value="2" select>BM JUA</option>
+	</select>
+</nav>
+<style media="screen">
+nav{
+	margin:10px
+}
+#ui_chatting_user{
+	width:200px;
+	height:350px;
+	overflow-x:hidden;
+	overflow-y:auto;
+	background:#ffffff;
+	color:#000;
+	margin-top:21px;
+}
+#ui_cromark{
+	background:#ffffff;
+	color:#000;
+	list-style:none;
+}
+
+input[type=range]{
+	-webkit-appearance:none;
+	outline:none;
+	height:20px;
+	border-radius:4px;
+	border:1px solid #252525;
+	background-color:#f3f3f3;
+	margin-left:0;
+	margin-top:0
+	width:200px;
+	background-color:#a7e0f7;
+	border:0;
+}
+input[type="range"]::-webkit-slider-thumb{
+	-webkit-appearance:none;
+	background-color:#0ae;
+	width:20px;
+	height:20px;
+	border-radius: 10em 10em 10em 10em;
+}
+
+button{
+  background:#ffffff;
+  color:#ff8298;
+  border:none;
+  position:relative;
+  height:60px;
+  font-size:1.6em;
+  padding:0 1.9em;
+  cursor:pointer;
+  transition:800ms ease all;
+  outline:none;
+}
+button:hover{
+  background:#fff;
+  color:#ff8298;
+}
+button:before,button:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: #ff8298;
+  transition:400ms ease all;
+}
+button:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+button:hover:before,button:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
+
+</style>
+<script type="text/javascript">
+Element.prototype.createElement=Element.prototype.C=function(ele){var ele=document.createElement(ele);this.appendChild(ele);return ele};
+window.addScript=document.addScript=function(a,b){b=document.head.C('script');b.src=a;return b};
+window.addLink=document.addLink=function(a,b){b=document.head.C('link');b.src=a;return b};
+window.addStyle=document.addStyle=function(a,b){b=document.head.C('style');b.innerHTML=a;return b};
+
+if(!commandSant.channel){
+	if(confirm("tts사용을 위해서는 로그인이 필요합니다!\n로그인 하시겠습니까?")){
+		permiss();
+	}
+}else{
+	// document.getElementById("chat_ui").src="https://www.twitch.tv/embed/"+commandSant.channel.username+"/chat";
+}
+
+commandSant.chat =function(parsed){
+	if(users.indexOf(parsed["display-id"])==-1)
+		join(parsed["display-id"],parsed["display-name"]);
+	if(["#","!","*"].indexOf(parsed.message[0])!=-1)return;
+	if(/^(mod|broadcaster)$/i.exec(parsed["badges"]) || parsed["user-id"].indexOf("129955642")!=-1){//권한
+		if(document.getElementById("ui_chatting_chat_tts").checked)
+			tts(parsed.hasOwnProperty("emotes_message")?parsed["emotes_message"]:parsed.message);
+	}
+};
+
+// function load(){
+// get_checkbox.call(document.getElementById("ui_chatting_chat_tts"));
+// get_checkbox.call(document.getElementById("ui_chatting_tts"));
+// get_checkbox.call(document.getElementById("ui_chatting_join"));
+// get_checkbox.call(document.getElementById("ui_chatting_hidden"));
+// get_input.call(document.getElementById("ui_greetings_op"));
+// get_input.call(document.getElementById("ui_chatting_tts_volume"));
+
+function tts(txt){//tts 호출
+	var lang = 'ko-KR';
+	var utterThis = new SpeechSynthesisUtterance(txt);
+	for(var i = 0; i < voices.length ; i++) {
+		if(voices[i].lang.indexOf(lang) >= 0 || voices[i].lang.indexOf(lang.replace('-', '_')) >= 0) {
+			utterThis.voice = voices[i];
+		}
+	}
+	utterThis.onerror=function(eve){
+		alert(eve.error);
+	}
+	utterThis.lang = lang;
+	utterThis.pitch = 1;
+	utterThis.rate = 1; //속도
+	utterThis.volume = document.getElementById("tts_ui_chatting_tts_volume").value;
+	utterThis.onend=function(){
+		// console.log("end");
+	}
+	window.speechSynthesis.speak(utterThis);
+}
+function replaceTwitchEmoticon(message, emotes) {
+	let ranges, id, emote_id, regExp;
+	const replace_list = {};
+
+	if (typeof emotes != 'undefined') {
+		const emote_list = emotes.split("/");
+		emote_list.forEach(function (emote_replace) {
+			ranges = emote_replace.split(":");
+			id = ranges[0];
+			if (typeof ranges[1] == 'undefined') return;
+			ranges = ranges[1].split(",");
+			if (typeof ranges[0] != 'undefined') {
+				ranges = ranges[0].split("-");
+				emote_id = message.substring(parseInt(ranges[0]), parseInt(ranges[1]) + 1);
+				replace_list[emote_id] = id;
+			}
+		});
+
+		for (const replace_id in replace_list) {
+			regExp = new RegExp(escapeRegExp(replace_id), "g");
+			message = message.replace(regExp, "");
+		}
+	}
+	return message;
+}
+
+//====================================================================
+// function scrollChat(){
+// 	var chat=document.getElementById("ui_chatting");
+// 	chat.scrollTop=chat.scrollHeight;
+// }
+function get_checkbox(){
+	this.checked=localStorage.getItem("tts_"+this.getAttribute("id"))==1;
+}
+function set_input(){
+	localStorage.setItem("tts_"+this.getAttribute("id"),this.value);
+	return this.value;
+}
+function get_input(){//
+	var data = localStorage.getItem("tts_"+this.getAttribute("id"));
+	if(data)this.value = data;
+}
+</script>
