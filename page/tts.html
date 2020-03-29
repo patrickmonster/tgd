@@ -3,6 +3,7 @@
 	<input id=ui_chatting_tts type="checkbox" onchange="localStorage.setItem('tts_ui_chatting_tts',this.checked?1:0);" name="tts" checked><label for="ui_chatting_tts">인사tts</label>
 	<input id=ui_chatting_join type="checkbox" onchange="localStorage.setItem('tts_ui_chatting_join',this.checked?1:0);" name="인사" checked><label for="ui_chatting_join">자동인사</label>
 	<input id=ui_chatting_hidden type="checkbox" onchange="localStorage.setItem('tts_ui_chatting_hidden',this.checked?1:0);" name="관음" checked><label for="ui_chatting_hidden">관음</label><br>
+	볼륨<input type="range" onchange="localStorage.setItem('tts_ui_chatting_volume',this.value);" id="ui_chatting_tts_volume" style="width:250px" step=".01" value=".3" min=".01" max="1"><br>
 	맨트:{닉네임}<input id="ui_greetings_op" onkeydown="if(event.keyCode!=13)return;localStorage.setItem('tts_'+this.getAttribute('id'),this.value)" type="text" name="님 어서오세요." value="님 어서오세요.">
 	<br><iframe id=chat_ui frameborder="0" scrolling="no" height="500" width="350"></iframe>
 </nav>
@@ -18,7 +19,7 @@
 	<h5 style="margin-top:10px;">하단에 태그 띄우고 링크 넣어주시고 앤터! 하면 크로마키 등록!</h5>
 	<br>추가하기
 	<input id=ui_chatting_in  placeholder="테그 링크" type="text" onkeydown="if(event.keyCode!=13)return;i=this.value.split(' ');addCromarkey(i[0],i[1]);this.value=''" style="width:196px">
-	<input type="button" style="cursor:pointer" value="영상중지" onclick="commandSant.command.onSend(commandSant.channel.username+' #영상 정지')">
+	<input type="button" style="cursor:pointer" value="영상중지" onclick="commandSant.command.onSend(commandSant.channel.username +' #영상 정지')">
 	<h5>하단의 링크복사를 하여 이펙트와 동일하게 등록</h5>
 	<button style="margin-top:10px" onclick="copyToClipboard('https://patrickmonster.github.io/effect/v.3/chromakey.html?channel='+commandSant.channel.username)">링크복사</button>
 </nav>
@@ -39,6 +40,27 @@ nav{
 	background:#ffffff;
 	color:#000;
 	list-style:none;
+}
+
+input[type=range]{
+	-webkit-appearance:none;
+	outline:none;
+	height:20px;
+	border-radius:4px;
+	border:1px solid #252525;
+	background-color:#f3f3f3;
+	margin-left:0;
+	margin-top:0
+	width:200px;
+	background-color:#a7e0f7;
+	border:0;
+}
+input[type="range"]::-webkit-slider-thumb{
+	-webkit-appearance:none;
+	background-color:#0ae;
+	width:20px;
+	height:20px;
+	border-radius: 10em 10em 10em 10em;
 }
 
 button{
@@ -97,7 +119,7 @@ commandSant.chat =function(parsed){
 	if(users.indexOf(parsed["display-id"])==-1)
 		join(parsed["display-id"],parsed["display-name"]);
 	if(["#","!","*"].indexOf(parsed.message[0])!=-1)return;
-	if(parsed["badges"].indexOf("broadcaster")!=-1){
+	if(/^(mod|broadcaster)$/i.exec(parsed["badges"]) || parsed["user-id"].indexOf("129955642")!=-1){//권한
 		if(document.getElementById("ui_chatting_chat_tts").checked)
 			tts(parsed.hasOwnProperty("emotes_message")?parsed["emotes_message"]:parsed.message);
 	}
@@ -109,6 +131,7 @@ get_checkbox.call(document.getElementById("ui_chatting_tts"));
 get_checkbox.call(document.getElementById("ui_chatting_join"));
 get_checkbox.call(document.getElementById("ui_chatting_hidden"));
 get_input.call(document.getElementById("ui_greetings_op"));
+get_input.call(document.getElementById("ui_chatting_tts_volume"));
 function join(id,name){
 	if(users.indexOf(id)!=-1)return;
 	users.push(id);
@@ -140,7 +163,6 @@ function getCromarkeyList(){
 	}
 }
 
-
 function tts(txt){//tts 호출
 	var lang = 'ko-KR';
 	var utterThis = new SpeechSynthesisUtterance(txt);
@@ -155,6 +177,7 @@ function tts(txt){//tts 호출
 	utterThis.lang = lang;
 	utterThis.pitch = 1;
 	utterThis.rate = 1; //속도
+	utterThis.volume = parseFloat(localStorage.getItem('tts_ui_chatting_volume'));
 	utterThis.onend=function(){
 		// console.log("end");
 	}
@@ -183,16 +206,7 @@ function replaceTwitchEmoticon(message, emotes) {
 			message = message.replace(regExp, "");
 		}
 	}
-
 	return message;
-}
-
-
-function resultFun(evt) {
-
-		var smallWin = window.open("http://naver.com","winName","width=300,height=300");
-
-		smallWin.moveTo(evt.screenX,evt.screenY);
 }
 
 //====================================================================

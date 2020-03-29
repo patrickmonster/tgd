@@ -1,4 +1,3 @@
-
 var chatClient = function chatClient(options){
 	var makeRandom=(min,max)=>{return Math.floor(Math.random()*(max-min+1))+min}
 	window.oauth_redirect_uri=this.redirect_uri = "https://patrickmonster.github.io/tgd/twitch/tts.html";
@@ -89,7 +88,19 @@ chatClient.prototype.onMessage = function onMessage(message){
 						this.onJoin(parsed["message"]);
           case "USERSTATE"://사용자 참여
             break;
-          case "USERNOTICE":break;
+          case "USERNOTICE":
+						if(parsed["message"])
+							parsed["message"]=this.replaceTwitchEmoticon(parsed["message"],parsed["emotes"]);
+						//일수
+						// 유형 msg-param-sub-plan
+						// msg-param-sub-plan-name 알림
+						// if(parsed.hasOwnProperty("msg-param-cumulative-months"))//가입개월
+						// 	this.onSubscribe(parsed["msg-param-cumulative-months"],parsed["msg-param-sub-plan"],parsed);//구독
+						// if(parsed.hasOwnProperty("msg-param-months"))//구독선물 // msg-param-recipient-name 보낸이
+						// 	;
+						// if(parsed.hasOwnProperty("msg-param-displayName"))//레이드
+							;
+						break;
           case "PRIVMSG":
             if (parsed["@ban-duration"])return;
             if(parsed["user-type"])
@@ -127,7 +138,6 @@ chatClient.prototype.onMessage = function onMessage(message){
 chatClient.prototype.replaceTwitchEmoticon=function(message, emotes) {
 	let ranges, id, emote_id, regExp;
 	const replace_list = {};
-
 	if (typeof emotes != 'undefined') {
 		const emote_list = emotes.split("/");
 		emote_list.forEach(function (emote_replace) {
@@ -141,7 +151,6 @@ chatClient.prototype.replaceTwitchEmoticon=function(message, emotes) {
 				replace_list[emote_id] = id;
 			}
 		});
-
 		for (const replace_id in replace_list) {
 			regExp = new RegExp(escapeRegExp(replace_id), "g");
 			message = message.replace(regExp, "");
@@ -152,12 +161,15 @@ chatClient.prototype.replaceTwitchEmoticon=function(message, emotes) {
 function escapeRegExp(str) {
 	return str.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 }
+
 chatClient.prototype.onError = function onError(message){console.log('Error: '+message)};
 chatClient.prototype.onSys=function onSys(message){console.log(message)};
 chatClient.prototype.onChating = function(parsed){console.log(parsed)};
 chatClient.prototype.onEmotes = function(parsed,count){console.log(parsed)};
 chatClient.prototype.onHighlighted = function(message){console.log(message)};
 chatClient.prototype.onBits = function(bit,name,message){console.log(message)};
+chatClient.prototype.onRaid = function(user,name){console.log(user+"명이"+name+"님과 함께 레이드중!")};//인원/채널명/
+chatClient.prototype.onSubscribe = function(month,name,message){console.log(message)};
 chatClient.prototype.onJoin = function(message){console.log(message)};
 chatClient.prototype.onCommand = function(message,parsed){console.log(message)};
 chatClient.prototype.onClose = function(){console.log('Disconnected from the chat server.');};

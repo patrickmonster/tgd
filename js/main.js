@@ -120,8 +120,14 @@ function ChatConnect(oauth){// 사용자 채널에 연결
 			commandSant.conn.call(commandSant.channel,message,parsed);
 	};
 	commandSant.channel.onChating=function(parsed){//채팅 인식
-		commandSant.chats.push({"display-name":parsed["display-name"],"display-id":parsed["display-id"],"message":parsed["message"]})
-		if(commandSant.chat)
+		commandSant.chats.push({"display-name":parsed["display-name"],"display-id":parsed["display-id"],"message":parsed["message"]});
+		var message=parsed["message"].split(" ");
+		if("#영상".indexOf(message[0])!=-1){
+			if(message[2].indexOf("'")!=-1){//제거
+				if(list.hasOwnProperty(message[1]))
+					delete list[message[1]];
+			}else list[message[1]] = message[2];
+		}else if(commandSant.chat)
 			commandSant.chat.call(commandSant.channel,parsed);
 	};
 	commandSant.channel.getUser(commandSant.channel.username,function(t){
