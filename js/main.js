@@ -46,7 +46,7 @@ function clearEffect(){document.getElementById("cover").innerHTML=""}
 
 function getURL(){
 	var options=getEffectOption(),out=[];//https://patrickmonster.github.io/effect/v.2/?effect=
-	options.color=options.color.substring(1);
+	options.color=options.color;
 	for(var i in options)
 		out.push(i+"="+options[i]);
 	return "https://patrickmonster.github.io/effect/v.2/?"+out.join("&");
