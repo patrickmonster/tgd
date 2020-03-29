@@ -57,9 +57,11 @@ function changeColor(color){
 }
 
 function getEffectOption(){
+	var color = document.getElementById('color_selecter').value;
+	if(color[0]=="#")color=color.substring(0);
 	var e={
 		count:document.getElementById("count_selecter").value,
-		color:document.getElementById('color_selecter').value,
+		color:color,
 		speed:document.getElementById("speed_selecter").value,
 		effect: document.getElementById("option1").selectedOptions[0].value + (document.getElementById("rand").checked?"rand":""),
 	};
