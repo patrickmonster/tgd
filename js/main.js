@@ -7,6 +7,7 @@ window.oauth_client_id = "g1rhyzp1s7y2d755xqjn1otspdgvc3";
 window.oauth_redirect_uri = "https://patrickmonster.github.io/tgd/";
 // window.oauth_redirect_uri = "http://549.ipdisk.co.kr/chatbot/";
 //채팅
+//window.fonts_styles
 let commandSant = {
 	command:null,channel:null,user:{}, conn:0,chat:0,chats:[],
 	onChat:0
