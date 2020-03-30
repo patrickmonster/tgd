@@ -22,10 +22,7 @@
 		<script defer src="https://patrickmonster.github.io/tgd/js/jquery.minicolors.min.js"></script>
 	  <link rel="stylesheet" href="https://patrickmonster.github.io/tgd/css/jquery.minicolors.css">
 		<style media="screen">
-@font-face {
-	font-family:"title";
-	src: url("font/title.woff") format("woff");
-}
+@font-face {font-family:"title";src: url("font/title.woff") format("woff");}
 
 iframe{
 	border: 0;
@@ -186,7 +183,7 @@ nav{
 	</div>
 </div>
 <div id="main">
-	<div id=content>페이지가 잘못 로드됨...</div>
+	<div id=content>로딩...</div>
 </div>
 <!-- 로그인 섹션 -->
 <div id="login" onclick="permiss();console.log('login')"><i class="fab fa-twitch"></i> 로그인</div>
@@ -261,7 +258,7 @@ function changeColor(color){
 
 function getEffectOption(){
 	var color = document.getElementById('color_selecter').value;
-	if(color[0]=="#")color=color.substring(0);
+	if(color[0]=="#")color=color.substring(1);
 	var e={
 		count:document.getElementById("count_selecter").value,
 		color:color,
