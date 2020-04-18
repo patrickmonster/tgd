@@ -205,7 +205,6 @@ window.addStyle=document.addStyle=function(a,b){b=document.head.C('style');b.inn
 
 window.oauth_client_id = "g1rhyzp1s7y2d755xqjn1otspdgvc3";
 window.oauth_redirect_uri = "https://patrickmonster.github.io/tgd/";
-// window.oauth_redirect_uri = "http://549.ipdisk.co.kr/chatbot/";
 //채팅
 let commandSant = {
 	command:null,channel:null,user:{}, conn:0,chat:0,chats:[],
@@ -216,14 +215,19 @@ var effect_style=document.addStyle("");
 if (document.location.hash.indexOf("access_token")!=-1){
 	permiss();
 }else{
-	const oauth = localStorage.getItem("oauth");
-	load_page();
-	options = getEffect({effect:"cherryblossom2",target:"#cover"});
-	$.fn.effect(options);
-	if(oauth){
-		ChatConnect(oauth);
-		connectCommand(oauth);
-	}//로그인이 되지 않음
+	if(!isPermiss()){
+		localStorage.setItem("oauth","");
+		alert("세션이 만료되어 로그아웃 되셧습니다!\n다시 로그인 해주세요!");
+	}else{
+		const oauth = localStorage.getItem("oauth");
+		load_page();
+		options = getEffect({effect:"cherryblossom2",target:"#cover"});
+		$.fn.effect(options);
+		if(oauth){
+			ChatConnect(oauth);
+			connectCommand(oauth);
+		}//로그인이 되지 않음
+	}
 }
 //=============================== 이펙트 모듈 ===============================
 

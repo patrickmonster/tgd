@@ -175,6 +175,19 @@ chatClient.prototype.onCommand = function(message,parsed){console.log(message)};
 chatClient.prototype.onClose = function(){console.log('Disconnected from the chat server.');};
 chatClient.prototype.close = function(){if(this.webSocket)this.webSocket.close()};
 
+// 권한 유효성 검사
+function isPermiss(){
+	var oauth_date = localStorage.getItem("oauth_date");
+	if(!localStorage.getItem("oauth") || !oauth_date){
+		return false;
+	}
+	var n_date = new Date().toDate().split("-");
+	var s_date = oauth_date.split("-");
+	for(var i in n_date)
+		s_date[i] =  Number(n_date[i]) - Number(s_date[i]);
+	if(s_date[1] >= 2)return false;
+	return true;
+}
 //채팅 권한
 function permiss(){//https://lastorder.xyz/chatreader-kor/speech.html 참고
 	if (document.location.hash!==""&&document.location.hash.indexOf("access_token")!==-1){
@@ -197,6 +210,7 @@ function permiss(){//https://lastorder.xyz/chatreader-kor/speech.html 참고
 				localStorage.setItem("oauth", oauth);
 				localStorage.setItem("state", "");
 				localStorage.setItem("last_url", "");
+				localStorage.setItem("oauth_date",new Date().toDate());//저장시간 기록
 				location.href=last_url;
 				setTimeout(()=>{location.reload()},500);
 			}
