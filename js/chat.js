@@ -202,14 +202,14 @@ function permiss(){//https://lastorder.xyz/chatreader-kor/speech.html 참고
 			document.write("SECURITY ERROR");
 		} else {
 			if (localstate === null||localstate===""|| state !== localstate) {
-				document.write("잘못된 state값이 전달되었습니다. 페이지를 새로고침 해보세요.<br/>Invalid state. please refresh and retry.")
-				localStorage.setItem("oauth","");
-				localStorage.setItem("state","");
-				localStorage.setItem("last_url","");
+				document.write("잘못된 state값이 전달되었습니다. 페이지를 새로고침 해보세요.<br/>Invalid state. please refresh and retry.");
+				localStorage.removeItem("oauth");
+				localStorage.removeItem("state");
+				localStorage.removeItem("last_url");
 			} else {
 				localStorage.setItem("oauth", oauth);
-				localStorage.setItem("state", "");
-				localStorage.setItem("last_url", "");
+				localStorage.removeItem("state");
+				localStorage.removeItem("last_url");
 				localStorage.setItem("oauth_date",new Date().toDate());//저장시간 기록
 				location.href=last_url;
 				setTimeout(()=>{location.reload()},500);
