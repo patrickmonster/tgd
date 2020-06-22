@@ -203,6 +203,8 @@ window.addScript=document.addScript=function(a,b){b=document.head.C('script');b.
 window.addLink=document.addLink=function(a,b){b=document.head.C('link');b.src=a;return b};
 window.addStyle=document.addStyle=function(a,b){b=document.head.C('style');b.innerHTML=a;return b};
 
+window.badlist = ["410369648","414699830","204552253","433529894"];
+
 window.oauth_client_id = "g1rhyzp1s7y2d755xqjn1otspdgvc3";
 window.oauth_redirect_uri = "https://patrickmonster.github.io/tgd/";
 //채팅
@@ -211,7 +213,6 @@ let commandSant = {
 	onChat:0
 },onStop,options;
 var effect_style=document.addStyle("");
-
 if (document.location.hash.indexOf("access_token")!=-1){
 	permiss();
 }else{
@@ -221,6 +222,9 @@ if (document.location.hash.indexOf("access_token")!=-1){
 			localStorage.removeItem("oauth");
 			alert("세션이 만료되어 로그아웃 되셧습니다!\n다시 로그인 해주세요!");
 		}else{
+			if(window.badlist.indexOf(JSON.parse(getChannel(oauth))["user_id"])!=-1){
+				location.href="about:blank";
+			}
 			if(oauth){
 				ChatConnect(oauth);
 				connectCommand(oauth);
