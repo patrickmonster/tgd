@@ -180,7 +180,7 @@ function tts(txt){//tts 호출
 	utterThis.lang = lang;
 	utterThis.pitch = 1;
 	utterThis.rate = 1; //속도
-	utterThis.volume = parseFloat(localStorage.getItem('tts_ui_chatting_volume') || 0);
+	utterThis.volume = parseFloat(localStorage.getItem('tts_ui_chatting_volume') || .5);
 	utterThis.onend=function(){
 		// console.log("end");
 	}
