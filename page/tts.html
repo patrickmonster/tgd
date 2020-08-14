@@ -2,7 +2,7 @@
 	<input id=ui_chatting_chat_tts type="checkbox" onchange="localStorage.setItem('tts_ui_chatting_chat_tts',this.checked?1:0);" name="채팅tts" checked><label for="ui_chatting_chat_tts">채팅tts</label>
 	<input id=ui_chatting_tts type="checkbox" onchange="localStorage.setItem('tts_ui_chatting_tts',this.checked?1:0);" name="tts" checked><label for="ui_chatting_tts">인사tts</label>
 	<input id=ui_chatting_join type="checkbox" onchange="localStorage.setItem('tts_ui_chatting_join',this.checked?1:0);" name="인사" checked><label for="ui_chatting_join">자동인사</label>
-	<input id=ui_chatting_hidden type="checkbox" onchange="localStorage.setItem('tts_ui_chatting_hidden',this.checked?1:0);" name="관음" checked><label for="ui_chatting_hidden">관음</label><br>
+	<input id=ui_chatting_hidden type="checkbox" onchange="localStorage.setItem('tts_ui_chatting_hidden',this.checked?1:0);" name="관음" checked><label for="ui_chatting_hidden">관음(자동입장인사)</label><br>
 	볼륨<input type="range" onchange="localStorage.setItem('tts_ui_chatting_volume',this.value);" id="ui_chatting_tts_volume" style="width:250px" step=".01" value=".3" min=".01" max="1"><br>
 	맨트:<input id="ui_greetings_op" onkeydown="if(event.keyCode!=13)return;localStorage.setItem('tts_'+this.getAttribute('id'),this.value)" type="text" name="님 어서오세요. ({user}을 입력할 경우 닉네임으로 읽음)" value="{user}님 어서오세요.">
 	<br><iframe id=chat_ui frameborder="0" scrolling="no" height="500" width="350"></iframe>
@@ -116,11 +116,13 @@ if(!commandSant.channel){
 	document.getElementById("chat_ui").src="https://www.twitch.tv/embed/"+commandSant.channel.username+"/chat?parent=patrickmonster.github.io";
 }
 
+var voice_users= JSON.parse(localStorage.getItem("tts_user")) || []; // 음성채팅이 가능한 유저
+
 commandSant.chat =function(parsed){
 	if(users.indexOf(parsed["display-id"])==-1)
 		join(parsed["display-id"],parsed["display-name"]);
 	if(["#","!","*"].indexOf(parsed.message[0])!=-1)return;
-	if(/^(mod|broadcaster)$/i.exec(parsed["badges"]) || parsed["user-id"].indexOf("129955642")!=-1){//권한
+	if(/^(mod|broadcaster)$/i.exec(parsed["badges"]) || voice_users.indexOf(parsed["display-id"])!= -1){//권한
 		if(document.getElementById("ui_chatting_chat_tts").checked)
 			tts(parsed.hasOwnProperty("emotes_message")?parsed["emotes_message"]:parsed.message);
 	}
@@ -178,7 +180,7 @@ function tts(txt){//tts 호출
 	utterThis.lang = lang;
 	utterThis.pitch = 1;
 	utterThis.rate = 1; //속도
-	utterThis.volume = parseFloat(localStorage.getItem('tts_ui_chatting_volume'));
+	utterThis.volume = parseFloat(localStorage.getItem('tts_ui_chatting_volume') || 0);
 	utterThis.onend=function(){
 		// console.log("end");
 	}
