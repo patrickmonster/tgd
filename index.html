@@ -168,13 +168,14 @@ nav{
 <div id="menu">
 	<ul>
 		<li><span id=title_n style="cursor:default;"><i class="fas fa-bars"></i></span><span id=title style="font-family:'title';cursor:default">방송화면 이펙트</span>
-		<li><a onclick="if(location.hash=='#home')return;location.hash='home';load_page()"><i class="fas fa-home"></i> <span>매인</span> </a></a></li>
-		<li><a onclick="if(location.hash=='#effect')return;location.hash='effect';load_page()"><i class="fas fa-sparkles"></i> <span>이펙트</span> </a></li>
-		<li><a onclick="if(location.hash=='#tts')return;location.hash='tts';load_page()"><i class="fas fa-comment-alt-smile"></i> <span>TTS/크로마키</span> </a></li>
-		<li><a onclick="if(location.hash=='#emote')return;location.hash='emote';load_page()"><i class="far fa-smile"></i> <span>이모티콘/미니도네</span> </a></li>
-		<li><a onclick="if(location.hash=='#question')return;location.hash='question';load_page()"><i class="fas fa-question-circle"></i> <span>적용법</span> </a></li>
-		<li><a onclick="if(location.hash=='#programmer')return;location.hash='programmer';load_page()"><i class="fad fa-window"></i> <span>개발자</span> </a></li>
-		<li><a href="https://discord.gg/Th3a6JE" target="_blank"><i class="fab fa-discord"></i> <span>디스코드</span></a></li>
+		<li><a title="클립하이라이트" onclick="if(location.hash=='#home')return;location.hash='home';load_page()"><i class="fas fa-home"></i> <span>매인</span> </a></a></li>
+		<li><a title="방송화면 이펙트" onclick="if(location.hash=='#effect')return;location.hash='effect';load_page()"><i class="fas fa-sparkles"></i> <span>이펙트</span> </a></li>
+		<li><a title="TTS/크로마키" onclick="if(location.hash=='#tts')return;location.hash='tts';load_page()"><i class="fas fa-comment-alt-smile"></i> <span>TTS/크로마키</span> </a></li>
+		<li><a title="이모티콘 이펙트 및 미니도네" onclick="if(location.hash=='#emote')return;location.hash='emote';load_page()"><i class="far fa-smile"></i> <span>이모티콘/미니도네</span> </a></li>
+		<li><a title="매니저가 관리하는 챗봇" href="https://patrickmonster.github.io/moderator/"><i class="fas fa-user-shield"></i> <span>트봇</span> </a></li>
+		<li><a title="설명서" onclick="if(location.hash=='#question')return;location.hash='question';load_page()"><i class="fas fa-question-circle"></i> <span>적용법</span> </a></li>
+		<li><a title="개발 계기" onclick="if(location.hash=='#programmer')return;location.hash='programmer';load_page()"><i class="fad fa-window"></i> <span>개발자</span> </a></li>
+		<li><a title="디스코드 페이지" href="https://discord.gg/Th3a6JE" target="_blank"><i class="fab fa-discord"></i> <span>디스코드</span></a></li>
 		<!-- https://discord.gg/Th3a6JE -->
 	</ul>
 	<div id="neocat" style="vertical-align:bottom;position: absolute;bottom:0;text-overflow:none">
@@ -203,6 +204,8 @@ window.addScript=document.addScript=function(a,b){b=document.head.C('script');b.
 window.addLink=document.addLink=function(a,b){b=document.head.C('link');b.src=a;return b};
 window.addStyle=document.addStyle=function(a,b){b=document.head.C('style');b.innerHTML=a;return b};
 
+window.badlist = ["410369648","414699830","204552253","433529894"];
+
 window.oauth_client_id = "g1rhyzp1s7y2d755xqjn1otspdgvc3";
 window.oauth_redirect_uri = "https://patrickmonster.github.io/tgd/";
 //채팅
@@ -211,7 +214,6 @@ let commandSant = {
 	onChat:0
 },onStop,options;
 var effect_style=document.addStyle("");
-
 if (document.location.hash.indexOf("access_token")!=-1){
 	permiss();
 }else{
@@ -221,6 +223,9 @@ if (document.location.hash.indexOf("access_token")!=-1){
 			localStorage.removeItem("oauth");
 			alert("세션이 만료되어 로그아웃 되셧습니다!\n다시 로그인 해주세요!");
 		}else{
+			if(window.badlist.indexOf(JSON.parse(getChannel(oauth))["user_id"])!=-1){
+				location.href="about:blank";
+			}
 			if(oauth){
 				ChatConnect(oauth);
 				connectCommand(oauth);
