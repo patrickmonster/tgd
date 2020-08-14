@@ -4,7 +4,7 @@
 	<input id=ui_chatting_join type="checkbox" onchange="localStorage.setItem('tts_ui_chatting_join',this.checked?1:0);" name="인사" checked><label for="ui_chatting_join">자동인사</label>
 	<input id=ui_chatting_hidden type="checkbox" onchange="localStorage.setItem('tts_ui_chatting_hidden',this.checked?1:0);" name="관음" checked><label for="ui_chatting_hidden">관음</label><br>
 	볼륨<input type="range" onchange="localStorage.setItem('tts_ui_chatting_volume',this.value);" id="ui_chatting_tts_volume" style="width:250px" step=".01" value=".3" min=".01" max="1"><br>
-	맨트:<input id="ui_greetings_op" onkeydown="if(event.keyCode!=13)return;localStorage.setItem('tts_'+this.getAttribute('id'),this.value)" type="text" name="님 어서오세요. ({user}을 입력할 경우 닉네임으로 읽음)" value="님 어서오세요.">
+	맨트:<input id="ui_greetings_op" onkeydown="if(event.keyCode!=13)return;localStorage.setItem('tts_'+this.getAttribute('id'),this.value)" type="text" name="님 어서오세요. ({user}을 입력할 경우 닉네임으로 읽음)" value="{user}님 어서오세요.">
 	<br><iframe id=chat_ui frameborder="0" scrolling="no" height="500" width="350"></iframe>
 </iframe>
 </nav>
