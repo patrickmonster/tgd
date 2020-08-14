@@ -6,6 +6,7 @@
 	볼륨<input type="range" onchange="localStorage.setItem('tts_ui_chatting_volume',this.value);" id="ui_chatting_tts_volume" style="width:250px" step=".01" value=".3" min=".01" max="1"><br>
 	맨트:{닉네임}<input id="ui_greetings_op" onkeydown="if(event.keyCode!=13)return;localStorage.setItem('tts_'+this.getAttribute('id'),this.value)" type="text" name="님 어서오세요." value="님 어서오세요.">
 	<br><iframe id=chat_ui frameborder="0" scrolling="no" height="500" width="350"></iframe>
+</iframe>
 </nav>
 <nav style="display:inline;float:left">
 	<!-- 채팅 유저 -->
@@ -112,7 +113,7 @@ if(!commandSant.channel){
 		permiss();
 	}
 }else{
-	document.getElementById("chat_ui").src="https://www.twitch.tv/embed/"+commandSant.channel.username+"/chat";
+	document.getElementById("chat_ui").src="https://www.twitch.tv/embed/"+commandSant.channel.username+"/chat?parent=patrickmonster.github.io";
 }
 
 commandSant.chat =function(parsed){
