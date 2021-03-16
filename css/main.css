@@ -1,0 +1,140 @@
+@font-face {font-family:"title";src: url("font/title.woff") format("woff");}
+
+iframe{
+	border: 0;
+	color: #fff;
+}
+@keyframes neon {
+  0%,
+  100% {
+    text-shadow: 0 0 1vw #FA1C16, 0 0 3vw #FA1C16, 0 0 10vw #FA1C16, 0 0 10vw #FA1C16, 0 0 .4vw #FED128, .5vw .5vw .1vw #806914;
+    color: #FED128;
+  }
+  50% {
+    text-shadow: 0 0 .5vw #800E0B, 0 0 1.5vw #800E0B, 0 0 5vw #800E0B, 0 0 5vw #800E0B, 0 0 .2vw #800E0B, .5vw .5vw .1vw #40340A;
+    color: #806914;
+  }
+}
+
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,
+form,fieldset,input,textarea,p,blockquote,th,td {
+	padding: 0;
+	margin: 0;
+}
+body,html{
+	background: #000;
+	width:100%;
+	height: 100%;
+	color: #fff;
+	overflow: hidden;
+}
+
+#title{
+  font-family: 'title';
+  font-size: 1.3em;
+  line-height: 2vw;
+  color: #FB4264;
+  text-shadow: 0 0 3vw #F40A35;
+  animation: neon 1s ease infinite;
+  -moz-animation: neon 1s ease infinite;
+  -webkit-animation: neon 1s ease infinite;
+}
+
+body #main, body #menu{
+	display: inline-block;
+}
+
+#effect_bord{
+	position:absolute;
+	width:100%;
+	height:100%;
+	top:0;
+	left:0;
+}
+#flake img{
+	width: 3vh;
+	height:3vh;
+}
+nav{
+	display:inline;
+	float:left
+}
+
+#menu{
+	background: #9147ff;
+	/* width: 200px; */
+	width: 50px;
+	height: 100%;
+	overflow: hidden;
+	text-overflow: hidden;
+	transition: 1s;
+}
+#title,
+#menu ul li span{
+	opacity: 0;
+	transition: .5s;
+	box-sizing:border-box;
+}
+#menu:hover{
+	width: 200px;
+	transition: .5s;
+}
+#menu:hover #title,
+#menu:hover ul li span{
+	opacity: 1;
+	transition: 1s;
+}
+#menu ul li{
+	margin: 10px;
+	height: 21px !important;
+	color: #fff;
+	text-overflow: clip;
+}
+#menu:hover #neocat,
+#title_n{
+	opacity: 1 !important;
+	transition: 1s;
+}
+#neocat,
+#menu:hover #title_n{
+	opacity: 0 !important;
+	transition: 1s;
+}
+#menu,#main{
+	float: left;
+}
+#menu a{
+	text-decoration: none;
+	color: #fff;
+}
+/* 매인 컨텐츠 */
+#login{
+	position: fixed;
+  right: 0;
+  top: 0;
+	cursor: pointer;
+}
+
+#main{
+	height: 100%;
+	width: calc(100% - 200px);
+}
+
+#content{
+  padding: 50px;
+  height: calc(100% - 100px);
+}
+#content .main{
+	position: relative;
+	width: 100%;
+	height: 100%;
+	transform: translate(-50%, -50%);
+	/* overflow-y: auto;
+	overflow-x: hidden; */
+	top: 50%;
+	left: 50%;
+}
+
+#menu ul a{
+	cursor: pointer;
+}

@@ -3,28 +3,37 @@ window.addScript=document.addScript=function(a,b){b=document.head.C('script');b.
 window.addLink=document.addLink=function(a,b){b=document.head.C('link');b.src=a;return b};
 window.addStyle=document.addStyle=function(a,b){b=document.head.C('style');b.innerHTML=a;return b};
 
+window.badlist = [];
+
 window.oauth_client_id = "g1rhyzp1s7y2d755xqjn1otspdgvc3";
 window.oauth_redirect_uri = "https://patrickmonster.github.io/tgd/";
-// window.oauth_redirect_uri = "http://549.ipdisk.co.kr/chatbot/";
 //채팅
-//window.fonts_styles
 let commandSant = {
 	command:null,channel:null,user:{}, conn:0,chat:0,chats:[],
 	onChat:0
 },onStop,options;
 var effect_style=document.addStyle("");
-
 if (document.location.hash.indexOf("access_token")!=-1){
 	permiss();
 }else{
 	const oauth = localStorage.getItem("oauth");
+	if(oauth){
+		if(!isPermiss()){
+			localStorage.removeItem("oauth");
+			alert("세션이 만료되어 로그아웃 되셧습니다!\n다시 로그인 해주세요!");
+		}else{
+			if(window.badlist.indexOf(JSON.parse(getChannel(oauth))["user_id"])!=-1){
+				location.href="about:blank";
+			}
+			if(oauth){
+				ChatConnect(oauth);
+				connectCommand(oauth);
+			}//로그인이 되지 않음
+		}
+	}
 	load_page();
 	options = getEffect({effect:"cherryblossom2",target:"#cover"});
 	$.fn.effect(options);
-	if(oauth){
-		ChatConnect(oauth);
-		connectCommand(oauth);
-	}//로그인이 되지 않음
 }
 //=============================== 이펙트 모듈 ===============================
 
@@ -46,7 +55,7 @@ function changedOptions() {
 function clearEffect(){document.getElementById("cover").innerHTML=""}
 
 function getURL(){
-	var options=getEffectOption(),out=[];//https://patrickmonster.github.io/effect/v.2/?effect=
+	var options=getEffectOption(),out=[];
 	options.color=options.color;
 	for(var i in options)
 		out.push(i+"="+options[i]);
@@ -59,7 +68,7 @@ function changeColor(color){
 
 function getEffectOption(){
 	var color = document.getElementById('color_selecter').value;
-	if(color[0]=="#")color=color.substring(0);
+	if(color[0]=="#")color=color.substring(1);
 	var e={
 		count:document.getElementById("count_selecter").value,
 		color:color,
@@ -149,11 +158,6 @@ function ChatConnect(oauth){// 사용자 채널에 연결
 	commandSant.channel.open();
 	//display-name
 }
-
-// 통신 데이터  - 사용자 _id
-//{"display_name":"네오캣짱","_id":"129955642","name":"neocats_","type":"user","bio":null,
-//"created_at":"2016-07-19T12:28:20.760139Z","updated_at":"2020-03-22T22:30:44.942731Z","logo":"로고"}
-
 //명령 채널
 function connectCommand(oauth){//명령 채널에 연결
 	const target="recodingbot";//명령 채
@@ -199,9 +203,6 @@ function load_page(){
 	if(!location.hash||
 			["#home","#effect","#tts","#emote","#cromark","#timmer","#question","#programmer","#donate","#discord"].indexOf(location.hash)==-1)
 		location.hash="home";
-	// console.log("./page/"+location.hash.substring(1)+".html");
-
-	// document.getElementById("main").setAttribute("src","./page/"+location.hash.substring(1)+".html");
 	ajax("./page/"+location.hash.substring(1)+".html",function(txt){
 		let ele = document.getElementById("content");
 		ele.innerHTML=txt;
