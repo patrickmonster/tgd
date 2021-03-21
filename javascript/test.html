@@ -1,9 +1,27 @@
 <script src="engin.js"></script>
-<script>
-
-
-window.onload = () =>{
-
-    const eff = new Effect();
-}
-</script>
+<body>
+  <script>
+    const randomHexColorCode = () => {
+      let n = (Math.random() * 0xfffff * 1000000).toString(16);
+      return "#" + n.slice(0, 6);
+    };
+    const effect = window.EFFECT({
+      color: "#9bfc8e", //randomHexColorCode(),
+      //   location: [-1, -100, [-20, 20], document.documentElement.clientHeight],
+      //   location: [-100, -1, document.documentElement.clientWidth, -1],
+      text: [
+        '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-1.png">',
+        '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-2.png">',
+        '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-6.png">',
+        '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-7.png">',
+        '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-8.png">',
+        '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-9.png">',
+      ],
+      size: [1, 5],
+      speed: [1, 1.8],
+      delay: [1, 1000],
+      count: 30,
+    });
+    console.log(effect);
+  </script>
+</body>
