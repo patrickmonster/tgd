@@ -9,6 +9,13 @@ window.EFFECT = (function () {
 
   const exception_style = ["font-size"];
 
+  /**
+   * 배열 데이터를 산정하는 함수
+   * @param {*} o 배열 리스트
+   * @param {*} correction 범위지정값의 오차범위값
+   * @returns 
+   */
+
   function selectArrayValue(o, correction = 50) {
     if (isArrayLike(o)) {
       switch (o.length) {
@@ -23,12 +30,36 @@ window.EFFECT = (function () {
       return o;
     }
   }
+
+  /**
+   * 위치를 산정하는 함수
+   * -1 : 전체화먄에서 한곳
+   * -2 : 반대쪽끝
+   * -3 : 중앙
+   * -4 : 전채2배중 1곳
+   * @param {*} pos 원하는 포지션값 (-1 = 모든위치 내에서 한 장소)
+   * @param {*} clientSize 윈하는 위치 (-1이 아닐경우 무시되는 값)
+   * @returns 
+   */
+  function getLocationValue(pos, clientSize) {
+    if (pos === -1) {
+      const randPoint = Math.random() * clientSize;
+      return randPoint;
+    } else if (pos === -2) {
+      return clientSize;
+    } else if (pos === -3) {
+      return clientSize / 2;
+    } else if (pos === -4) {
+      const pos = clientSize / 2;// 전채의 2절반
+      return Math.random() * (clientSize * 2) - pos;
+    } else {
+      return selectArrayValue(pos);
+    }
+  }
+
   function Effect(cfg) {
-    this.option = {};
     this.elements = [];
     this.isPlaying = false;
-    // this.minSize = cfg.count || 10;
-    // this.maxSize = 50;
     this.size = cfg.size || [10, 30];
     this.count = cfg.count || 10;
     this.target = cfg.target || document.body;
@@ -37,6 +68,8 @@ window.EFFECT = (function () {
     this.position = "absolute";
     this.speed = cfg.speed || [1, 1]; //프레임당 이동거리
     this.delay = cfg.delay || [1, 100];
+    this.animationType = cfg.animationType || [0, 1];
+    this.resize = cfg.resize || false; // 화면 업데이트 여부
     this.location = cfg.location || [-1, -1, [-200, 200], [-200, 200]];
   }
 
@@ -88,9 +121,7 @@ window.EFFECT = (function () {
     const style = Object.keys(this.style)
       .map((o) => `${o}:${this[o]}`)
       .join(";");
-    const img_size = selectArrayValue(this.size, -1);
-    const img = `.${this.uuid}.flake img{width:${img_size}ex;height:${img_size}ex}`;
-    this.rootStyle.innerHTML = `.${this.uuid}.flake{${style}} ${img}`;
+    this.rootStyle.innerHTML = `.${this.uuid}.flake{${style}} body{overflow:hidden}`;
   };
 
   Effect.prototype.css = function (tag, value) {
@@ -104,7 +135,7 @@ window.EFFECT = (function () {
   };
 
   /**
-   *
+   * 엘리먼트 전용 저장함수 (차차...)
    * @returns
    */
   Effect.prototype.data = function () {
@@ -140,42 +171,51 @@ window.EFFECT = (function () {
    *    거리 산정방식에 의하여 각 프레임별 이동 거리와 이동 속도를 미리 연산시킴
    *
    */
-  Effect.prototype.flake = function () {
-    const obj = document.createElement("div");
+  Effect.prototype.flake = function (index = -1) {
+    let obj;
+    let style = {};
+    if (index === -1) {
+      obj = document.createElement("div");
 
-    this.rootObject.appendChild(obj);
-    obj.classList.add(this.uuid);
-    obj.classList.add("flake");
-    obj.innerHTML =
-      typeof this.text === "string"
-        ? this.text
-        : randomArrayItemSelect(this.text);
+      this.rootObject.appendChild(obj);
+      obj.classList.add(this.uuid);
+      obj.classList.add("flake");
+      obj.innerHTML =
+        typeof this.text === "string"
+          ? this.text
+          : randomArrayItemSelect(this.text);
 
-    function getLocationValue(pos, clientSize) {
-      // 해당하는 값을 지정하는 함수
-      if (pos === -1) {
-        const randPoint = Math.random() * clientSize;
-        return randPoint;
-      } else {
-        return selectArrayValue(pos);
+      // 이미지 포함여부 검사 - 이미지가 존재할 경우 조절을 해 줘야 함
+      if (obj.childNodes.length) {
+        const img_size = selectArrayValue(this.size, -1);
+        obj.childNodes.forEach(e => {
+          if (e.tagName && e.tagName.toLowerCase() === "img") {
+            e.setAttribute("style", `width: ${img_size}ex;height:${img_size}ex`)
+          }
+        });
       }
+    } else {
+      const element = this.elements[index];
+      obj = element.element;
+      style = element.style;
     }
 
-    const { documentElement } = document;
+    const { documentElement: { clientWidth, clientHeight } } = document;
     const define_location = [-1, -1, -200, -200];
     for (let i = this.location.length; i < 4; i++) {
       this.location[i] = define_location[i];
     }
+
     const pos = this.location.map((o, i) =>
       getLocationValue(
         o,
-        i % 2 ? documentElement.clientHeight : documentElement.clientWidth
+        i % 2 ? clientHeight : clientWidth
       )
     );
 
     if (isArrayLike(this.location[2])) {
       // x좌표
-      if ((this.location[2].length == 2, this.location[2][0] < 0)) {
+      if ((this.location[2].length == 2 && this.location[2][0] < 0)) {
         const value = randomNumberInRange(
           this.location[2][0],
           this.location[2][1]
@@ -185,7 +225,7 @@ window.EFFECT = (function () {
     }
     if (isArrayLike(this.location[3])) {
       // y좌표
-      if ((this.location[3].length == 2, this.location[3][0] < 0)) {
+      if ((this.location[3].length == 2 && this.location[3][0] < 0)) {
         const value = randomNumberInRange(
           this.location[3][0],
           this.location[3][1]
@@ -227,20 +267,27 @@ window.EFFECT = (function () {
     const frameSize = Math.max(location.x.length, location.y.length); // 최대 프레임 크기
     const frameSleep =
       frameSize / Math.min(location.x.length, location.y.length); // 건너뛰어야 하는 시간
-    const style = {
-      "font-size": selectArrayValue(this.size, 0), // 폰트크기
-      init: pos, // 초기값
-      left: pos[0],
-      top: pos[1],
-      speed: speeds, // 프레임당 속도
-      location,
-      delay, // 시작전 딜레이
-      frame: 0, // 프레임
-      frameSize,
-      frameSleep,
-      frameTarget: location.x.length == frameSize ? "x" : "y",
-      frameNTarget: location.x.length == frameSize ? "y" : "x",
-    };
+
+    style["font-size"] = selectArrayValue(this.size, 0); // 폰트크기
+    style.init = pos;
+    style.left = pos[0]; //x
+    style.top = pos[1]; // y
+    style.speed = speeds;
+    style.frame = 0;
+    style.delay = delay;
+    style.location = location;
+    style.frameSize = frameSize;
+    style.frameSleep = frameSleep;
+    style.frameTarget = location.x.length == frameSize ? "x" : "y";
+    style.frameNTarget = location.x.length == frameSize ? "y" : "x";
+
+    // console.log(style);
+
+    // style.location;
+    // style.delay;
+    // style.frameSize;
+    // style.frameSleep;
+
 
     const attribute = Object.keys(style)
       .filter(
@@ -250,8 +297,11 @@ window.EFFECT = (function () {
       .join(";");
     obj.setAttribute("style", attribute);
 
-    const element = { element: obj, style };
-    const index = this.elements.push(element);
+    let element;
+    if (index === -1) {
+      element = { element: obj, style };
+      index = this.elements.push(element);
+    }
 
     return { element, index };
   };
@@ -268,6 +318,9 @@ window.EFFECT = (function () {
       }
 
       frame = frame - delay;
+      /**
+       * 프레임 연산 - 프레임 동작방식 혹은 프레임 자연스러운 처리를 위한 데이터 조작
+       */
 
       if (frameSize <= frame) {
         style.frame = 0;
@@ -280,6 +333,8 @@ window.EFFECT = (function () {
         style[frameNTarget === "x" ? "left" : "top"] =
           location[frameNTarget][index];
         // 보조 프레임
+
+        // console.log(location, frameTarget, frameNTarget);
       }
       const attribute = Object.keys(style)
         .filter(
@@ -292,19 +347,26 @@ window.EFFECT = (function () {
   };
 
   /**
-   * 애니메이션 조작부분
+   * 애니메이션 루프
    */
   Effect.prototype.loop = function () {
     requestAnimationFrame(this.loop.bind(this));
-    this.move();
-    // if (this.isPlaying) {
-    // }
+    if (this.isPlaying) {
+      this.move();
+    }
   };
 
   Effect.prototype.start = function () {
     if (!this.isPlaying) {
       this.isPlaying = true;
       this.loop();
+    }
+    return this;
+  };
+
+  Effect.prototype.stop = function () {
+    if (this.isPlaying) {
+      this.isPlaying = false;
     }
     return this;
   };

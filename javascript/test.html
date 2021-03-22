@@ -1,26 +1,33 @@
-<script src="engin.js"></script>
+<script src="engin.V.1.js"></script>
 <body>
   <script>
     const randomHexColorCode = () => {
       let n = (Math.random() * 0xfffff * 1000000).toString(16);
       return "#" + n.slice(0, 6);
     };
+  /**
+   * -1 : 전채중에 렌덤
+   * -2 : 반대끝 (0의 반대)
+   * -3 : 중앙
+   * -4 : 전채 2배중 1곳
+   */
     const effect = window.EFFECT({
-      color: "#9bfc8e", //randomHexColorCode(),
-      //   location: [-1, -100, [-20, 20], document.documentElement.clientHeight],
+      color: randomHexColorCode(),//"#9bfc8e", 
+        location: [ -1, -2, -4, -200],
       //   location: [-100, -1, document.documentElement.clientWidth, -1],
-      text: [
-        '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-1.png">',
-        '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-2.png">',
-        '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-6.png">',
-        '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-7.png">',
-        '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-8.png">',
-        '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-9.png">',
-      ],
-      size: [1, 5],
+      // text: [
+      //   '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-1.png">',
+      //   '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-2.png">',
+      //   '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-6.png">',
+      //   '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-7.png">',
+      //   '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-8.png">',
+      //   '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-9.png">',
+      // ],
+      text : "●",
+      size: [1, 8],
       speed: [1, 1.8],
       delay: [1, 1000],
-      count: 30,
+      count: 100,
     });
     console.log(effect);
   </script>
