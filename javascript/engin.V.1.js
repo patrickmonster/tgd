@@ -6,6 +6,12 @@ window.EFFECT = (function () {
   const randomNumberInRange = (min, max) => Math.random() * (max - min) + min;
   const randomArrayItemSelect = (array) =>
     array[Math.floor(Math.random() * array.length)];
+  const chunkIntoN = (arr, n) => {
+    const size = Math.ceil(arr.length / n);
+    return Array.from({ length: n }, (v, i) =>
+      arr.slice(i * size, i * size + size)
+    );
+  };
 
   const exception_style = ["font-size"];
 
@@ -13,6 +19,7 @@ window.EFFECT = (function () {
     default: "ani_default",
     reverse: "ani_reverse",
     rotate: "ani_subRotate",
+    opacity: "ani_opacity",
   };
 
   /**
@@ -74,14 +81,13 @@ window.EFFECT = (function () {
    * @returns 진행해야하는 프레임값
    */
   Effect.prototype.ani_default = function (frame, style) {
-    console.log(frame);
     return frame;
   };
 
   Effect.prototype.ani_reverse = function (frame, style) {
-    const index = style.frameSize - (frame + 1);
-    if (index < 0) return 0;
-    return index;
+    frame = style.frameSize - (frame + 1);
+    if (frame < 0) return 0;
+    return frame;
   };
 
   // Effect.prototype.ani_curve = function (frame, style) {
@@ -92,8 +98,8 @@ window.EFFECT = (function () {
 
   Effect.prototype.ani_subRotate = function (frame, style) {
     const { subStyle } = style;
-    if (!subStyle.init) {
-      subStyle.init = true;
+    if (!subStyle.init_ani_subRotate) {
+      subStyle.init_ani_subRotate = true;
       subStyle.rotateP = selectArrayValue(subStyle.rotateP, 0);
       subStyle.rotate = randomNumberInRange(0, 360);
     }
@@ -101,9 +107,81 @@ window.EFFECT = (function () {
     style.transform = `rotate(${index}deg)`;
     if (index > 360) {
       subStyle.rotate = 0;
+    } else if (index < 0) {
+      subStyle.rotate = 360;
     } else {
       subStyle.rotate = index;
     }
+    return frame;
+  };
+
+  Effect.prototype.ani_opacity = function (frame, style) {
+    const { subStyle } = style;
+    if (!subStyle.init_ani_opacity) {
+      subStyle.init_ani_opacity = true;
+      if (isArrayLike(subStyle.opacity_animation_time)) {
+        //배열일경우
+        const animation_time = subStyle.opacity_animation_time;
+
+        subStyle.opacity_frame_size =
+          subStyle.opacity_frame_size ||
+          style.frameSize ||
+          randomNumberInRange(1, 1000);
+
+        // 구역 개수
+        subStyle.opacity_size = Math.floor(
+          subStyle.opacity_frame_size / animation_time.length
+        );
+
+        // 배열 나눔 (영역 분류)
+        // subStyle.opacity_animation_location = chunkIntoN(
+        //   animation_time,
+        //   subStyle.opacity_size
+        // );
+
+        subStyle.opacity_speed = []; // 각 영역별 속도
+        subStyle.opacity_direction = []; // 방향
+        const base_time = 1 / animation_time.length; // 기준시간
+
+        for (let i = 1; i < animation_time.length; i++) {
+          const now = animation_time[i]; // 현재 시간
+          const direction = animation_time[i - 1] <= now; // 방향 (true - 정방향)
+          const time =
+            (direction
+              ? now - animation_time[i - 1]
+              : animation_time[i - 1] - now) - base_time; // 진행시간 - 기준시간 = 오차시간
+
+          const isFast = time > 0; // 빠른지/느린지 여부
+          const percent = (Math.abs(time) / base_time) * 100; // 진행상황에 따른 퍼센트
+
+          subStyle.opacity_direction.push(animation_time[i - 1]);
+          subStyle.opacity_speed.push(
+            ((subStyle.opacity_size * percent) / 100) * (isFast ? 1 : -1)
+          );
+        }
+
+        console.log(subStyle);
+      } else {
+        subStyle.opacityP = 0;
+        subStyle.opacity = subStyle.opacity_animation_time;
+      }
+      subStyle.opacity_frame = 0;
+    }
+
+    if (!subStyle.opacity_animation_location) {
+      return frame;
+    }
+
+    if (subStyle.opacityP) {
+      const index = Math.floor(subStyle.opacity_size / subStyle.opacity_frame); //
+      const subIndex = subStyle.opacity_size % subStyle.opacity_frame; //
+      // const value = subStyle.opacity_animation_location[index][subIndex];
+      // style.opacity = value;
+      // console.log(value);
+
+      subStyle.opacity_frame++;
+    }
+
     return frame;
   };
 
@@ -123,6 +201,7 @@ window.EFFECT = (function () {
     this.resize = cfg.resize || false; // 화면 업데이트 여부
     this.subStyle = cfg.subStyle || {}; // 보조 변경 옵션
     this.location = cfg.location || [-1, -1, [-200, 200], [-200, 200]];
+    this.isBodyScroll = cfg.isBodyScroll || false;
   }
 
   function init() {
@@ -140,6 +219,7 @@ window.EFFECT = (function () {
     console.log(`Create new Effect ${uuid}`);
 
     this.rootStyle = document.createElement("style"); //루트 스타일
+    this.rootStyle.classList.add(`style-${uuid}`);
     document.head.appendChild(this.rootStyle);
     this.styleUpdate(); // 스타일 업데이트
 
@@ -173,7 +253,30 @@ window.EFFECT = (function () {
     const style = Object.keys(this.style)
       .map((o) => `${o}:${this[o]}`)
       .join(";");
-    this.rootStyle.innerHTML = `.${this.uuid}.flake{${style}} body{overflow:hidden}`;
+    const body_option = this.isBodyScroll ? "body{overflow:hidden}" : "";
+    this.rootStyle.innerHTML = `.${this.uuid}.flake{${style}} ${body_option}`;
+    return this;
+  };
+
+  Effect.prototype.changeCount = function (count = -1) {
+    if (count > 0) {
+      this.count = count;
+    }
+
+    if (this.count != this.elements.length) {
+      if (this.elements.length > this.count) {
+        count = this.elements.length - this.count;
+        for (let i = 0; i < count; i++) {
+          const { element, style } = this.elements.pop();
+          this.rootObject.removeChild(element);
+        }
+      } else {
+        count = this.count - this.elements.length;
+        for (let i = 0; i < count; i++) {
+          this.flake();
+        }
+      }
+    }
   };
 
   Effect.prototype.css = function (tag, value) {
@@ -255,6 +358,12 @@ window.EFFECT = (function () {
       style = element.style;
     }
 
+    if (typeof color !== "string") {
+      style.color = randomArrayItemSelect(this.color);
+    } else {
+      style.color = this.color;
+    }
+
     const {
       documentElement: { clientWidth, clientHeight },
     } = document;
@@ -276,6 +385,9 @@ window.EFFECT = (function () {
         ); // 값 선택
         pos[2] = pos[0] + value;
       }
+    } else if (this.location[2] == -5) {
+      // 위치고정
+      pos[2] = pos[0];
     }
     if (isArrayLike(this.location[3])) {
       // y좌표
@@ -286,6 +398,9 @@ window.EFFECT = (function () {
         ); // 값 선택
         pos[3] = pos[1] + value;
       }
+    } else if (this.location[3] == -5) {
+      // 위치고정
+      pos[3] = pos[1];
     }
 
     // 속도 연산
@@ -335,7 +450,7 @@ window.EFFECT = (function () {
     style.location = location;
     style.frameSize = frameSize;
     style.frameSleep = frameSleep;
-    style.transform = "rotate(45deg)";
+    // style.transform = "rotate(45deg)";
     style.frameTarget = location.x.length == frameSize ? "x" : "y";
     style.frameNTarget = location.x.length == frameSize ? "y" : "x";
 
@@ -372,7 +487,6 @@ window.EFFECT = (function () {
         frameSize,
         frameTarget,
         frameNTarget,
-        subStyle,
         animationFunction, // 애니메이션 조작 함수
       } = style;
       let frame = style.frame;
@@ -392,9 +506,9 @@ window.EFFECT = (function () {
       if (frameSize <= frame) {
         style.frame = 0;
       } else {
-        if (typeof animationFunction === "string") {
+        if (animationFunction && typeof animationFunction === "string") {
           frame = this[TYPE[animationFunction]](frame, style); // 프레임 연산
-        } else {
+        } else if (animationFunction) {
           animationFunction.forEach((o) => {
             frame = this[TYPE[o]](frame, style);
           });
@@ -447,6 +561,8 @@ window.EFFECT = (function () {
 
   return function (cfg) {
     const effect = new Effect(cfg || {});
-    return init.call(effect).start();
+    init.call(effect).start();
+    console.log(effect);
+    return effect;
   };
 })();

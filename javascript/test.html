@@ -1,5 +1,36 @@
 <script src="engin.V.1.js"></script>
+<style>
+  body {
+    padding: 0px;
+    margin: 0;
+  }
+  #background {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: -1;
+    background-color: cornsilk;
+  }
+
+  ul {
+    list-style: none;
+  }
+
+  ul li {
+    display: none;
+  }
+</style>
 <body>
+  <!-- 배경용 백그라운드 -->
+  <div id="background"></div>
+  <div>
+    <ul>
+      <li style="display: block">내용1</li>
+      <li>내용2</li>
+      <li>내용3</li>
+    </ul>
+  </div>
+
   <script>
     const randomHexColorCode = () => {
       let n = (Math.random() * 0xfffff * 1000000).toString(16);
@@ -10,11 +41,11 @@
      * -2 : 반대끝 (0의 반대)
      * -3 : 중앙
      * -4 : 전채 2배중 1곳
+     * -5 : 위치 고정
      */
-    const effect = window.EFFECT({
-      color: randomHexColorCode(), //"#9bfc8e",
-      location: [-1, -2, -4, -200],
-      // location: [-100, -1, document.documentElement.clientWidth, -1],
+    window.EFFECT({
+      color: "#9bfc8e",
+      location: [-1, -200, -4, -2],
       text: [
         '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-1.png">',
         '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-2.png">',
@@ -23,14 +54,44 @@
         '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-8.png">',
         '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-9.png">',
       ],
-      // text: "♥",
       size: [1, 5],
       speed: [1, 1.8],
       delay: [1, 1000],
       count: 100,
-      animationFunction: ["rotate"], //default / reverse / rotate
+      isBodyScroll: true,
+      animationFunction: ["rotate"],
       subStyle: { rotateP: [0.1, 5] },
     });
-    console.log(effect);
+
+    window.EFFECT({
+      color: "#9bfc8e",
+      location: [-1, -200, -4, -2],
+      text: "♥",
+      size: [1, 50],
+      speed: [1, 1.8],
+      delay: [1, 1000],
+      count: 50,
+      isBodyScroll: true,
+      animationFunction: ["rotate"],
+      subStyle: { rotateP: [0.1, 5] },
+    });
+
+    // window.EFFECT({
+    //   color: [randomHexColorCode(), randomHexColorCode()], //"#9bfc8e",
+    //   location: [-1, -1, -5, -5],
+    //   // location: [-1, -200, -4, -2],
+    //   // location: [-100, -1, document.documentElement.clientWidth, -1],
+    //   text: "●",
+    //   size: [1, 5],
+    //   speed: [1, 1.8],
+    //   delay: 0,
+    //   count: 1,
+    //   isBodyScroll: true,
+    //   animationFunction: "opacity", //default / reverse / rotate
+    //   subStyle: {
+    //     opacity_animation_time: [0, 0.7, 1],
+    //     opacity_frame_size: 10000,
+    //   }, //rotateP: [0.1, 5],
+    // });
   </script>
 </body>
