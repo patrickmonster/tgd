@@ -14,21 +14,21 @@
     const effect = window.EFFECT({
       color: randomHexColorCode(), //"#9bfc8e",
       location: [-1, -2, -4, -200],
-      //   location: [-100, -1, document.documentElement.clientWidth, -1],
-      // text: [
-      //   '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-1.png">',
-      //   '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-2.png">',
-      //   '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-6.png">',
-      //   '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-7.png">',
-      //   '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-8.png">',
-      //   '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-9.png">',
-      // ],
-      text: "♥",
-      size: [1, 8],
+      // location: [-100, -1, document.documentElement.clientWidth, -1],
+      text: [
+        '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-1.png">',
+        '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-2.png">',
+        '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-6.png">',
+        '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-7.png">',
+        '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-8.png">',
+        '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-9.png">',
+      ],
+      // text: "♥",
+      size: [1, 5],
       speed: [1, 1.8],
       delay: [1, 1000],
-      count: 5,
-      animationFunction: "rotate",
+      count: 100,
+      animationFunction: ["rotate"], //default / reverse / rotate
       subStyle: { rotateP: [0.1, 5] },
     });
     console.log(effect);

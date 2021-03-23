@@ -96,7 +96,6 @@ window.EFFECT = (function () {
       subStyle.init = true;
       subStyle.rotateP = selectArrayValue(subStyle.rotateP, 0);
       subStyle.rotate = randomNumberInRange(0, 360);
-      console.log(subStyle);
     }
     let index = subStyle.rotate + subStyle.rotateP;
     style.transform = `rotate(${index}deg)`;
@@ -393,7 +392,13 @@ window.EFFECT = (function () {
       if (frameSize <= frame) {
         style.frame = 0;
       } else {
-        frame = this[TYPE[animationFunction]](frame, style); // 프레임 연산
+        if (typeof animationFunction === "string") {
+          frame = this[TYPE[animationFunction]](frame, style); // 프레임 연산
+        } else {
+          animationFunction.forEach((o) => {
+            frame = this[TYPE[o]](frame, style);
+          });
+        }
         // 프레임이 진행중
         style[frameTarget === "x" ? "left" : "top"] =
           location[frameTarget][frame];
