@@ -5,15 +5,15 @@
       let n = (Math.random() * 0xfffff * 1000000).toString(16);
       return "#" + n.slice(0, 6);
     };
-  /**
-   * -1 : 전채중에 렌덤
-   * -2 : 반대끝 (0의 반대)
-   * -3 : 중앙
-   * -4 : 전채 2배중 1곳
-   */
+    /**
+     * -1 : 전채중에 렌덤
+     * -2 : 반대끝 (0의 반대)
+     * -3 : 중앙
+     * -4 : 전채 2배중 1곳
+     */
     const effect = window.EFFECT({
-      color: randomHexColorCode(),//"#9bfc8e", 
-        location: [ -1, -2, -4, -200],
+      color: randomHexColorCode(), //"#9bfc8e",
+      location: [-1, -2, -4, -200],
       //   location: [-100, -1, document.documentElement.clientWidth, -1],
       // text: [
       //   '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-1.png">',
@@ -23,11 +23,13 @@
       //   '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-8.png">',
       //   '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-9.png">',
       // ],
-      text : "●",
+      text: "♥",
       size: [1, 8],
       speed: [1, 1.8],
       delay: [1, 1000],
-      count: 100,
+      count: 5,
+      animationFunction: "rotate",
+      subStyle: { rotateP: [0.1, 5] },
     });
     console.log(effect);
   </script>

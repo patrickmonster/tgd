@@ -9,11 +9,17 @@ window.EFFECT = (function () {
 
   const exception_style = ["font-size"];
 
+  const TYPE = {
+    default: "ani_default",
+    reverse: "ani_reverse",
+    rotate: "ani_subRotate",
+  };
+
   /**
    * 배열 데이터를 산정하는 함수
    * @param {*} o 배열 리스트
    * @param {*} correction 범위지정값의 오차범위값
-   * @returns 
+   * @returns
    */
 
   function selectArrayValue(o, correction = 50) {
@@ -39,23 +45,68 @@ window.EFFECT = (function () {
    * -4 : 전채2배중 1곳
    * @param {*} pos 원하는 포지션값 (-1 = 모든위치 내에서 한 장소)
    * @param {*} clientSize 윈하는 위치 (-1이 아닐경우 무시되는 값)
-   * @returns 
+   * @returns
    */
   function getLocationValue(pos, clientSize) {
     if (pos === -1) {
+      // 전체의 렌덤
       const randPoint = Math.random() * clientSize;
       return randPoint;
     } else if (pos === -2) {
+      // 반대편끝
       return clientSize;
     } else if (pos === -3) {
+      //중앙
       return clientSize / 2;
     } else if (pos === -4) {
-      const pos = clientSize / 2;// 전채의 2절반
+      // 전채의 2절반
+      const pos = clientSize / 2;
       return Math.random() * (clientSize * 2) - pos;
     } else {
       return selectArrayValue(pos);
     }
   }
+
+  /**
+   * 프레임 조작 디폴트 함수
+   * @param {*} frame 현재 오브젝트의 프레임 값
+   * @param {*} style 해당하는 오브젝트가 가지고 있는 스타일 정보
+   * @returns 진행해야하는 프레임값
+   */
+  Effect.prototype.ani_default = function (frame, style) {
+    console.log(frame);
+    return frame;
+  };
+
+  Effect.prototype.ani_reverse = function (frame, style) {
+    const index = style.frameSize - (frame + 1);
+    if (index < 0) return 0;
+    return index;
+  };
+
+  // Effect.prototype.ani_curve = function (frame, style) {
+  //   const index = style.frameSize - (frame + 1);
+  //   if (index < 0) return 0;
+  //   return index;
+  // };
+
+  Effect.prototype.ani_subRotate = function (frame, style) {
+    const { subStyle } = style;
+    if (!subStyle.init) {
+      subStyle.init = true;
+      subStyle.rotateP = selectArrayValue(subStyle.rotateP, 0);
+      subStyle.rotate = randomNumberInRange(0, 360);
+      console.log(subStyle);
+    }
+    let index = subStyle.rotate + subStyle.rotateP;
+    style.transform = `rotate(${index}deg)`;
+    if (index > 360) {
+      subStyle.rotate = 0;
+    } else {
+      subStyle.rotate = index;
+    }
+    return frame;
+  };
 
   function Effect(cfg) {
     this.elements = [];
@@ -68,8 +119,10 @@ window.EFFECT = (function () {
     this.position = "absolute";
     this.speed = cfg.speed || [1, 1]; //프레임당 이동거리
     this.delay = cfg.delay || [1, 100];
-    this.animationType = cfg.animationType || [0, 1];
+    this.animationType = cfg.animationType || [0, 1]; // 에니메이션 효과
+    this.animationFunction = cfg.animationFunction || "default";
     this.resize = cfg.resize || false; // 화면 업데이트 여부
+    this.subStyle = cfg.subStyle || {}; // 보조 변경 옵션
     this.location = cfg.location || [-1, -1, [-200, 200], [-200, 200]];
   }
 
@@ -188,9 +241,12 @@ window.EFFECT = (function () {
       // 이미지 포함여부 검사 - 이미지가 존재할 경우 조절을 해 줘야 함
       if (obj.childNodes.length) {
         const img_size = selectArrayValue(this.size, -1);
-        obj.childNodes.forEach(e => {
+        obj.childNodes.forEach((e) => {
           if (e.tagName && e.tagName.toLowerCase() === "img") {
-            e.setAttribute("style", `width: ${img_size}ex;height:${img_size}ex`)
+            e.setAttribute(
+              "style",
+              `width: ${img_size}ex;height:${img_size}ex`
+            );
           }
         });
       }
@@ -200,22 +256,21 @@ window.EFFECT = (function () {
       style = element.style;
     }
 
-    const { documentElement: { clientWidth, clientHeight } } = document;
+    const {
+      documentElement: { clientWidth, clientHeight },
+    } = document;
     const define_location = [-1, -1, -200, -200];
     for (let i = this.location.length; i < 4; i++) {
       this.location[i] = define_location[i];
     }
 
     const pos = this.location.map((o, i) =>
-      getLocationValue(
-        o,
-        i % 2 ? clientHeight : clientWidth
-      )
+      getLocationValue(o, i % 2 ? clientHeight : clientWidth)
     );
 
     if (isArrayLike(this.location[2])) {
       // x좌표
-      if ((this.location[2].length == 2 && this.location[2][0] < 0)) {
+      if (this.location[2].length == 2 && this.location[2][0] < 0) {
         const value = randomNumberInRange(
           this.location[2][0],
           this.location[2][1]
@@ -225,7 +280,7 @@ window.EFFECT = (function () {
     }
     if (isArrayLike(this.location[3])) {
       // y좌표
-      if ((this.location[3].length == 2 && this.location[3][0] < 0)) {
+      if (this.location[3].length == 2 && this.location[3][0] < 0) {
         const value = randomNumberInRange(
           this.location[3][0],
           this.location[3][1]
@@ -269,6 +324,9 @@ window.EFFECT = (function () {
       frameSize / Math.min(location.x.length, location.y.length); // 건너뛰어야 하는 시간
 
     style["font-size"] = selectArrayValue(this.size, 0); // 폰트크기
+    style.animationFunction = this.animationFunction; // 프레임 조작
+    style.animationType = this.animationType; // 에니메이션 옵션
+    style.subStyle = Object.assign({}, this.subStyle); // 보조 옵션
     style.init = pos;
     style.left = pos[0]; //x
     style.top = pos[1]; // y
@@ -278,6 +336,7 @@ window.EFFECT = (function () {
     style.location = location;
     style.frameSize = frameSize;
     style.frameSleep = frameSleep;
+    style.transform = "rotate(45deg)";
     style.frameTarget = location.x.length == frameSize ? "x" : "y";
     style.frameNTarget = location.x.length == frameSize ? "y" : "x";
 
@@ -287,7 +346,6 @@ window.EFFECT = (function () {
     // style.delay;
     // style.frameSize;
     // style.frameSleep;
-
 
     const attribute = Object.keys(style)
       .filter(
@@ -309,7 +367,15 @@ window.EFFECT = (function () {
   Effect.prototype.move = function () {
     this.elements.forEach((o) => {
       const { element, style } = o;
-      const { delay, location, frameSize, frameTarget, frameNTarget } = style;
+      const {
+        delay,
+        location,
+        frameSize,
+        frameTarget,
+        frameNTarget,
+        subStyle,
+        animationFunction, // 애니메이션 조작 함수
+      } = style;
       let frame = style.frame;
 
       style.frame += 1; // 프레임카운트 증가
@@ -318,6 +384,8 @@ window.EFFECT = (function () {
       }
 
       frame = frame - delay;
+
+      // console.log(animationFunction);
       /**
        * 프레임 연산 - 프레임 동작방식 혹은 프레임 자연스러운 처리를 위한 데이터 조작
        */
@@ -325,6 +393,7 @@ window.EFFECT = (function () {
       if (frameSize <= frame) {
         style.frame = 0;
       } else {
+        frame = this[TYPE[animationFunction]](frame, style); // 프레임 연산
         // 프레임이 진행중
         style[frameTarget === "x" ? "left" : "top"] =
           location[frameTarget][frame];
@@ -350,9 +419,9 @@ window.EFFECT = (function () {
    * 애니메이션 루프
    */
   Effect.prototype.loop = function () {
-    requestAnimationFrame(this.loop.bind(this));
+    this.move();
     if (this.isPlaying) {
-      this.move();
+      requestAnimationFrame(this.loop.bind(this));
     }
   };
 
