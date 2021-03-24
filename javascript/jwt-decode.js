@@ -46,10 +46,8 @@
   }
 
   var atob =
-    (typeof window !== "undefined" &&
-      window.atob &&
-      window.atob.bind(window)) ||
-    polyfill;
+    typeof window !== "undefined" && window.atob && window.atob.bind(window);
+  //  || polyfill;
   var btoa =
     typeof window !== "undefined" && window.btoa && window.btoa.bind(window);
 
@@ -66,7 +64,14 @@
   }
 
   function b64EncodeUnicode(str) {
-    return encodeURIComponent(btoa(str)).replaceAll("%3D", "");
+    // const v = str.replace(/(.)/g, function (m, p) {
+    //   var code = p.charCodeAt(0).toString(16).toUpperCase();
+    //   return "%" + code;
+    // }); //4pml <- JjY1
+    return btoa(decodeURIComponent(encodeURIComponent(str))).replaceAll(
+      "=",
+      ""
+    );
   }
 
   function base64_url_decode(str) {
@@ -87,6 +92,7 @@
     try {
       return b64DecodeUnicode(output);
     } catch (err) {
+      console.log(err);
       return atob(output);
     }
   }
@@ -106,7 +112,9 @@
     options = options || {};
     var pos = options.header === true ? 0 : 1;
     try {
-      return JSON.parse(base64_url_decode(token.split(".")[pos]));
+      const str = base64_url_decode(token.split(".")[pos]);
+      console.log(str);
+      return JSON.parse(str);
     } catch (e) {
       throw new InvalidTokenError("Invalid token specified: " + e.message);
     }
@@ -125,7 +133,9 @@
       );
       const token = b64EncodeUnicode(JSON.stringify(obj)); // 토큰
       const secret = b64EncodeUnicode(options.secret || "secret"); // 서명
-      return `${header}.${token}.${secret}`; // 토큰발급
+      console.log(token, secret);
+      if (options.header === false) return `${header}.${token}.${secret}`;
+      else return `${token}.${secret}`; // 토큰발급
     } catch (e) {
       throw new InvalidTokenError("Invalid token specified: " + e.message);
     }

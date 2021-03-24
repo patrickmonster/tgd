@@ -22,20 +22,15 @@
 </style>
 <body>
   <!-- 배경용 백그라운드 -->
-  <div id="background"></div>
-  <div>
-    <ul>
-      <li style="display: block">내용1</li>
-      <li>내용2</li>
-      <li>내용3</li>
-    </ul>
-  </div>
-
   <script>
-    const randomHexColorCode = () => {
-      let n = (Math.random() * 0xfffff * 1000000).toString(16);
-      return "#" + n.slice(0, 6);
-    };
+    window.jwt -
+      deocde(
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+      );
+    // const randomHexColorCode = () => {
+    //   let n = (Math.random() * 0xfffff * 1000000).toString(16);
+    //   return "#" + n.slice(0, 6);
+    // };
     /**
      * -1 : 전채중에 렌덤
      * -2 : 반대끝 (0의 반대)
@@ -43,38 +38,38 @@
      * -4 : 전채 2배중 1곳
      * -5 : 위치 고정
      */
-    window.EFFECT({
-      color: "#9bfc8e",
-      location: [-1, -200, -4, -2],
-      text: [
-        '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-1.png">',
-        '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-2.png">',
-        '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-6.png">',
-        '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-7.png">',
-        '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-8.png">',
-        '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-9.png">',
-      ],
-      size: [1, 5],
-      speed: [1, 1.8],
-      delay: [1, 1000],
-      count: 100,
-      isBodyScroll: true,
-      animationFunction: ["rotate"],
-      subStyle: { rotateP: [0.1, 5] },
-    });
+    // window.EFFECT({
+    //   color: "#9bfc8e",
+    //   location: [-1, -200, -4, -2],
+    //   text: [
+    //     '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-1.png">',
+    //     '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-2.png">',
+    //     '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-6.png">',
+    //     '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-7.png">',
+    //     '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-8.png">',
+    //     '<image src="https://patrickmonster.github.io/tgd/img/CherryBlossom-9.png">',
+    //   ],
+    //   size: [1, 5],
+    //   speed: [1, 1.8],
+    //   delay: [1, 1000],
+    //   count: 100,
+    //   isBodyScroll: true,
+    //   animationFunction: ["rotate"],
+    //   subStyle: { rotateP: [0.1, 5] },
+    // });
 
-    window.EFFECT({
-      color: "#9bfc8e",
-      location: [-1, -200, -4, -2],
-      text: "♥",
-      size: [1, 50],
-      speed: [1, 1.8],
-      delay: [1, 1000],
-      count: 50,
-      isBodyScroll: true,
-      animationFunction: ["rotate"],
-      subStyle: { rotateP: [0.1, 5] },
-    });
+    // window.EFFECT({
+    //   color: "#9bfc8e",
+    //   location: [-1, -200, -4, -2],
+    //   text: "♥",
+    //   size: [1, 50],
+    //   speed: [1, 1.8],
+    //   delay: [1, 1000],
+    //   count: 50,
+    //   isBodyScroll: true,
+    //   animationFunction: ["rotate"],
+    //   subStyle: { rotateP: [0.1, 5] },
+    // });
 
     // window.EFFECT({
     //   color: [randomHexColorCode(), randomHexColorCode()], //"#9bfc8e",
