@@ -50,6 +50,8 @@
       window.atob &&
       window.atob.bind(window)) ||
     polyfill;
+  var btoa =
+    typeof window !== "undefined" && window.btoa && window.btoa.bind(window);
 
   function b64DecodeUnicode(str) {
     return decodeURIComponent(
@@ -61,6 +63,10 @@
         return "%" + code;
       })
     );
+  }
+
+  function b64EncodeUnicode(str) {
+    return encodeURIComponent(btoa(str)).replaceAll("%3D", "");
   }
 
   function base64_url_decode(str) {
@@ -106,6 +112,25 @@
     }
   }
 
+  function jwtEncode(obj, options) {
+    if (typeof obj !== "object") {
+      throw new InvalidTokenError("Invalid token specified");
+    }
+
+    options = options || {};
+    const defaultHeader = { alg: "HS256", typ: "JWT" };
+    try {
+      const header = b64EncodeUnicode(
+        JSON.stringify(options.header || defaultHeader)
+      );
+      const token = b64EncodeUnicode(JSON.stringify(obj)); // 토큰
+      const secret = b64EncodeUnicode(options.secret || "secret"); // 서명
+      return `${header}.${token}.${secret}`; // 토큰발급
+    } catch (e) {
+      throw new InvalidTokenError("Invalid token specified: " + e.message);
+    }
+  }
+
   /*
    * Expose the function on the window object
    */
@@ -118,6 +143,14 @@
       });
     } else if (window) {
       window.jwt_decode = jwtDecode;
+    }
+
+    if (typeof window.define == "function" && window.define.amd) {
+      window.define("jwt_encode", function () {
+        return jwtEncode;
+      });
+    } else if (window) {
+      window.jwt_encode = jwtEncode;
     }
   }
 });
