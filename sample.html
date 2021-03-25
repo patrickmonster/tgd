@@ -5,18 +5,44 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>tmp</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
     <script src="javascript/jwt-decode.js"></script>
-    <!-- <script src="https://patrickmonster.github.io/effect/v.5/engin.js"></script> -->
-    <!-- <script src="javascript/engin.V.1.js"></script> -->
     <script src="../effect/v.5/engin.js"></script>
     <style>
+      @font-face {
+        font-family: "title";
+        src: url("font/title1.woff") format("woff");
+      }
+
       body {
         background-color: black;
+        color: rgb(255, 255, 255);
+      }
+      img,
+      p {
+        padding: 10px;
+        margin-top: 0;
+        margin-bottom: 0;
+        cursor: pointer;
+      }
+      svg {
+        color: aquamarine;
+        display: inline-block;
+        font-size: inherit;
+        height: 1em;
+        width: 1em;
+        overflow: visible;
+        vertical-align: -0.125em;
+        padding: 10px;
+        cursor: pointer;
       }
     </style>
   </head>
-  <body></body>
-  <script>
+  <!-- <svg  aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"></svg> -->
+  <body>
+    <p style="font-family: title">안녕하세요 반갑습니다 잘 부탁 드립니다</p>
+  </body>
+  <!-- <script>
     function getQuery() {
       const query = document.location.search.substring(1).split("&");
       const out = {};
@@ -33,22 +59,84 @@
       });
       return out;
     }
-    const query = getQuery();
-    console.log(query);
-    if (typeof query.token === "string") {
-      query.object = jwt_decode(query.token, { header: true });
-    } else {
-      query.object = [];
-      query.token.forEach((o) => {
-        console.log(o);
-        query.object.push(jwt_decode(o, { header: true }));
-      });
+
+    function selectItem(target, tag) {
+      console.log(`click ${target.tagName} / ${tag}`);
     }
 
-    if (query.object.length) query.object.forEach((o) => window.EFFECT(o));
-    else window.EFFECT(query.object);
+    const ele = document.createElement("script");
+    ele.src = "img/data.js";
+
+    function event_bind(target, tag) {
+      target.onclick = function (e) {
+        selectItem.bind(target, e, tag);
+      };
+    }
+
+    const parent_node = document.createElement("div");
+    document.body.appendChild(parent_node);
+    setTimeout(function () {
+      parent_node.innerHTML += "이미지(색상 변경이 불가능함)";
+      parent_node.appendChild(document.createElement("br"));
+      window.PATRICKMONSTER.data.imgs.forEach((o) => {
+        const img = document.createElement("img");
+        img.src = o;
+        img.setAttribute("style", "width:30px;height:30px");
+        event_bind(img, "img");
+        parent_node.appendChild(img);
+        // parent_node.appendChild(document.createElement("br"));
+      });
+      parent_node.appendChild(document.createElement("br"));
+      parent_node.innerHTML += "SVG";
+      parent_node.appendChild(document.createElement("br"));
+      window.PATRICKMONSTER.data.svgs.forEach((o) => {
+        const svg = document.createElement("svg");
+        svg.setAttribute("style", "color: #ffffff;font-size:1.7em");
+        svg.setAttribute("aria-hidden", true);
+        svg.setAttribute("focusable", false);
+        svg.setAttribute("role", "img");
+        svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+        svg.setAttribute("viewBox", "0 0 512 512");
+        svg.innerHTML = o;
+        event_bind(svg, "svg");
+        parent_node.appendChild(svg);
+      });
+      parent_node.appendChild(document.createElement("br"));
+      parent_node.innerHTML += "텍스트";
+      parent_node.appendChild(document.createElement("br"));
+      window.PATRICKMONSTER.data.texts.forEach((o) => {
+        const p = document.createElement("p");
+        p.setAttribute(
+          "style",
+          "color: #ffffff;font-size:1.7em;display:inline-block;"
+        );
+        p.innerHTML = o;
+        event_bind(p, "text");
+        parent_node.appendChild(p);
+      });
+      setTimeout(function () {
+        parent_node.innerHTML += "";
+      }, 0);
+    }, 100);
+    document.head.appendChild(ele);
+
+    // const query = getQuery();
+    // console.log(query);
+    // if (typeof query.token === "string") {
+    //   query.object = jwt_decode(query.token, { header: true });
+    // } else {
+    //   query.object = [];
+    //   query.token.forEach((o) => {
+    //     console.log(o);
+    //     query.object.push(jwt_decode(o, { header: true }));
+    //   });
+    // }
+    // console.log(query.object);
+
+    // if (query.object.length) query.object.forEach((o) => window.EFFECT(o));
+    // else window.EFFECT(query.object);
     // document.writeln(JSON.stringify(query));
-  </script>
+  </script> -->
   <!-- 
       토큰값
       eyJjb2xvciI6IiM5YmZjOGUiLCJsb2NhdGlvbiI6Wy0xLC0yMDAsLTQsLTJdLCJzaXplIjpbMSw1MF0sInNwZWVkIjpbMSwxLjhdLCJkZWxheSI6WzEsMTAwMF0sImNvdW50Ijo1MCwiaXNCb2R5U2Nyb2xsIjp0cnVlLCJhbmltYXRpb25GdW5jdGlvbiI6WyJyb3RhdGUiXSwic3ViU3R5bGUiOnsicm90YXRlUCI6WzAuMSw1XX19
@@ -64,4 +152,15 @@
       "subStyle": { "rotateP": [0.1, 5] },
     }
    -->
+
+  <!-- 
+    이미지 형식의 토큰
+    {
+      imgs : [...]
+    }
+    eyJpbWdzIjpbImh0dHBzOi8vY2RuLmRpc2NvcmRhcHAuY29tL2F0dGFjaG1lbnRzLzY4MjQ0OTY2ODQyODUyOTc0My83MDYxNDcwNjEzODAxNTM0MzQvbWFjYXJvbl8zLnBuZyIsImh0dHBzOi8vY2RuLmRpc2NvcmRhcHAuY29tL2F0dGFjaG1lbnRzLzY4MjQ0OTY2ODQyODUyOTc0My83MDYxNDcwNjI0NjY3NDAzMDQvbWFjYXJvbl8yLnBuZyIsImh0dHBzOi8vY2RuLmRpc2NvcmRhcHAuY29tL2F0dGFjaG1lbnRzLzY4MjQ0OTY2ODQyODUyOTc0My83MDYxNDcwNjUwNTAzMDA0NjcvbWFjYXJvbl81LnBuZyIsImh0dHBzOi8vY2RuLmRpc2NvcmRhcHAuY29tL2F0dGFjaG1lbnRzLzY4MjQ0OTY2ODQyODUyOTc0My83MDYxNDcwNjU1NzQ1ODg0ODYvbWFjYXJvbl8xLnBuZyIsImh0dHBzOi8vY2RuLmRpc2NvcmRhcHAuY29tL2F0dGFjaG1lbnRzLzY4MjQ0OTY2ODQyODUyOTc0My83MDYxNDcwNjg5ODAyMzIyNjYvbWFjYXJvbl80LnBuZyIsImh0dHBzOi8vY2RuLmRpc2NvcmRhcHAuY29tL2F0dGFjaG1lbnRzLzY4MjQ0OTY2ODQyODUyOTc0My82OTc3NDAxMDM3NzAwNDY1MTQvc2FrdXJhX3Bvc29tLTEucG5nIiwiaHR0cHM6Ly9jZG4uZGlzY29yZGFwcC5jb20vYXR0YWNobWVudHMvNjgyNDQ5NjY4NDI4NTI5NzQzLzY5Nzc0MDA5OTkwNzA5MjUyMC9zYWt1cmFfcG9zb20tNi5wbmciLCJodHRwczovL2Nkbi5kaXNjb3JkYXBwLmNvbS9hdHRhY2htZW50cy82ODI0NDk2Njg0Mjg1Mjk3NDMvNjk3NzQwMTA0NTQxNzk4NDE4L3Nha3VyYV9wb3NvbS04LnBuZyIsImh0dHBzOi8vY2RuLmRpc2NvcmRhcHAuY29tL2F0dGFjaG1lbnRzLzY4MjQ0OTY2ODQyODUyOTc0My82OTc3NDAxMDQ4MjI5NDc4OTAvc2FrdXJhX3Bvc29tLTIucG5nIiwiaHR0cHM6Ly9jZG4uZGlzY29yZGFwcC5jb20vYXR0YWNobWVudHMvNjgyNDQ5NjY4NDI4NTI5NzQzLzY5Nzc0MDEwMTk2MjE3MDQyOS9zYWt1cmFfcG9zb20tNy5wbmciLCJodHRwczovL2Nkbi5kaXNjb3JkYXBwLmNvbS9hdHRhY2htZW50cy82ODI0NDk2Njg0Mjg1Mjk3NDMvNjk3NzQwMTA1OTI5OTgyMDkyL3Nha3VyYV9wb3NvbS0zLnBuZyIsImh0dHBzOi8vY2RuLmRpc2NvcmRhcHAuY29tL2F0dGFjaG1lbnRzLzY4MjQ0OTY2ODQyODUyOTc0My82OTc3NDAxMDc5OTM4NDE2NjQvc2FrdXJhX3Bvc29tLTQucG5nIiwiaHR0cHM6Ly9jZG4uZGlzY29yZGFwcC5jb20vYXR0YWNobWVudHMvNjgyNDQ5NjY4NDI4NTI5NzQzLzY5Nzc0MDEwOTI4OTc1MDUyOC9zYWt1cmFfcG9zb20tNS5wbmciLCJodHRwczovL3BhdHJpY2ttb25zdGVyLmdpdGh1Yi5pby90Z2QvaW1nL2NoZXJyeWJsb3Nzb20vJUVCJUIyJTlBJUVBJUJEJTgzMS0xLnBuZyIsImh0dHBzOi8vcGF0cmlja21vbnN0ZXIuZ2l0aHViLmlvL3RnZC9pbWcvY2hlcnJ5Ymxvc3NvbS8lRUIlQjIlOUElRUElQkQlODMxLTIucG5nIiwiaHR0cHM6Ly9wYXRyaWNrbW9uc3Rlci5naXRodWIuaW8vdGdkL2ltZy9jaGVycnlibG9zc29tLyVFQiVCMiU5QSVFQSVCRCU4MzEtMy5wbmciLCJodHRwczovL3BhdHJpY2ttb25zdGVyLmdpdGh1Yi5pby90Z2QvaW1nL2NoZXJyeWJsb3Nzb20vJUVCJUIyJTlBJUVBJUJEJTgzMS00LnBuZyIsImh0dHBzOi8vcGF0cmlja21vbnN0ZXIuZ2l0aHViLmlvL3RnZC9pbWcvY2hlcnJ5Ymxvc3NvbS8lRUIlQjIlOUElRUElQkQlODMxLTUucG5nIiwiaHR0cHM6Ly9wYXRyaWNrbW9uc3Rlci5naXRodWIuaW8vdGdkL2ltZy9DaGVycnlCbG9zc29tLTEucG5nIiwiaHR0cHM6Ly9wYXRyaWNrbW9uc3Rlci5naXRodWIuaW8vdGdkL2ltZy9DaGVycnlCbG9zc29tLTIucG5nIiwiaHR0cHM6Ly9wYXRyaWNrbW9uc3Rlci5naXRodWIuaW8vdGdkL2ltZy9DaGVycnlCbG9zc29tLTYucG5nIiwiaHR0cHM6Ly9wYXRyaWNrbW9uc3Rlci5naXRodWIuaW8vdGdkL2ltZy9DaGVycnlCbG9zc29tLTcucG5nIiwiaHR0cHM6Ly9wYXRyaWNrbW9uc3Rlci5naXRodWIuaW8vdGdkL2ltZy9DaGVycnlCbG9zc29tLTgucG5nIiwiaHR0cHM6Ly9wYXRyaWNrbW9uc3Rlci5naXRodWIuaW8vdGdkL2ltZy9DaGVycnlCbG9zc29tLTkucG5nIiwiaHR0cHM6Ly9wYXRyaWNrbW9uc3Rlci5naXRodWIuaW8vdGdkL2ltZy9jYWNhby5wbmciLCJodHRwczovL3BhdHJpY2ttb25zdGVyLmdpdGh1Yi5pby90Z2QvaW1nL2Nob2NvbGF0ZS5wbmciLCJodHRwczovL3BhdHJpY2ttb25zdGVyLmdpdGh1Yi5pby90Z2QvaW1nL2Nob2NvbGF0ZS0xLnBuZyIsImh0dHBzOi8vcGF0cmlja21vbnN0ZXIuZ2l0aHViLmlvL3RnZC9pbWcvY2hvY29sYXRlLWJveC0yLnBuZyIsImh0dHBzOi8vcGF0cmlja21vbnN0ZXIuZ2l0aHViLmlvL3RnZC9pbWcvY2hvY29sYXRlLWNoaXAucG5nIiwiaHR0cHM6Ly9jZG4uZGlzY29yZGFwcC5jb20vYXR0YWNobWVudHMvNjgyNDQ5NjY4NDI4NTI5NzQzLzcxNjYyNDYwMTIxNTY2NDIzMC8xLnBuZyIsImh0dHBzOi8vY2RuLmRpc2NvcmRhcHAuY29tL2F0dGFjaG1lbnRzLzY4MjQ0OTY2ODQyODUyOTc0My83MTY2MjQ1OTQxMzk4NzMzNDgvMi5wbmciLCJodHRwczovL2Nkbi5kaXNjb3JkYXBwLmNvbS9hdHRhY2htZW50cy82ODI0NDk2Njg0Mjg1Mjk3NDMvNzE2NjI0NjAwMjY3NjIwMzkyLzMucG5nIiwiaHR0cHM6Ly9jZG4uZGlzY29yZGFwcC5jb20vYXR0YWNobWVudHMvNjgyNDQ5NjY4NDI4NTI5NzQzLzcxNjYyNTY1NDI4MzUwMTU5OS8xLnBuZyIsImh0dHBzOi8vY2RuLmRpc2NvcmRhcHAuY29tL2F0dGFjaG1lbnRzLzY4MjQ0OTY2ODQyODUyOTc0My83MTY2MjU2NTYzMTM1NDQ3MzQvMi5wbmciLCJodHRwczovL2Nkbi5kaXNjb3JkYXBwLmNvbS9hdHRhY2htZW50cy82ODI0NDk2Njg0Mjg1Mjk3NDMvNzE2NjI1NjUyOTYyNTU3OTUyLzMucG5nIiwiaHR0cHM6Ly9jZG4uZGlzY29yZGFwcC5jb20vYXR0YWNobWVudHMvNjgyNDQ5NjY4NDI4NTI5NzQzLzY4Mzg5NDgyOTY2Njc5NTUzMC8xLnBuZyIsImh0dHBzOi8vY2RuLmRpc2NvcmRhcHAuY29tL2F0dGFjaG1lbnRzLzY4MjQ0OTY2ODQyODUyOTc0My82ODM4OTQ4MzA0NzE5NzA4ODcvMi5wbmciLCJodHRwczovL2Nkbi5kaXNjb3JkYXBwLmNvbS9hdHRhY2htZW50cy82ODI0NDk2Njg0MuKApjc0My82ODI1MzE1OTM1NzA4Nzc0NDAvU1BPSUxFUl9Sb3NlX29mX1NoYXJvbi5wbmciLCJodHRwczovL2Nkbi5kaXNjb3JkYXBwLmNvbS9hdHRhY2htZW50cy82ODI0NDk2Njg0Mjg1Mjk3NDMvNjgyNTMxNTk1MDc2NTAxNTU2L1NQT0lMRVJfcGVwZXJvMS5wbmciLCJodHRwczovL2Nkbi5kaXNjb3JkYXBwLmNvbS9hdHRhY2htZW50cy82ODI0NDk2Njg0Mjg1Mjk3NDMvNjgyNTMxNTk2NTY5NTQyNzM3L1NQT0lMRVJfcGVwZXJvMi5wbmciLCJodHRwczovL2Nkbi5kaXNjb3JkYXBwLmNvbS9hdHRhY2htZW50cy82ODI0NDk2Njg0Mjg1Mjk3NDMvNjgyNTMxNTk5MDA2Njk1NDQ0L1NQT0lMRVJfS29yZWFuX0ZsYWcucG5nIiwiaHR0cHM6Ly9jZG4uZGlzY29yZGFwcC5jb20vYXR0YWNobWVudHMvNjgyNDQ5NjY4NDI4NTI5NzQzLzY4Mzg5NDgxNjYxNDI1MjU5Mi8zLnBuZyIsImh0dHBzOi8vY2RuLmRpc2NvcmRhcHAuY29tL2F0dGFjaG1lbnRzLzY4MjQ0OTY2ODQyODUyOTc0My82ODM4OTQ4MzUwOTQzNTU5NzgvMi5wbmciLCJodHRwczovL2Nkbi5kaXNjb3JkYXBwLmNvbS9hdHRhY2htZW50cy82ODI0NDk2Njg0Mjg1Mjk3NDMvNjgzODk0ODMyOTY3ODQzODg1LzEucG5nIl19.c2VjcmV0
+
+    이미지 토큰 2
+    
+    -->
 </html>

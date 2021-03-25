@@ -64,19 +64,20 @@
   }
 
   function b64EncodeUnicode(str) {
-    return btoa(str.replace(/(.)/g, function(m,p){
-      var code = p.charCodeAt(0).toString(16).toUpperCase();
-      if(code.length <= 2)
-        return p;
-      else {
-        code = encodeURIComponent(p);
-        const out = [];
-        for(let i = 0; i<code.length; i+=3){
-          out.push(unescape(`${code.substr(i,3)}`));
+    return btoa(
+      str.replace(/(.)/g, function (m, p) {
+        var code = p.charCodeAt(0).toString(16).toUpperCase();
+        if (code.length <= 2) return p;
+        else {
+          code = encodeURIComponent(p);
+          const out = [];
+          for (let i = 0; i < code.length; i += 3) {
+            out.push(unescape(`${code.substr(i, 3)}`));
+          }
+          return out.join("");
         }
-        return out.join("");
-      }
-    })).replaceAll("=","");
+      })
+    );
   }
 
   function base64_url_decode(str) {
@@ -100,6 +101,10 @@
       console.log(err);
       return atob(output);
     }
+  }
+
+  function base64_url_encode(str) {
+    return b64EncodeUnicode(str).replaceAll("=", "");
   }
 
   function InvalidTokenError(message) {
@@ -133,12 +138,11 @@
     options = options || {};
     const defaultHeader = { alg: "HS256", typ: "JWT" };
     try {
-      const header = b64EncodeUnicode(
+      const header = base64_url_encode(
         JSON.stringify(options.header || defaultHeader)
       );
-      const token = b64EncodeUnicode(JSON.stringify(obj)); // 토큰
-      const secret = b64EncodeUnicode(options.secret || "secret"); // 서명
-      console.log(token, secret);
+      const token = base64_url_encode(JSON.stringify(obj)); // 토큰
+      const secret = base64_url_encode(options.secret || "secret"); // 서명
       if (options.header === false) return `${header}.${token}.${secret}`;
       else return `${token}.${secret}`; // 토큰발급
     } catch (e) {

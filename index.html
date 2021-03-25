@@ -21,46 +21,13 @@
 		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 		<script defer src="https://patrickmonster.github.io/effect/js/all.min.js"></script>
 
-		<script type="text/javascript" src="https://patrickmonster.github.io/tgd/js/fullpage.js"></script>
+		<script type="text/javascript" src="js/fullpage.js"></script>
 		<link rel="stylesheet" href="https://patrickmonster.github.io/tgd/css/fullpage.min.css">
 		<script defer src="https://patrickmonster.github.io/tgd/js/jquery.minicolors.min.js"></script>
 		
-		<script defer src="https://patrickmonster.github.io/effect/v.2/js/effect.js"></script>
 		<script defer src="https://patrickmonster.github.io/effect/js/option.js"></script>
 		
 		<link rel="stylesheet" href="https://patrickmonster.github.io/tgd/css/jquery.minicolors.css">
-		<script>
-function randomItem(a) {return a[Math.floor(Math.random() * a.length)]}
-(function($) {
-$.fn.bottomup = function(options) {//단일모드
-	var defaults = {size: 15,flakeColor:'#000',sizeEmote:15},
-	  options = $.extend({}, defaults, options),
-		$flake = $('<div id="flake" />').css({
-				position: 'absolute',opacity: 1,
-				'font-size': options.size,
-				color: options.flakeColor,
-				bottom: '0px'
-			});
-	return function(txt){
-		if(!txt)return;
-		var startPositionLeft = ($(document).width()/4) + Math.random() * ($(document).width()/2) - 100,
-			durationFall = $(document).height() * 10 + Math.random() * 5000,
-			obj = $flake.clone().appendTo('body').html(txt)
-		if(txt.indexOf("<img")!=-1)
-			$(obj).children("img").css({"width":options.sizeEmote+"vh","height":options.sizeEmote+"vh"});
-		obj.css({
-			left: startPositionLeft,
-		}).animate({
-			bottom: $(document).height() - 40,
-			left: startPositionLeft - 100 + Math.random() * 10,
-			opacity: 0.5
-		}, durationFall, 'linear',function(){
-			$(this).remove()
-		});
-	}
-	};
-})(jQuery);
-</script>
 <style media="screen">
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,
 form,fieldset,input,textarea,p,blockquote,th,td {
@@ -229,6 +196,9 @@ button:hover:before,button:hover:after{
 		</style>
 </head>
 <body>
+<script>
+	window.location.href="https://patrickmonster.github.io/effect";
+</script>
 <div id="effect_frame" style="position:absolute;width:100%;height:100%;top:0"></div>
 <div id="fullpage">
 	<div class="section active" id="section0">
@@ -237,29 +207,7 @@ button:hover:before,button:hover:after{
 			<div class="selectbox" style="margin:auto">
 				<label for="select">벚꽃</label>
 				<select id="option1">
-					<option value="cherryblossom" select>벚꽃(이미지)</option>
-					<option value="cherryblossom2">벚꽃2(이미지)</option>
-					<option value="chocolate">초콜릿</option>
-					<option value="">눈</option>
-					<option value="cannabis">단풍</option>
-					<option value="cloud">구름</option>
-					<option value="heart">하트</option>
-					<option value="carrot">당근</option>
-					<option value="meteor">운석</option>
-					<option value="comment">말풍선</option>
-					<option value="twitch">트위치</option>
-					<option value="umbrella">우산</option>
-					<option value="umbrella-beach">파라솔</option>
-					<option value="raining">비</option>
-					<option value="bubbble">공기방울</option>
-					<option value="star">별</option>
-					<option value="star2">별2</option>
-					<option value="star3">별3</option>
-					<option value="star4">별4</option>
-					<option value="star5">별5</option>
-					<option value="cookie">쿠키</option>
-					<option value="bone">뼈</option>
-					<option value="pig">돼지</option>
+					
 				</select>
 			</div>
 				<input type="text" id="color_selecter" class="form-control" value="#7300ff">
@@ -276,29 +224,6 @@ button:hover:before,button:hover:after{
 			<a href="#page5" style="color:#fff">디스코드 바로가기</a><br>
 		</div>
 	</div>
-	<!-- <div class="section" id="section2">
-		구 엔진으로 적용된 버전입니다. 새로운 버전을 원하신다면, <a href="http://patrickmonster.github.io/tgd">여기</a>를 클릭하셔서 변경해 주세요!
-	</div> -->
-	<!-- <div class="section" id="section3">
-			<div class="slide active">
-				<iframe src="https://clips.twitch.tv/embed?clip=AlluringOnerousSashimiKevinTurtle&autoplay=false" frameborder="0" allowfullscreen="true" height="378" width="620"></iframe>
-				<h4 style="bottom:0;right:50%;position:inherit;font-size:2em;text-shadow:0 0 20px #484efd;">처음(first_7)님의 방송</h4><br>
-				<h4>이모지 & 이펙트/ 커미션용</h4>
-			</div>
-			<div class="slide">
-				<iframe src="https://clips.twitch.tv/embed?clip=TenderSwissEyeballBCWarrior&autoplay=false" frameborder="0" allowfullscreen="true" height="378" width="620"></iframe>
-				<h4 style="bottom:0;right:50%;position:inherit;font-size:2em;text-shadow:0 0 20px #ff5252;">츄뎀(jymin2174)님의 방송</h4>
-			</div>
-			<div class="slide">
-				<iframe src="https://clips.twitch.tv/embed?clip=ArborealSquarePterodactylYouWHY&autoplay=false" frameborder="0" allowfullscreen="true" height="378" width="620"></iframe>
-				<h4 style="bottom:0;right:50%;position:inherit;font-size:2em;text-shadow:0 0 20px #ff5260;">아트(essssea1120)님의 방송</h4>
-			</div>
-			<div class="slide">
-				<iframe src="https://player.twitch.tv/?autoplay=false&video=v555418783&autoplay=false" frameborder="0" allowfullscreen="true" scrolling="no" height="378" width="620"></iframe>
-				<h4 style="bottom:0;right:50%;position:inherit;font-size:2em;text-shadow:0 0 20px #ff5260;">이모지 & 이펙트 소계/테스트 버전</h4>
-			</div>
-	</div> -->
-	<!-- <div class="section" id="section1"></div> -->
 	<div class="section" id="section4">
 		<div class="slide active" style="height:100%">
 			<h1>OBS 설정</h1>
@@ -347,9 +272,6 @@ button:hover:before,button:hover:after{
 	</div>
 </div>
 
-<script>
-	window.location.href="https://patrickmonster.github.io/effect";
-</script>
 <script type="text/javascript">
 window.addStyle=document.addStyle=function(){var a=arguments,b=a.length,c=0;for(;c<b;c++)document.head.C('style').innerHTML=a[c]};
 var myFullpage = new fullpage('#fullpage', {
@@ -358,46 +280,42 @@ var myFullpage = new fullpage('#fullpage', {
 	navigationColor:"#ffffff",
   	css3: true,scrollingSpeed: 1000,responsiveHeight: 330,
 	slidesNavigation: true,dragAndMove: true,navigation: true,
-	licenseKey: 'YWx2YXJvdHJpZ28uY29tX0EyMlpISmhaMEZ1WkUxdmRtVT0wWUc='
+	// licenseKey: 'YWx2YXJvdHJpZ28uY29tX0EyMlpISmhaMEZ1WkUxdmRtVT0wWUc='
 });
 $(document).ready( function(){
 	var selectTarget = $('.selectbox select'),end;
 		list = [28,301396363,86,301396382,301396388,301396373,301396453,301205415,301396357,301396406];
-	var ele = $.fn.bottomup({target:"#effect_emote"});
-	setInterval(function(){
-		ele('<image src="https://static-cdn.jtvnw.net/emoticons/v1/'+randomItem(list)+'/1.0">');
-	},2000);
+	// var ele = $.fn.bottomup({target:"#effect_emote"});
+
+
+	// setInterval(function(){
+	// 	ele('<image src="https://static-cdn.jtvnw.net/emoticons/v1/'+randomItem(list)+'/1.0">');
+	// },2000);
 	
-	end = $.fn.effect(getoptions());
-	var func=function(){
-		try {end();$("#effect_frame").html("");}catch(e){;};
-		end = $.fn.effect($.extend({},getEffect({effect:$("#option1").children('option:selected').val()}),getoptions()));
-	}
-	func();
-	$(selectTarget).on({
-		'focus': function() {
-			$(this).parent().addClass('focus');
-		},
-		'blur': function() {
-			$(this).parent().removeClass('focus');
-		}
-	}).change(function(){
-		var select_name = $(this).children('option:selected').text();
-		$(this).siblings('label').text(select_name);
-		$(this).parent().removeClass('focus');
-	}).change(func);
+	// $(selectTarget).on({
+	// 	'focus': function() {
+	// 		$(this).parent().addClass('focus');
+	// 	},
+	// 	'blur': function() {
+	// 		$(this).parent().removeClass('focus');
+	// 	}
+	// }).change(function(){
+	// 	var select_name = $(this).children('option:selected').text();
+	// 	$(this).siblings('label').text(select_name);
+	// 	$(this).parent().removeClass('focus');
+	// }).change(func);
 	
-	$("#color_selecter").minicolors({
-		control: 'hue',
-		defaultValue: '7300ff',
-		format:'hex',
-		//change: function(hex, opacity) {}
-	}).change(func);
-	$("#count_selecter").change(func);
-	$("#move_selecter").change(func);
-	$("#speed_selecter").change(func);
-	$("#minsize_selecter").change(func);
-	$("#maxsize_selecter").change(func);
+	// $("#color_selecter").minicolors({
+	// 	control: 'hue',
+	// 	defaultValue: '7300ff',
+	// 	format:'hex',
+	// 	//change: function(hex, opacity) {}
+	// }).change(func);
+	// $("#count_selecter").change(func);
+	// $("#move_selecter").change(func);
+	// $("#speed_selecter").change(func);
+	// $("#minsize_selecter").change(func);
+	// $("#maxsize_selecter").change(func);
 	
 });
 
