@@ -64,14 +64,19 @@
   }
 
   function b64EncodeUnicode(str) {
-    // const v = str.replace(/(.)/g, function (m, p) {
-    //   var code = p.charCodeAt(0).toString(16).toUpperCase();
-    //   return "%" + code;
-    // }); //4pml <- JjY1
-    return btoa(decodeURIComponent(encodeURIComponent(str))).replaceAll(
-      "=",
-      ""
-    );
+    return btoa(str.replace(/(.)/g, function(m,p){
+      var code = p.charCodeAt(0).toString(16).toUpperCase();
+      if(code.length <= 2)
+        return p;
+      else {
+        code = encodeURIComponent(p);
+        const out = [];
+        for(let i = 0; i<code.length; i+=3){
+          out.push(unescape(`${code.substr(i,3)}`));
+        }
+        return out.join("");
+      }
+    })).replaceAll("=","");
   }
 
   function base64_url_decode(str) {
